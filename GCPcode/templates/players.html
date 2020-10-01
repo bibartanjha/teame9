@@ -1,0 +1,58 @@
+{% extends 'base_players_teams_news.html' %}
+
+{% block head %}
+<title>Players</title>
+{% endblock %}
+
+{% block body %} 
+	<label for = "fname">Type player name  or select from drop-down</label>
+	<br>
+	<div class="form">
+	    <form action="/Players" method="POST">    		
+            <input type="text" name="content" id="content">
+            <input type="submit" value="Submit">
+	    </form>
+	</div>
+	<br>
+	<div class="form">
+	    <form action="/Players" method="POST">
+            <select name="content" id="content">
+        		<option value="" selected disabled hidden></option>
+            	{% for player in all_players%}
+            		<option>{{player}}</option>
+				{% endfor %}
+				</select>
+            <input type="submit" value="Submit">
+	    </form>
+	</div>
+    
+    <br>
+    <p><b>{{name}}</b></p>
+    <br>	
+
+    <p><b>{{general}}</b></p>
+	<p>{{team}}</p>
+	<p>{{position}}</p>
+	<p>{{jersey}}</p>
+	<p>{{years}}</p>
+	<br>
+
+	<p><b>{{bio}}</b></p>
+    <p>{{bd}}</p>
+    <p>{{school}}</p>
+    <p>{{height}}</p>
+    <p>{{weight}}</p>
+    <br>
+
+	<p><b>{{stats}}</b></p>
+	<p>{{PTS}}</p>
+	<p>{{AST}}</p>
+	<p>{{REB}}</p>
+	<br>
+
+	<p><b>{{draft}}</b></p>
+	<p>{{draft_year}}</p>
+    <p>{{draft_round}}</p>
+    <p>{{draft_number}}</p>
+	<br>
+{% endblock %}
