@@ -17,6 +17,7 @@ def AboutPage():
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
     all_players = []
+    
     for player in players.get_players():
         all_players.append(player['full_name'])
     if request.method == 'POST':
