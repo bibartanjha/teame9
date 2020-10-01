@@ -7,7 +7,7 @@
 {% block body %} 
 	<div class="form">
 	    <form action="/Teams" method="POST">
-    		<label for = "fname">Select team:</label>
+    		<label for = "fname">Select a team:</label>
             <select name="content" id="content">
             	 <option value="" selected disabled hidden></option>
             	{% for team in all_teams%}
