@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Favorite Players</title>
-</head>
-<body>
+{% extends 'index.html' %}
+
+{% block head %}
+<title>EE461L: Favorite Player</title>
+{% endblock %}
+
+{% block body %}
 <h1 style="text-align: center"> My Favorite Players</h1>
 <h4 style="text-align: center">Add your favorite players here
   </h4>
@@ -43,5 +43,4 @@
       </tr>
   </table>
 
-</body>
-</html>
+{% endblock %}
