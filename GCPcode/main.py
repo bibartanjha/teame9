@@ -11,7 +11,7 @@ def root():
 
 @app.route('/AboutPage')
 def AboutPage():
-    pass
+    return render_template('about.html')
 
 
 @app.route('/Players', methods=['GET', 'POST'])
