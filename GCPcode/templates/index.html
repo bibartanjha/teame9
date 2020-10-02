@@ -1,28 +1,102 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>EE461L-NBA Project</title>
-            <script src="{{ url_for('static', filename='script.js') }}"></script>
-            <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <head>        
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        
+                <!-- Bootstrap init -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        {% block head %}
+        <title>EE461L: NBA Project</title>
+        {% endblock %}
     </head>
     
     <body>
-        <h1>EE461L-NBA Project</h1>
+        
+        <!-- NAV BAR -->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        
+            <a class="navbar-brand" href="#">NBA &amp; WNBA Database</a>
+
+            <ul class="navbar-nav">
+                <!-- MAIN PAGES -->
+                <li class="nav-item">
+                    <a class="nav-link" href='#'>Players</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='#'>Teams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='#'>News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='#'></a>
+                </li>
+                <!-- DROP-DOWN, extra pages -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle id=navbardrop" data-toggle="dropdown">More</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Season Simulator</a>
+                        <a class="dropdown-item" href="#">Trade Simulator</a>
+                        <a class="dropdown-item" href="#">Favorite Team</a>
+                        <a class="dropdown-item" href="#">Favorite Player</a>
+                        <a class="dropdown-item" href="#">Compare</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </div>
+                </li>
+            </ul>    
+            <button type='button' style="position: absolute; right: 10px; text-align: center">
+                <a class="nav-link" href="/account">Login</a>
+            </button>
+        </nav>
+        {% block body %}
+        
+        <!-- SCORES -->
+        
+        <div class="container p-5" id="box_score" >
+            <h4 style="text-align: center">LATEST GAMES</h4>
+            <div class="container" style="text-align: center; width: 750px;">
+                <div class="row">
+                    <div class="col-sm-3">Team 1 info</div>
+                    <div class="col-sm-1">vs</div>
+                    <div class="col-sm-3">Team 2 info</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">Team 1 info</div>
+                    <div class="col-sm-1">vs</div>
+                    <div class="col-sm-3">Team 2 info</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">Team 1 info</div>
+                    <div class="col-sm-1">vs</div>
+                    <div class="col-sm-3">Team 2 info</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">Team 1 info</div>
+                    <div class="col-sm-1">vs</div>
+                    <div class="col-sm-3">Team 2 info</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">Team 1 info</div>
+                    <div class="col-sm-1">vs</div>
+                    <div class="col-sm-3">Team 2 info</div>
+                </div>
+            </div>
+        
+        </div>
+        
+        <!-- unsure of where to put -->
         <ul>
-            <li><a href= "">About Page</a></li>
-            <li><a href= "/Players">Players</a></li>
-            <li><a href= "/Teams">Teams</a></li>
-            <li><a href= "/News">News</a></li>
-            <li><a href= "">Year</a></li>
-            <li><a href= "">Playoff/Season Simulator</a></li>
-            <li><a href= "">Trade Simulator</a></li>
-            <li><a href= "">Settings</a></li>
-            <li><a href= "">Favorite Team</a></li>
-            <li><a href= "">Favorite Player</a></li>
-            <li><a href= "">Comparison Page</a></li>
-            <li><a href= "">Account Sign Up/Login Page</a></li>
             <li><a href= "">Sharing Pop-up Page</a></li>
         </ul>
+        {% endblock %}
     </body>
 </html>

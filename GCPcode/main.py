@@ -180,7 +180,7 @@ def comparison():
 
 @app.route('/account')
 def account():
-    pass
+    return render_template('login.html')
 
 
 @app.route('/pop-up')
