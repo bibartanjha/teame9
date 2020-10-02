@@ -165,17 +165,26 @@ def Settings():
 
 @app.route('/favteam')
 def favteam():
-    pass
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template('favteam.html')
 
 
 @app.route('/favplayer')
 def favplayer():
-    pass
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template('favplayer.html')
 
 
 @app.route('/comparison')
 def comparison():
-    pass
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template('comparison.html')
 
 
 @app.route('/account')
