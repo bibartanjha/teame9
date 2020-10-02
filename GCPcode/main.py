@@ -160,7 +160,7 @@ def TradeSim():
 
 @app.route('/Settings')
 def Settings():
-    pass
+    return render_template('settings.html')
 
 
 @app.route('/favteam')
