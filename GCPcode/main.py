@@ -30,17 +30,17 @@ def News():
 
 @app.route('/Year')
 def Year():
-    pass
+    return render_template('year.html')
 
 
 @app.route('/PlayoffSim')
 def PlayoffSim():
-    pass
+    return render_template('playoffSim.html')
 
 
 @app.route('/TradeSim')
 def TradeSim():
-    pass
+    return render_template('tradeSim.html')
 
 
 @app.route('/Settings')
