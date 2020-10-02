@@ -6,5 +6,27 @@
 {% endblock %}
 
 {% block body %}
+<div class="container p-5">
+	<h4 style="text-align: center">LOG IN</h4>
+	<!-- need to add form thing here with RESTful api but add later -->
+	<div class="container" style="text-align: center; width:500px;">
+		<div class="item" style="margin-bottom:5px">
+			<p>Username: </p>
+			<input type="text" name="username">
 
+		</div>
+		<div class="item" style="margin-top:5px">
+			<p>Password: </p>
+			<input type="text" name="password">
+		</div>
+		<div class="item" style="padding-top:5px;">
+			<button value="Log In">Log In</button>
+		</div>
+
+		<div class="item" style="margin-top:40px;">
+			<a href='#'>Don't have an account? Sign up here!</a>
+		</div>
+
+	</div>
+</div>
 {% endblock %}
