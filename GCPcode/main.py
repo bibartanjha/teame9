@@ -11,7 +11,7 @@ def root():
 
 @app.route('/AboutPage')
 def AboutPage():
-    pass
+    return render_template('about.html')
 
 
 @app.route('/Players', methods=['GET', 'POST'])
@@ -145,17 +145,17 @@ def News():
 
 @app.route('/Year')
 def Year():
-    pass
+    return render_template('year.html')
 
 
 @app.route('/PlayoffSim')
 def PlayoffSim():
-    pass
+    return render_template('playoffSim.html')
 
 
 @app.route('/TradeSim')
 def TradeSim():
-    pass
+    return render_template('tradeSim.html')
 
 
 @app.route('/Settings')

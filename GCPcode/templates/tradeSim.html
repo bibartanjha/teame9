@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Trade Simulator</title>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <h1>Trade Simulator</h1>
+        <label for="playerName1">Player 1:</label>
+        <input type="text1" id="playerName1" name="playerName1"><br><br>
+        <label for="playerName2">Player 2:</label>
+        <input type="text2" id="playerName2" name="playerName2"><br><br>
+
+        <button onclick="simulateTrade()">Trade Players</button><br><br>
+    </body>
+</html>
