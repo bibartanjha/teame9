@@ -5,59 +5,81 @@
 {% endblock %}
 
 {% block body %}
-<h1 style="text-align: center"> My Favorite Teams</h1>
-<h4 style="text-align: center">Add your favorite teams here
-  </h4>
+<<div class="jumbotron bg-info text-white" style="text-align: center">
+    <h1>My Favorite Teams</h1>
+</div>
 
+<div class="form pb-3">
 <form action="/favteam" method="POST" style="text-align: center">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Team">
+    <select id="teamchoices" name="teamchoices" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Select a Team</option>
+        {% for team in teamList %}
+            <option>{{team.full_name}}</option>
+       {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-secondary ml-3">Add</button>
 </form>
+</div>
 
-  <table style="background-color:lightblue">
-    <tr >
-        <td style="font-weight:bold">Team Name: </td>
-        <td>New York Knicks</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Abbreviation: </td>
-        <td>NYK</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Nickname: </td>
-        <td>Knicks</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">City: </td>
-        <td>New York</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">State: </td>
-        <td>New York</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Year Founded: </td>
-        <td>1946</td>
-    </tr>
-      <tr >
-        <td style="font-weight:bold">Coach: </td>
-        <td>Red Holtzman</td>
-    </tr>
-      <tr >
-        <td style="font-weight:bold">Facebook: </td>
-        <td><a href="https://www.facebook.com/NYKnicks">https://www.facebook.com/NYKnicks</a></td>
-    </tr>
-      <tr >
-        <td style="font-weight:bold">Instagram: </td>
-        <td><a href="https://instagram.com/nyknicks">https://instagram.com/nyknicks</a></td>
-    </tr>
-      <tr >
-        <td style="font-weight:bold">Twitter: </td>
-        <td><a href="https://twitter.com/nyknicks">https://twitter.com/nyknicks</a></td>
-    </tr>
 
+<div class="container col-md-6">
+  <table class="table" style="background-color:lightgrey">
+      <thead class="thead-dark">
+        <tr><th>{{name}}</th></tr>
+      </thead>
+      <tr>
+          <td style="font-weight:bold">Abbreviation: </td>
+          <td>{{abr}}</td>
+      </tr>
+
+      <tr>
+          <td style="font-weight:bold">Nickname: </td>
+          <td>{{nickname}}</td>
+      </tr>
+
+      <tr>
+            <td style="font-weight:bold">City: </td>
+            <td>{{city}}</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">State: </td>
+            <td>{{state}}</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Year Founded: </td>
+            <td>{{year}}</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Head Coach: </td>
+            <td>{{coach}}</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Manager: </td>
+            <td>{{manager}}</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Facebook: </td>
+            <td><a href={{facebook}}>{{facebook}}</a></td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Instagram: </td>
+            <td><a href={{instagram}}>{{instagram}}</a></td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Twitter: </td>
+            <td><a href={{twitter}}>{{twitter}}</a></td>
+        </tr>
 
   </table>
+</div>
 
 {% endblock %}
 

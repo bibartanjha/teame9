@@ -163,12 +163,39 @@ def Settings():
     return render_template('settings.html')
 
 
-@app.route('/favteam')
+@app.route('/favteam', methods=['GET', 'POST'])
 def favteam():
+    teamList = teams.get_teams()
     if request.method == 'POST':
-        pass
+        team = request.form['teamchoices']
+        if team == "":
+            return render_template('favteam.html', teamList = teamList)
+
+        addTeam = teams.find_teams_by_full_name(team)
+        id = addTeam[0].get('id')
+        teamBackground = teamdetails.TeamDetails(id).get_normalized_dict().get('TeamBackground')[0]
+        teamSocial = teamdetails.TeamDetails(id).get_normalized_dict().get('TeamSocialSites')
+        teamHeaders = teaminfocommon.TeamInfoCommon(id).team_info_common.get_dict()['headers']
+        teamData = teaminfocommon.TeamInfoCommon(id).team_info_common.get_dict()['data']
+
+        abr = teamBackground.get('ABBREVIATION')
+        nickname = teamBackground.get('NICKNAME')
+        city = teamBackground.get('CITY')
+        state = addTeam[0].get('state')
+        year = teamBackground.get('YEARFOUNDED')
+        coach = teamBackground.get('HEADCOACH')
+        manager = teamBackground.get('GENERALMANAGER')
+        facebook = teamSocial[0].get('WEBSITE_LINK')
+        instagram = teamSocial[1].get('WEBSITE_LINK')
+        twitter = teamSocial[2].get('WEBSITE_LINK')
+        conference = teamData[0][teamHeaders.index('TEAM_CONFERENCE')]
+
+
+
+
+        return render_template('favteam.html', teamList=teamList, name=team, abr=abr, nickname=nickname, city=city, state=state, year=year, facebook=facebook, instagram=instagram, twitter=twitter, coach=coach, manager=manager, conference=conference)
     else:
-        return render_template('favteam.html')
+        return render_template('favteam.html', teamList=teamList)
 
 
 @app.route('/favplayer', methods=['GET', 'POST'])
