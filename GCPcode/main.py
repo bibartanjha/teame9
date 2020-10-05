@@ -171,12 +171,43 @@ def favteam():
         return render_template('favteam.html')
 
 
-@app.route('/favplayer')
+@app.route('/favplayer', methods=['GET', 'POST'])
 def favplayer():
+    playerList = players.get_players()
     if request.method == 'POST':
-        pass
+        person = request.form['playerchoices']
+        if person == "":
+            return render_template('favplayer.html', playerList = playerList)
+
+        addPlayer = players.find_players_by_full_name(person)
+        id = addPlayer[0].get('id')
+        playerInfo = commonplayerinfo.CommonPlayerInfo(id).get_normalized_dict().get('CommonPlayerInfo')[0]
+        name = addPlayer[0].get('full_name')
+        if addPlayer[0].get('is_active') == "true":
+            active ='active'
+        else:
+            active = 'inactive'
+
+        yearsActive = int(playerInfo.get('TO_YEAR'))-int(playerInfo.get('FROM_YEAR'))
+        teamName = playerInfo.get('TEAM_NAME')
+        teamCity = playerInfo.get('TEAM_CITY')
+        jersey = playerInfo.get('JERSEY')
+        position = playerInfo.get('POSITION')
+        height = playerInfo.get('HEIGHT')
+        weight = playerInfo.get('WEIGHT')
+        draftYear = playerInfo.get('DRAFT_YEAR')
+        draftRound = playerInfo.get('DRAFT_ROUND')
+        draftNumber = playerInfo.get('DRAFT_NUMBER')
+        birth = playerInfo.get('BIRTHDATE')
+        school = playerInfo.get('SCHOOL')
+        PTS = playerInfo.get('PTS')
+        AST = playerInfo.get('AST')
+        REB = playerInfo.get('REB')
+
+
+        return render_template('favplayer.html', playerList = playerList, addPlayer = addPlayer, name=name, active=active, yearsActive= yearsActive, teamName=teamName, teamCity=teamCity, jersey = jersey, position=position, height=height, weight=weight, draftYear=draftYear, draftRound=draftRound, draftNumber=draftNumber, birth=birth, school=school, PTS=PTS, AST=AST, REB=REB)
     else:
-        return render_template('favplayer.html')
+        return render_template('favplayer.html', playerList = playerList)
 
 
 @app.route('/comparison')
