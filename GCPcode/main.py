@@ -14,7 +14,7 @@ try:
     print("Connected")
 except:
     print("Not connected")
-    
+
 app = Flask(__name__)
 
 client_year = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Years?retryWrites=true&w=majority")
@@ -39,7 +39,7 @@ def AboutPage():
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
     db = client['Players']
-    collection = debug['NBA_selected']
+    collection = db['NBA_selected']
     player_info_documents = []
     for document in collection.find():
         player_info_documents.append(document)
