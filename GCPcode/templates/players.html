@@ -2,57 +2,93 @@
 
 {% block head %}
 <title>Players</title>
+
+<style>
+body {text-align: center;}
+table{
+    margin: 0px auto;
+    background-color:lightblue;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: orange;
+    padding: 1px;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+.pagination {
+  
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  transition: background-color .2s;
+  border: 1px solid #ddd;
+}
+
+.pagination a.active {
+  background-color: green;
+  color: white;
+  border: 1px solid black;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
 {% endblock %}
 
 {% block body %} 
-	<label for = "fname">Type player name or select from drop-down</label>
-	<br>
-	<div class="form">
-	    <form action="/Players" method="POST">    		
-            <input type="text" name="content" id="content">
-            <input type="submit" value="Submit">
-	    </form>
-	</div>
-	<br>
-	<div class="form">
-	    <form action="/Players" method="POST">
-            <select name="content" id="content">
-        		<option value="" selected disabled hidden></option>
-            	{% for player in all_players%}
-            		<option>{{player}}</option>
-				{% endfor %}
-				</select>
-            <input type="submit" value="Submit">
-	    </form>
-	</div>
-    
-    <br>
-    <p><b>{{name}}</b></p>
-    <br>	
+<h1>Active Players</h1>
+<p>This model has 100 instances</p>
+<div class = "grid-container">
+    {%for player in player_info_documents%}
+        <div class="grid-item">
+            <h4><b>{{player['Name']}}</b></h4>
+            <img src="/static/images/{{ player['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td style="font-weight:bold">Status</td>
+                    <td>{{player['Status']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Team</td>
+                    <td>{{player['Team']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Position</td>
+                    <td>{{player['Position']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Career</td>
+                    <td>{{player['Start Year']}}-{{player['End Year']}}</td>
+                </tr>
+            </table>
+            <br>
+            <a href = "">Instance Page Link</a>
+        </div>
+    {% endfor %}
+</div>
 
-    <p><b>{{general}}</b></p>
-	<p>{{team}}</p>
-	<p>{{position}}</p>
-	<p>{{jersey}}</p>
-	<p>{{years}}</p>
-	<br>
 
-	<p><b>{{bio}}</b></p>
-    <p>{{bd}}</p>
-    <p>{{school}}</p>
-    <p>{{height}}</p>
-    <p>{{weight}}</p>
-    <br>
-
-	<p><b>{{stats}}</b></p>
-	<p>{{PTS}}</p>
-	<p>{{AST}}</p>
-	<p>{{REB}}</p>
-	<br>
-
-	<p><b>{{draft}}</b></p>
-	<p>{{draft_year}}</p>
-    <p>{{draft_round}}</p>
-    <p>{{draft_number}}</p>
-	<br>
+<br>
+<ul class="pagination" style = "text-align: center">
+    <li><a href="#">&laquo;</a></li>
+    <li><a href="#" class="active">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">6</a></li>
+    <li><a href="#">7</a></li>
+    <li><a href="#">8</a></li>
+    <li><a href="#">9</a></li>
+    <li><a href="#">10</a></li>
+    <l1><a href="#">&raquo;</a></l1>
+  </ul>
+<br>
 {% endblock %}
