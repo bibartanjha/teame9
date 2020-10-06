@@ -2,56 +2,56 @@
 
 {% block head %}
 <title>Teams</title>
+<style>
+body {text-align: center;}
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: orange;
+    padding: 10px;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+table{
+    margin: 0px auto;
+    background-color:lightblue;
+}
+</style>
 {% endblock %}
 
 {% block body %} 
-	<div class="form">
-	    <form action="/Teams" method="POST">
-    		<label for = "fname">Select a team:</label>
-            <select name="content" id="content">
-            	 <option value="" selected disabled hidden></option>
-            	{% for team in all_teams%}
-            		<option>{{team}}</option>
-				{% endfor %}
-				</select>
-            <input type="submit" value="Submit">
-	    </form>
-	</div>
-	<br>
-	<p><b>{{name}}</b></p>
-	<br>
-
-	<p><b>{{general}}</b></p>
-	<p>{{city}}</p>
-	<p>{{conference}}</p>
-	<p>{{division}}</p>
-	<p>{{arena}}</p>
-	<p>{{owner}}</p>
-	<p>{{coach}}</p>
-	<p>{{years}}</p>
-	<br>
-	
-	<p><b>{{roster}}</b></p>
-	{% for teamperson in roster_list%}
-            <p>{{teamperson}}</p>
+<h1>Active Players</h1>
+<p>This model has 40 instances (30 from NBA and 10 from WNBA)</p>
+<div class = "grid-container">
+    {%for team in team_info_documents%}
+        <div class="grid-item">
+            <h4><b>{{team['Name']}}</b></h4>
+            <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
+            <br>
+            <br>
+            <table>
+            	<tr>
+                    <td style="font-weight:bold">Year Founded</td>
+                    <td>{{team['Year Founded']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Conference</td>
+                    <td>{{team['Conference']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Division</td>
+                    <td>{{team['Division']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Coach</td>
+                    <td>{{team['Coach']}}</td>
+                </tr>
+            </table>
+            <br>
+            <a href = "">Instance Page Link</a>
+        </div>
     {% endfor %}
-	<br>
-	
-	<p><b>{{season_year}}</b></p>
-	<p>{{W}}</p>
-	<p>{{L}}</p>
-	<p>{{PCT}}</p>
-	<p>{{conf_rank}}</p>
-	<p>{{div_rank}}</p>
-	<br>
-	
-	<p><b>{{championships}}</b></p>
-	{% for year in championships_list%}
-            <p>{{year}}</p>
-    {% endfor %}
-
-
-
-
-    
+</div>
 {% endblock %}
