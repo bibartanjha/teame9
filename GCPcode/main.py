@@ -49,10 +49,10 @@ def Players():
 def Teams():
     db = client['Teams']
     collection = db['NBA']
-    team_info_documents = []
+    nba_info_documents = []
     for document in collection.find():
-        team_info_documents.append(document)
-    return render_template('teams.html', team_info_documents=team_info_documents)
+        nba_info_documents.append(document)
+    return render_template('teams.html', nba_info_documents=nba_info_documents)
 
 
 

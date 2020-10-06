@@ -1,45 +1,7 @@
-{% extends 'index.html' %}
-
-{% block head %}
+{% extends 'base_modelpages.html' %}
+{% block title %}
 <title>Players</title>
-
-<style>
-body {text-align: center;}
-table{
-    margin: 0px auto;
-    background-color:lightblue;
-}
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: orange;
-    padding: 1px;
-}
-.grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-}
-.pagination {
-  
-}
-
-.pagination a {
-  color: black;
-  padding: 8px 16px;
-  transition: background-color .2s;
-  border: 1px solid #ddd;
-}
-
-.pagination a.active {
-  background-color: green;
-  color: white;
-  border: 1px solid black;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}
-</style>
 {% endblock %}
-
 {% block body %} 
 <h1>Active Players</h1>
 <p>This model has 100 instances</p>
@@ -73,22 +35,4 @@ table{
         </div>
     {% endfor %}
 </div>
-
-
-<br>
-<ul class="pagination" style = "text-align: center">
-    <li><a href="#">&laquo;</a></li>
-    <li><a href="#" class="active">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">6</a></li>
-    <li><a href="#">7</a></li>
-    <li><a href="#">8</a></li>
-    <li><a href="#">9</a></li>
-    <li><a href="#">10</a></li>
-    <l1><a href="#">&raquo;</a></l1>
-  </ul>
-<br>
 {% endblock %}
