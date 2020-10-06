@@ -1,37 +1,22 @@
-{% extends 'index.html' %}
-
-{% block head %}
+{% extends 'base_modelpages.html' %}
+{% block title %}
 <title>Teams</title>
-<style>
-body {text-align: center;}
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: orange;
-    padding: 10px;
-}
-.grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-}
-table{
-    margin: 0px auto;
-    background-color:lightblue;
-}
-</style>
 {% endblock %}
-
 {% block body %} 
-<h1>Active Players</h1>
+<h1>Active Teams</h1>
 <p>This model has 40 instances (30 from NBA and 10 from WNBA)</p>
 <div class = "grid-container">
-    {%for team in team_info_documents%}
+    {%for team in nba_info_documents%}
         <div class="grid-item">
             <h4><b>{{team['Name']}}</b></h4>
             <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
             <br>
             <br>
             <table>
+            	<tr>
+                    <td style="font-weight:bold">League</td>
+                    <td>NBA</td>
+                </tr>
             	<tr>
                     <td style="font-weight:bold">Year Founded</td>
                     <td>{{team['Year Founded']}}</td>
@@ -54,4 +39,6 @@ table{
         </div>
     {% endfor %}
 </div>
+
+
 {% endblock %}
