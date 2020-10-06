@@ -410,36 +410,78 @@ def Settings():
     return render_template('settings.html')
 
 
-
-
-
-@app.route('/favteam')
-
+@app.route('/favteam', methods=['GET', 'POST'])
 def favteam():
-
+    teamList = teams.get_teams()
     if request.method == 'POST':
+        team = request.form['teamchoices']
+        if team == "":
+            return render_template('favteam.html', teamList = teamList)
 
-        pass
+        addTeam = teams.find_teams_by_full_name(team)
+        id = addTeam[0].get('id')
+        teamBackground = teamdetails.TeamDetails(id).get_normalized_dict().get('TeamBackground')[0]
+        teamSocial = teamdetails.TeamDetails(id).get_normalized_dict().get('TeamSocialSites')
+        teamHeaders = teaminfocommon.TeamInfoCommon(id).team_info_common.get_dict()['headers']
+        teamData = teaminfocommon.TeamInfoCommon(id).team_info_common.get_dict()['data']
 
+        abr = teamBackground.get('ABBREVIATION')
+        nickname = teamBackground.get('NICKNAME')
+        city = teamBackground.get('CITY')
+        state = addTeam[0].get('state')
+        year = teamBackground.get('YEARFOUNDED')
+        coach = teamBackground.get('HEADCOACH')
+        manager = teamBackground.get('GENERALMANAGER')
+        facebook = teamSocial[0].get('WEBSITE_LINK')
+        instagram = teamSocial[1].get('WEBSITE_LINK')
+        twitter = teamSocial[2].get('WEBSITE_LINK')
+        conference = teamData[0][teamHeaders.index('TEAM_CONFERENCE')]
+
+
+
+
+        return render_template('favteam.html', teamList=teamList, name=team, abr=abr, nickname=nickname, city=city, state=state, year=year, facebook=facebook, instagram=instagram, twitter=twitter, coach=coach, manager=manager, conference=conference)
     else:
-
-        return render_template('favteam.html')
-
+        return render_template('favteam.html', teamList=teamList)
 
 
-
-
-@app.route('/favplayer')
-
+@app.route('/favplayer', methods=['GET', 'POST'])
 def favplayer():
-
+    playerList = players.get_players()
     if request.method == 'POST':
+        person = request.form['playerchoices']
+        if person == "":
+            return render_template('favplayer.html', playerList = playerList)
 
-        pass
+        addPlayer = players.find_players_by_full_name(person)
+        id = addPlayer[0].get('id')
+        playerInfo = commonplayerinfo.CommonPlayerInfo(id).get_normalized_dict().get('CommonPlayerInfo')[0]
+        name = addPlayer[0].get('full_name')
+        if addPlayer[0].get('is_active') == "true":
+            active ='active'
+        else:
+            active = 'inactive'
 
+        yearsActive = int(playerInfo.get('TO_YEAR'))-int(playerInfo.get('FROM_YEAR'))
+        teamName = playerInfo.get('TEAM_NAME')
+        teamCity = playerInfo.get('TEAM_CITY')
+        jersey = playerInfo.get('JERSEY')
+        position = playerInfo.get('POSITION')
+        height = playerInfo.get('HEIGHT')
+        weight = playerInfo.get('WEIGHT')
+        draftYear = playerInfo.get('DRAFT_YEAR')
+        draftRound = playerInfo.get('DRAFT_ROUND')
+        draftNumber = playerInfo.get('DRAFT_NUMBER')
+        birth = playerInfo.get('BIRTHDATE')
+        school = playerInfo.get('SCHOOL')
+        PTS = playerInfo.get('PTS')
+        AST = playerInfo.get('AST')
+        REB = playerInfo.get('REB')
+
+
+        return render_template('favplayer.html', playerList = playerList, addPlayer = addPlayer, name=name, active=active, yearsActive= yearsActive, teamName=teamName, teamCity=teamCity, jersey = jersey, position=position, height=height, weight=weight, draftYear=draftYear, draftRound=draftRound, draftNumber=draftNumber, birth=birth, school=school, PTS=PTS, AST=AST, REB=REB)
     else:
-
-        return render_template('favplayer.html')
+        return render_template('favplayer.html', playerList = playerList)
 
 
 

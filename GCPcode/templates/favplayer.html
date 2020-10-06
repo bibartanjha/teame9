@@ -1,46 +1,120 @@
-{% extends 'index.html' %}
+{% extends 'index.html'%}
 
 {% block head %}
 <title>EE461L: Favorite Player</title>
 {% endblock %}
 
 {% block body %}
-<h1 style="text-align: center"> My Favorite Players</h1>
-<h4 style="text-align: center">Add your favorite players here
-  </h4>
+<div class="jumbotron bg-primary text-white" style="text-align: center">
+    <h1>My Favorite Players</h1>
+</div>
 
+<div class="form pb-3">
 <form action="/favplayer" method="POST" style="text-align: center">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Player">
+    <select id="playerchoices" name="playerchoices" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Select a Player</option>
+        {% for person in playerList %}
+            <option>{{person.full_name}}</option>
+       {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-secondary ml-3">Add</button>
 </form>
+</div>
 
-  <table style="background-color:lightblue">
-    <tr >
-        <td style="font-weight:bold">Name: </td>
-        <td>Jason Kidd</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Is Active: </td>
-        <td>Yes</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Latest Game Stats </td>
-       </tr>
-      <div></div>
-       <tr >
-        <td style="font-weight:bold">Date: </td>
-        <td>June 05, 2019</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Opposing Team: </td>
-        <td>Raptors</td>
-    </tr>
-       <tr >
-        <td style="font-weight:bold">Opposing Team City: </td>
-    </tr>
-      <tr >
-        <td style="font-weight:bold">Final Score: </td>
+
+<div class="container col-md-6">
+  <table class=table style="background-color:lightblue">
+    <thead class="thead-dark">
+      <tr>
+        <th>{{name}}</th>
       </tr>
+    </thead>
+       <tr >
+           <td style="font-weight:bold">Player Status: </td>
+            <td>{{active}}</td>
+       </tr>
+
+      <tr >
+          <td style="font-weight:bold">Years Active: </td>
+          <td>{{yearsActive}}</td>
+      </tr>
+
+       <tr >
+           <td style="font-weight:bold">Team: </td>
+           <td>{{teamName}}</td>
+       </tr>
+
+      <tr >
+          <td style="font-weight:bold">Team City: </td>
+          <td>{{teamCity}}</td>
+      </tr>
+
+       <tr >
+           <td style="font-weight:bold">Jersey #: </td>
+           <td>{{jersey}}</td>
+       </tr>
+
+       <tr >
+           <td style="font-weight:bold">Position: </td>
+           <td>{{position}}</td>
+       </tr>
+
+      <tr >
+          <td style="font-weight:bold">Height: </td>
+          <td>{{height}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">Weight: </td>
+          <td>{{weight}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">Draft Year: </td>
+          <td>{{draftYear}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">Draft Round: </td>
+          <td>{{draftRound}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">Draft Number: </td>
+          <td>{{draftNumber}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">Birth Date: </td>
+          <td>{{birth}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">School: </td>
+          <td>{{school}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">PTS: </td>
+          <td>{{PTS}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">AST: </td>
+          <td>{{AST}}</td>
+      </tr>
+
+      <tr >
+          <td style="font-weight:bold">REB: </td>
+          <td>{{REB}}</td>
+      </tr>
+
+
+
+
   </table>
+</div>
+
 
 {% endblock %}
