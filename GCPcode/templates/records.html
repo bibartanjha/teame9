@@ -1,33 +1,84 @@
-<!-- <!DOCTYPE html>
-<html>
-    <head>
-        <title>Playoff Simulator</title>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-
-    <body>
-        <h1>Playoff Simulator</h1>
-        <button onclick = "simSeason()">Simulate Playoff for NBA</button>
-        <p id = "playoffTeam1"></p>
-        <p id = "playoffTeam2"></p>
-        <p id = "playoffTeam3"></p>
-        <p id = "playoffTeam4"></p>
-        <p id = "playoffTeam5"></p>
-        <p id = "playoffTeam6"></p>
-        <p id = "playoffTeam7"></p>
-        <p id = "playoffTeam8"></p>
-
-
-    </body>
-</html> -->
-
 {% extends 'index.html' %}
 
 {% block head %}
 <title>Records</title>
+
+
+<style>
+body {text-align: center;}
+table{
+    margin: 0px auto;
+    background-color:lightblue;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: orange;
+    padding: 1px;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+.pagination {
+    
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    transition: background-color .2s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: green;
+    color: white;
+    border: 1px solid black;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
 {% endblock %}
-<p><b>Most Team Championships</b></p>
-<p>{{record_team_championships}}</p>
+
 {% block body %}
+<h1><b>Records</b></h1>
+<div class="grid-container">
+    <div class="grid-item">
+        <h4><b>The Boston Celtics have the most NBA championships with 17</b></h4>
+        <img src="/static/images/teamspage/Boston Celtics.jpg" alt="No picture found" width="120" height="120" />
+        <br>
+        <br>
+    </div>
+    <div class="grid-item">
+        <h4><b>Bill Russell has the most individual NBA championships with 11</b></h4>
+        <img src="/static/images/playerspage/Bill Russell.jpg" alt="No picture found" width="120" height="120" />
+        <br>
+        <br>
+    </div>
+    <div class="grid-item">
+        <h4><b>Wilt Chamberlain holds the record of most points scored in a NBA game with 100</b></h4>
+        <img src="/static/images/playerspage/Wilt Chamberlain.jpg" alt="No picture found" width="120" height="120" />
+        <br>
+        <br>
+    </div>
+    <div class="grid-item">
+        <h4><b>Phil Jackson has won the most NBA championships as a head coach with 11</b></h4>
+        <br>
+        <br>
+    </div>
+    <div class="grid-item">
+        <h4><b>The 2015-2016 Golden State Warriors set the record for most wins in a NBA regular season with 72</b></h4>
+        <img src="/static/images/teamspage/Golden State Warriors.jpg" alt="No picture found" width="120" height="120" />
+        <br>
+        <br>
+    </div>
+    <div class="grid-item">
+        <h4><b>Michael Jordan holds the record for most Finals MVPS with 6</b></h4>
+        <img src="/static/images/playerspage/Michael Jordan.jpg" alt="No picture found" width="120" height="120" />
+        <br>
+        <br> 
+    </div>
+</div>
 {% endblock %}
+

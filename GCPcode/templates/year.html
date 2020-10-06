@@ -2,54 +2,79 @@
 
 {% block head %}
 <title>Archive</title>
+
+
+<style>
+body {text-align: center;}
+table{
+    margin: 0px auto;
+    background-color:lightblue;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: orange;
+    padding: 1px;
+}
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+.pagination {
+    
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    transition: background-color .2s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: green;
+    color: white;
+    border: 1px solid black;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
 {% endblock %}
 
 {% block body %}
-<div class="jumbotron bg-primary text-white" style="text-align: center">
-    <h1>NBA Archive</h1>
+<h1>Champions by Year</h1>
+<div class = "grid-container">
+    {% for year in year_info_documents %}
+        <div class = "grid-item">
+            <h4><b>{{year['Year']}}</b></h4>
+            <img src="/static/images/teamspage/{{ year['NBA Finals Winner'] }}.jpg" alt="No picture found" width="120" height="120" />
+            <br>
+            <br>
+            <table>
+            	<tr>
+                    <td style="font-weight:bold">NBA Finals Champion</td>
+                    <td>{{year['NBA Finals Winner']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Western Conference Champion</td>
+                    <td>{{year['Western Champion']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Eastern Conference Champion</td>
+                    <td>{{year['Eastern Champion']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Finals MVP</td>
+                    <td>{{year['Finals MVP']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Season MVP</td>
+                    <td>{{year['Season MVP']}}</td>
+                </tr>
+            </table>
+            <br>
+        </div>
+    {% endfor %}
 </div>
-<br>
-<div class="form" style="text-align: center">
-    <label for="year">Type in a year</label>
-    <form action="/Year" method="POST" style="text-align: center">
-        <input type = "text" name = "content" id = "content">
-        <input type = "submit" value = "Submit">
-    </form>
-</div>
-
-<div class="container col-md-6">
-    <table class=table style="background-color:springgreen">
-      <thead class="thead-light">
-        <tr>
-          <th>{{year}}</th>
-        </tr>
-      </thead class="thead-light">
-         <tr >
-             <td style="font-weight:bold"></td>
-              <td>{{finalsWinnerName}}</td>
-         </tr>
-  
-        <tr >
-            <td style="font-weight:bold"></td>
-            <td>{{westWinnerName}}</td>
-        </tr>
-  
-         <tr >
-             <td style="font-weight:bold"></td>
-             <td>{{eastWinnerName}}</td>
-         </tr>
-  
-        <tr >
-            <td style="font-weight:bold"></td>
-            <td>{{finalsMVPName}}</td>
-        </tr>
-  
-         <tr >
-             <td style="font-weight:bold"></td>
-             <td>{{seasonMVPName}}</td>
-         </tr>
-
-    </table>
-</div>
-
 {% endblock %}
+

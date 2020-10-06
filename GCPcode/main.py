@@ -66,41 +66,12 @@ def News():
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():
 
-    if request.method == 'POST':
-
-        year_requested = request.form['content']
-
-        if year_requested == "":
-
-            return render_template('year.html')
-
-        db_year = client_year.Years
-
-        collection_year = db_year["NBA"]
-
-        document_year = collection_year.find_one({"Year": year_requested})
-
-        finalsWinnerName = "NBA Finals Chamption: " + document_year['NBA Finals Winner']
-
-        westWinnerName = "Western Conference Champion: " + document_year['Western Champion']
-
-        eastWinnerName = "Eastern Conference Champion: " + document_year['Eastern Champion']
-
-        finalsMVPName = "Finals MVP: " + document_year['Finals MVP']
-
-        seasonMVPName = "Season MVP: " + document_year['Season MVP']
-
-        return render_template('year.html',year=year_requested,finalsWinnerName=finalsWinnerName,westWinnerName=westWinnerName,eastWinnerName=eastWinnerName,finalsMVPName=finalsMVPName,seasonMVPName=seasonMVPName)
-
-    else:
-
-        return render_template('year.html')
-
-
-
-
-
-
+    db_year = client_year['Years']
+    collection_year = db_year['NBA']
+    year_info_documents = []
+    for document in collection_year.find():
+        year_info_documents.append(document)
+    return render_template('year.html',year_info_documents=year_info_documents)
 
 @app.route('/Records')
 
