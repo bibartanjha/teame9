@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Trade Simulator</title>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
+{% extends 'index.html' %}
 
-    <body>
-        <h1>Trade Simulator</h1>
-        <label for="playerName1">Player 1:</label>
-        <input type="text1" id="playerName1" name="playerName1"><br><br>
-        <label for="playerName2">Player 2:</label>
-        <input type="text2" id="playerName2" name="playerName2"><br><br>
+{% block head %}
+<title>Trade Simulator</title>
+{% endblock %}
 
-        <button onclick="simulateTrade()">Trade Players</button><br><br>
-    </body>
-</html>
+{% block body %}
+<div class = "form">
+    <form action="/TradeSim" method="POST">
+        <label for = "playerName1">Player 1:</label>
+        <input type = "text" id = "playerName1" name = "playerName1"><br><br>
+        <label for = "playerName2">Player 2:</label>
+        <input type = "text" id = "playerName2" name = "playerName2"><br><br>
+        <input type = "submit" value = "Submit">
+    </form>
+</div>
+<br>
+
+<p>{{valid_trade}}</p>
+
+{% endblock %}

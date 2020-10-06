@@ -1,16 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>News by Year</title>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
+{% extends 'index.html' %}
 
-    <body>
-        <h1>News by Year</h1>
-        <label for="year">Enter a year:</label>
-        <input type="text" id="year" name="year"><br><br>
-        <button onclick="displayNews()">Display news by year</button><br><br>
-        <p id = "yearDisplay"></p>
-    </body>
-</html>
+{% block head %}
+<title>Archive</title>
+{% endblock %}
+
+{% block body %}
+<label for="year">Type in a year</label>
+<br>
+<div class="form">
+    <form action="/Year" method="POST">
+        <input type = "text" name = "content" id = "content">
+        <input type = "submit" value = "Submit">
+    </form>
+</div>
+<br>
+<p>{{finalsWinnerName}}</p>
+<br>
+<p>{{westWinnerName}}</p>
+<br>
+<p>{{eastWinnerName}}</p>
+<br>
+<p>{{finalsMVPName}}</p>
+<br>
+<p>{{seasonMVPName}}</p>
+
+{% endblock %}

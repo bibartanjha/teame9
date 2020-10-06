@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <head>
         <title>Playoff Simulator</title>
@@ -20,4 +20,14 @@
 
 
     </body>
-</html>
+</html> -->
+
+{% extends 'index.html' %}
+
+{% block head %}
+<title>Records</title>
+{% endblock %}
+<p><b>Most Team Championships</b></p>
+<p>{{record_team_championships}}</p>
+{% block body %}
+{% endblock %}
