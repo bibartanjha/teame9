@@ -5,23 +5,51 @@
 {% endblock %}
 
 {% block body %}
-<label for="year">Type in a year</label>
+<div class="jumbotron bg-primary text-white" style="text-align: center">
+    <h1>NBA Archive</h1>
+</div>
 <br>
-<div class="form">
-    <form action="/Year" method="POST">
+<div class="form" style="text-align: center">
+    <label for="year">Type in a year</label>
+    <form action="/Year" method="POST" style="text-align: center">
         <input type = "text" name = "content" id = "content">
         <input type = "submit" value = "Submit">
     </form>
 </div>
-<br>
-<p>{{finalsWinnerName}}</p>
-<br>
-<p>{{westWinnerName}}</p>
-<br>
-<p>{{eastWinnerName}}</p>
-<br>
-<p>{{finalsMVPName}}</p>
-<br>
-<p>{{seasonMVPName}}</p>
+
+<div class="container col-md-6">
+    <table class=table style="background-color:springgreen">
+      <thead class="thead-light">
+        <tr>
+          <th>{{year}}</th>
+        </tr>
+      </thead class="thead-light">
+         <tr >
+             <td style="font-weight:bold"></td>
+              <td>{{finalsWinnerName}}</td>
+         </tr>
+  
+        <tr >
+            <td style="font-weight:bold"></td>
+            <td>{{westWinnerName}}</td>
+        </tr>
+  
+         <tr >
+             <td style="font-weight:bold"></td>
+             <td>{{eastWinnerName}}</td>
+         </tr>
+  
+        <tr >
+            <td style="font-weight:bold"></td>
+            <td>{{finalsMVPName}}</td>
+        </tr>
+  
+         <tr >
+             <td style="font-weight:bold"></td>
+             <td>{{seasonMVPName}}</td>
+         </tr>
+
+    </table>
+</div>
 
 {% endblock %}

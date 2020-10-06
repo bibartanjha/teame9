@@ -328,7 +328,7 @@ def Year():
 
         seasonMVPName = "Season MVP: " + document_year['Season MVP']
 
-        return render_template('year.html', finalsWinnerName=finalsWinnerName,westWinnerName=westWinnerName,eastWinnerName=eastWinnerName,finalsMVPName=finalsMVPName,seasonMVPName=seasonMVPName)
+        return render_template('year.html',year=year_requested,finalsWinnerName=finalsWinnerName,westWinnerName=westWinnerName,eastWinnerName=eastWinnerName,finalsMVPName=finalsMVPName,seasonMVPName=seasonMVPName)
 
     else:
 
