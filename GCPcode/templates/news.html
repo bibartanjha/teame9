@@ -60,17 +60,10 @@
 {% if sort != "Default: Date (Latest to Earliest)" %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
-
-<h6>The image for each item below corresponds to the source (i.e. the reporter or organization)</h6>
-
-
-
 <div class = "grid-container">
     {%for article in articles%}
         <div class="grid-item">
             <h4><b>{{article['Title']}}</b></h4>
-            <img src="/static/images/newspage/{{ article['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="180" />
-            <br>
             <br>
             <table>
         	 	<tr>
@@ -91,6 +84,10 @@
                 </tr>
             </table>
             <br>
+            <figure>
+                <img src="/static/images/newspage/{{ article['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="180" />
+                <figcaption>{{article['OriginalSource']}}</figcaption>
+            </figure>
             <a href = "{{article['OriginalSourceUrl']}}">Original Source Link</a>
             <br>
             <a href = "">Instance Page Link</a>
@@ -98,7 +95,6 @@
     {% endfor %}
 </div>
 {% endblock %}
-
 
 
 
