@@ -1,46 +1,8 @@
-{% extends 'index.html' %}
+{% extends 'base_modelpages.html' %}
 
-{% block head %}
+{% block title %}
 <title>Archive</title>
-
-
-<style>
-body {text-align: center;}
-table{
-    margin: 0px auto;
-    background-color:lightblue;
-}
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: orange;
-    padding: 1px;
-}
-.grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-}
-.pagination {
-    
-}
-
-.pagination a {
-    color: black;
-    padding: 8px 16px;
-    transition: background-color .2s;
-    border: 1px solid #ddd;
-}
-
-.pagination a.active {
-    background-color: green;
-    color: white;
-    border: 1px solid black;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}
-</style>
 {% endblock %}
-
 {% block body %}
 <h1>Champions by Year</h1>
 <div class = "grid-container">

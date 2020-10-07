@@ -1,0 +1,62 @@
+{% extends 'base_modelpages.html' %}
+
+{% block title %}
+<title>Franchise Leaders</title>
+{% endblock %}
+{% block body %}
+<h1><b>Franchise Leaders</b></h1>
+<div class="grid-container">
+    {% for franLeader in franLeaders_documents %}
+        <div class = "grid-item">
+            <h4><b>{{franLeader['Team Name']}}</b></h4>
+            <img src="/static/images/teamspage/{{ franLeader['Team Name'] }}.jpg" alt="No picture found" width="120" height="120" />
+            <br>
+            <br>
+            <table>
+            	<tr>
+                    <td style="font-weight:bold">Franchise Leader Points</td>
+                    <td>{{franLeader['PTS Franchise Leader Name']}}</td>
+                </tr>
+            	<tr>
+                    <td style="font-weight:bold">Total Points</td>
+                    <td>{{franLeader['Total Points']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Assists</td>
+                    <td>{{franLeader['AST Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Assists</td>
+                    <td>{{franLeader['Total Assists']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Rebounds</td>
+                    <td>{{franLeader['REB Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Rebounds</td>
+                    <td>{{franLeader['Total Rebounds']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Blocks</td>
+                    <td>{{franLeader['BLK Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Blocks</td>
+                    <td>{{franLeader['Total Blocks']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Steals</td>
+                    <td>{{franLeader['STL Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Steals</td>
+                    <td>{{franLeader['Total Steals']}}</td>
+                </tr>
+            </table>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

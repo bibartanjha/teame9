@@ -20,6 +20,7 @@ app = Flask(__name__)
 client_year = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Years?retryWrites=true&w=majority")
 client_trade = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
 client_teams = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Teams?retryWrites=true&w=majority")
+client_franLeaders = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Franchise_Leaders?retryWrites=true&w=majority")
 
 @app.route('/')
 
@@ -73,64 +74,24 @@ def Year():
         year_info_documents.append(document)
     return render_template('year.html',year_info_documents=year_info_documents)
 
-@app.route('/Records')
+@app.route('/Franchise_Leaders')
 
 def record():
 
-    return render_template('records.html')
-
-    #find team with most championships
-    # db_teams = client_teams.Teams
-    # collection_teams = db_teams['NBA']
-
-    # team_name = ""
-    # titles = 0
-    # for i in collection_teams:
-    #     number_of_championships = len(i['Championships'])
-    #     if titles <= number_of_championships:
-    #         titles = number_of_championships
-    #         team_name = i['Name']
-
-    # team_championship_str = team_name + " holds the record with " + str(titles) + " championships"
-
-    # return render_template('records.html',record_team_championships=team_championship_str)
+    db_franLeaders = client_franLeaders['Franchise_Leaders']
+    collection_franLeaders = db_franLeaders['NBA']
+    franLeaders_documents = []
+    for document in collection_franLeaders.find():
+        franLeaders_documents.append(document)
+    
+    return render_template('franchiseLeaders.html',franLeaders_documents=franLeaders_documents)
 
 
-
-
-
-@app.route('/TradeSim',methods = ['GET','POST'])
+@app.route('/Coaches',methods = ['GET','POST'])
 
 def TradeSim():
 
-    if request.method == 'POST':
-
-        player1 = request.form['playerName1']
-        player2 = request.form['playerName2']
-
-        if player1 == "" or player2 == "":
-
-            return render_template('tradeSim.html')
-
-        db_trade = client_trade.Players
-        collection_trade = db_trade['NBA_selected']
-        player1_info = collection_trade.find_one({"Name": player1})
-        player2_info = collection_trade.find_one({"Name": player2})
-
-        player1_stats = float(player1_info['PTS'])
-        player2_stats = float(player2_info['PTS'])
-
-        valid_trade = ""
-
-        if abs(player1_stats - player2_stats) > 5:
-            valid_trade = "Invalid trade between " + player1_info['Name'] + " and " + player2_info['Name']
-        else:
-            valid_trade = "Valid trade between " + player1_info['Name'] + " and " + player2_info['Name']
-
-        return render_template('tradeSim.html',valid_trade = valid_trade)
-
-    else:
-        return render_template('tradeSim.html')
+    return render_template('coaches.html')
 
 
 
