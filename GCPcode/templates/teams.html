@@ -6,7 +6,7 @@
 <h1>Active Teams</h1>
 <p>This model has 40 instances (30 from NBA and 10 from WNBA)</p>
 <div class = "grid-container">
-    {%for team in nba_info_documents%}
+    {%for team in nba_docs%}
         <div class="grid-item">
             <h4><b>{{team['Name']}}</b></h4>
             <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
@@ -17,6 +17,10 @@
                     <td style="font-weight:bold">League</td>
                     <td>NBA</td>
                 </tr>
+                <tr>
+                    <td style="font-weight:bold">Location</td>
+                    <td>{{team['Location']}}</td>
+                </tr>
             	<tr>
                     <td style="font-weight:bold">Year Founded</td>
                     <td>{{team['Year Founded']}}</td>
@@ -26,8 +30,37 @@
                     <td>{{team['Conference']}}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Division</td>
-                    <td>{{team['Division']}}</td>
+                    <td style="font-weight:bold">Coach</td>
+                    <td>{{team['Coach']}}</td>
+                </tr>
+            </table>
+            <br>
+            <a href = "">Instance Page Link</a>
+        </div>
+    {% endfor %}
+
+    {%for team in wnba_docs%}
+        <div class="grid-item">
+            <h4><b>{{team['Name']}}</b></h4>
+            <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td style="font-weight:bold">League</td>
+                    <td>WNBA</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Location</td>
+                    <td>{{team['Location']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Year Founded</td>
+                    <td>{{team['Year Founded']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Conference</td>
+                    <td>{{team['Conference']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Coach</td>

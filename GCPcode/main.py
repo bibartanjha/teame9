@@ -50,10 +50,16 @@ def Players():
 def Teams():
     db = client['Teams']
     collection = db['NBA']
-    nba_info_documents = []
+    collection_2 = db['WNBA']
+    nba_docs = []
     for document in collection.find():
-        nba_info_documents.append(document)
-    return render_template('teams.html', nba_info_documents=nba_info_documents)
+        nba_docs.append(document)
+
+    collection_2 = db['WNBA']
+    wnba_docs = []
+    for document in collection_2.find():
+        wnba_docs.append(document)
+    return render_template('teams.html', nba_docs=nba_docs, wnba_docs=wnba_docs)
 
 
 
