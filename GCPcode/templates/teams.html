@@ -91,10 +91,10 @@
                 </tr>
 
                 {% if team['League'] == 'NBA' %}
-                <tr>
-                    <td style="font-weight:bold">Division</td>
-                    <td>{{team['Division']}}</td>
-                </tr> 
+                    <tr>
+                        <td style="font-weight:bold">Division</td>
+                        <td>{{team['Division']}}</td>
+                    </tr> 
                 {% endif %}
 
                 {% if team['Coach'] != ' ' %}
@@ -105,6 +105,9 @@
                 {% endif %}
             </table>
             <br>
+            {% if team['League'] == 'WNBA' %}
+                <br>
+            {% endif %}
             <a href = "">Instance Page Link</a>
         </div>
     {% endfor %}
