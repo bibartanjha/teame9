@@ -195,6 +195,7 @@ def Year():
     year_info_documents = []
     for document in collection_year.find():
         year_info_documents.append(document)
+    year_info_documents = sorted(year_info_documents, key=lambda k: k['Year'],reverse=True)
     return render_template('year.html',year_info_documents=year_info_documents)
 
 @app.route('/Franchise_Leaders')
