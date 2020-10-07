@@ -207,6 +207,7 @@ def record():
     franLeaders_documents = []
     for document in collection_franLeaders.find():
         franLeaders_documents.append(document)
+    franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
     
     return render_template('franchiseLeaders.html',franLeaders_documents=franLeaders_documents)
 
