@@ -4,7 +4,6 @@
 {% endblock %}
 {% block body %} 
 <h1>Latest News</h1>
-<p>This model has 40 instances</p>
 
 <form action="/News" method="POST">
     <select name="Filter by category" id="Filter by category">
@@ -60,6 +59,8 @@
 {% if sort != "Default: Date (Latest to Earliest)" %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
+<h6><b>Number of instances: {{ num_instances }}</b></h6>
+
 <div class = "grid-container">
     {%for article in articles%}
         <div class="grid-item">

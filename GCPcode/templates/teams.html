@@ -4,8 +4,6 @@
 {% endblock %}
 {% block body %} 
 <h1>Active Teams</h1>
-<p>This model has 42 instances</p>
-
 
 <form action="/Teams" method="POST">
     <select name="Filter by league" id="Filter by league">
@@ -64,6 +62,7 @@
 {% if sort != "Default: Team Name (A-Z)" %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
+<h6><b>Number of instances: {{ num_instances }}</b></h6>
 
 <div class = "grid-container">
     {%for team in teams%}

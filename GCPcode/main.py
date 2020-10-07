@@ -85,9 +85,9 @@ def Players():
             players = sorted(players, key=lambda k: k['End Year'])
         elif sort == "End Year (Latest to Earliest)":
             players = sorted(players, key=lambda k: k['End Year'], reverse=True)
-        return render_template('players.html', players=players, filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
+        return render_template('players.html', players=players, num_instances=len(players), filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
     else: 
-        return render_template('players.html', players=players, filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
+        return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
 
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
@@ -141,9 +141,9 @@ def Teams():
             teams = sorted(teams, key=lambda k: k['Year Founded']) 
         elif sort == "Year Founded (Latest to Earliest)":
             teams = sorted(teams, key=lambda k: k['Year Founded'], reverse=True) 
-        return render_template('teams.html', teams=teams, filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
+        return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
     else:
-        return render_template('teams.html', teams=teams, filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
+        return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
 
 
 
@@ -183,9 +183,9 @@ def News():
             articles = sorted(articles, key=lambda k: k['OriginalSource']) 
         elif sort == "Source (Z to A)":
             articles = sorted(articles, key=lambda k: k['OriginalSource'], reverse=True)
-        return render_template('news.html', articles=articles, filter_category=filter_category, filter_team=filter_team, sort=sort)
+        return render_template('news.html', articles=articles, num_instances=len(articles), filter_category=filter_category, filter_team=filter_team, sort=sort)
     else:
-        return render_template('news.html', articles=articles, filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+        return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
 
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():

@@ -4,8 +4,6 @@
 {% endblock %}
 {% block body %} 
 <h1>Active Players</h1>
-<p>This model has 100 instances</p>
-
 
 <form action="/Players" method="POST">
     <select name="Filter by status" id="Filter by status">
@@ -87,6 +85,7 @@
 {% if sort != "Default: Name (A-Z)" %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
+<h6><b>Number of instances: {{ num_instances }}</b></h6>
 
 
 
