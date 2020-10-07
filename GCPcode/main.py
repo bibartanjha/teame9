@@ -23,6 +23,7 @@ client_year = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.
 client_trade = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
 client_teams = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Teams?retryWrites=true&w=majority")
 client_franLeaders = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Franchise_Leaders?retryWrites=true&w=majority")
+client_coaches = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Coaches?retryWrites=true&w=majority")
 
 @app.route('/')
 
@@ -211,9 +212,15 @@ def record():
 
 @app.route('/Coaches',methods = ['GET','POST'])
 
-def TradeSim():
+def coaches():
 
-    return render_template('coaches.html')
+    db_coaches = client_coaches['Coaches']
+    collection_coaches = db_coaches['NBA']
+    coaches_documents = []
+    for document in collection_coaches.find():
+        coaches_documents.append(document)
+
+    return render_template('coaches.html',coaches_documents=coaches_documents)
 
 
 
