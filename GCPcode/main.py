@@ -8,6 +8,8 @@ import pymongo
 
 from pymongo import MongoClient
 
+import numpy as np
+
 #chase username and password accordingly
 try:
     client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
@@ -39,36 +41,150 @@ def AboutPage():
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
-    db = client['Players']
-    collection = db['NBA_selected']
-    player_info_documents = []
-    for document in collection.find():
-        player_info_documents.append(document)
-    return render_template('players.html', player_info_documents=player_info_documents)
+    players_db = client['Players']
+    NBA = players_db['NBA_selected']
+    players = []
+    for player in NBA.find():
+        players.append(player)
+    players = sorted(players, key=lambda k: k['Name'])
+
+    if request.method == 'POST':
+        filter_status = request.form['Filter by status']
+        if filter_status != "All statuses":
+            players_with_status = []
+            for player in players:
+                if player['Status'] == filter_status:
+                    players_with_status.append(player)
+            players=players_with_status
+
+        filter_position = request.form['Filter by position']
+        if filter_position != "All positions":
+            players_in_position = []
+            for player in players:
+                if player['Position'] == filter_position:
+                    players_in_position.append(player)
+            players=players_in_position
+
+        filter_team = request.form['Filter by team']
+        if filter_team != "All teams":
+            players_in_team = []
+            for player in players:
+                if player['Team'] == filter_team:
+                    players_in_team.append(player)
+            players=players_in_team
+
+        sort = request.form['Sort']
+        if sort == "Name (Z-A)":
+            players = sorted(players, key=lambda k: k['Name'], reverse=True)
+        elif sort == "Start Year (Earliest to Latest)":
+            players = sorted(players, key=lambda k: k['Start Year'])
+        elif sort == "Start Year (Latest to Earliest)":
+            players = sorted(players, key=lambda k: k['Start Year'], reverse=True)
+        elif sort == "End Year (Earliest to Latest)":
+            players = sorted(players, key=lambda k: k['End Year'])
+        elif sort == "End Year (Latest to Earliest)":
+            players = sorted(players, key=lambda k: k['End Year'], reverse=True)
+        return render_template('players.html', players=players, filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
+    else: 
+        return render_template('players.html', players=players, filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
 
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
-    db = client['Teams']
-    collection = db['NBA']
-    collection_2 = db['WNBA']
-    nba_docs = []
-    for document in collection.find():
-        nba_docs.append(document)
+    teams_db = client['Teams']
+    NBA = teams_db['NBA']
+    WNBA = teams_db['WNBA']
+    teams = []
+    for team in NBA.find():
+        teams.append(team)
+    for team in WNBA.find():
+        teams.append(team)
+    teams = sorted(teams, key=lambda k: k['Name'])
 
-    collection_2 = db['WNBA']
-    wnba_docs = []
-    for document in collection_2.find():
-        wnba_docs.append(document)
-    return render_template('teams.html', nba_docs=nba_docs, wnba_docs=wnba_docs)
+    if request.method == 'POST':
+        filter_league = request.form['Filter by league']
+        if filter_league != "All leagues":
+            teams_in_league = []
+            for team in teams:
+                if team['League'] == filter_league:
+                    teams_in_league.append(team)
+            teams=teams_in_league
+
+        filter_conference = request.form['Filter by conference']
+        if filter_conference != "All conferences":
+            league = filter_conference.split(" ")[0]
+            conference = filter_conference.split(" ")[1]
+            teams_in_conference = []
+            for team in teams:
+                if team['League'] == league and team['Conference'] == conference:
+                    teams_in_conference.append(team)
+            teams=teams_in_conference
+
+        filter_division = request.form['Filter by division']
+        if filter_division != "All divisions":
+            teams_in_division = []
+            for team in teams:
+                if team['League'] == 'NBA':
+                    if team['Division'] == filter_division:
+                        teams_in_division.append(team)
+            teams=teams_in_division
+
+
+        sort = request.form['Sort'] 
+        if sort == "Team Name (Z-A)":
+            teams = sorted(teams, key=lambda k: k['Name'], reverse=True) 
+        elif sort == "Location (A-Z)":
+            teams = sorted(teams, key=lambda k: k['Location']) 
+        elif sort == "Location (Z-A)":
+            teams = sorted(teams, key=lambda k: k['Location'], reverse=True) 
+        elif sort == "Year Founded (Earliest to Latest)":
+            teams = sorted(teams, key=lambda k: k['Year Founded']) 
+        elif sort == "Year Founded (Latest to Earliest)":
+            teams = sorted(teams, key=lambda k: k['Year Founded'], reverse=True) 
+        return render_template('teams.html', teams=teams, filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
+    else:
+        return render_template('teams.html', teams=teams, filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
 
 
 
 @app.route('/News', methods=['GET', 'POST'])
 def News():
+    news_db = client['News']
+    NBA = news_db['NBA']
+    articles = []
+    for article in NBA.find():
+        articles.append(article)
+    articles = sorted(articles, key=lambda k: k['Updated'], reverse=True) 
     if request.method == 'POST':
-        pass
+        filter_category = request.form['Filter by category']
+        if filter_category != "All categories":
+            articles_in_category = []
+            for article in articles:
+                if article['Categories'] == filter_category:
+                    articles_in_category.append(article)
+            articles=articles_in_category
+
+        filter_team = request.form['Filter by team']
+        if filter_team != "All teams":
+            articles_for_team = []
+            for article in articles:
+                if article['Team'] == filter_team:
+                    articles_for_team.append(article)
+            articles=articles_for_team
+
+        sort = request.form['Sort'] 
+        if sort == "Date (Earliest to Latest)":
+            articles = sorted(articles, key=lambda k: k['Updated']) 
+        elif sort == "Title (A to Z)":
+            articles = sorted(articles, key=lambda k: k['Title']) 
+        elif sort == "Title (Z to A)":
+            articles = sorted(articles, key=lambda k: k['Title'], reverse=True) 
+        elif sort == "Source (A to Z)":
+            articles = sorted(articles, key=lambda k: k['OriginalSource']) 
+        elif sort == "Source (Z to A)":
+            articles = sorted(articles, key=lambda k: k['OriginalSource'], reverse=True)
+        return render_template('news.html', articles=articles, filter_category=filter_category, filter_team=filter_team, sort=sort)
     else:
-        return render_template('news.html')
+        return render_template('news.html', articles=articles, filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
 
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():

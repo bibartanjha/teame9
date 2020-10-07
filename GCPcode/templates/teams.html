@@ -4,57 +4,84 @@
 {% endblock %}
 {% block body %} 
 <h1>Active Teams</h1>
-<p>This model has 40 instances (30 from NBA and 10 from WNBA)</p>
-<div class = "grid-container">
-    {%for team in nba_docs%}
-        <div class="grid-item">
-            <h4><b>{{team['Name']}}</b></h4>
-            <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
-            <br>
-            <br>
-            <table>
-            	<tr>
-                    <td style="font-weight:bold">League</td>
-                    <td>NBA</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Location</td>
-                    <td>{{team['Location']}}</td>
-                </tr>
-            	<tr>
-                    <td style="font-weight:bold">Year Founded</td>
-                    <td>{{team['Year Founded']}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Conference</td>
-                    <td>{{team['Conference']}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Coach</td>
-                    <td>{{team['Coach']}}</td>
-                </tr>
-            </table>
-            <br>
-            <a href = "">Instance Page Link</a>
-        </div>
-    {% endfor %}
+<p>This model has 42 instances</p>
 
-    {%for team in wnba_docs%}
+
+<form action="/Teams" method="POST">
+    <select name="Filter by league" id="Filter by league">
+        <optgroup label = "Filter by league">
+        <option selected>All leagues</option>
+        <option>NBA</option>
+        <option>WNBA</option>
+    </select>
+
+    <select name="Filter by conference" id="Filter by conference">
+        <optgroup label = "Filter by conference">
+        <option selected>All conferences</option>
+        <optgroup label = "NBA">
+        <option>NBA East</option>
+        <option>NBA West</option>
+        <optgroup label = "WNBA">
+        <option>WNBA East</option>
+        <option>WNBA West</option>
+    </select>
+
+    <select name="Filter by division" id="Filter by division">
+        <optgroup label = "Filter by division">
+        <option selected>All divisions</option>
+        <optgroup label = "NBA East">
+        <option>Atlantic</option>
+        <option>Central</option>
+        <option>Southeast</option>
+        <optgroup label = "NBA West">
+        <option>Northwest</option>
+        <option>Pacific</option>
+        <option>Southwest</option>
+    </select>
+
+
+    <select name="Sort" id="Sort">
+        <optgroup label = "Sort by">
+        <option selected>Default: Team Name (A-Z)</option>
+        <option>Team Name (Z-A)</option>
+        <option>Location (A-Z)</option>
+        <option>Location (Z-A)</option>
+        <option>Year Founded (Earliest to Latest)</option>
+        <option>Year Founded (Latest to Earliest)</option>
+    </select>
+    <input type="submit" name="submit" value="Place">
+</form>
+
+{% if filter_league != "All leagues" %}
+    <h6><b>Filter (League): {{ filter_league }}</b></h6>
+{% endif %}
+{% if filter_conference != "All conferences" %}
+    <h6><b>Filter (Conference): {{ filter_conference }}</b></h6>
+{% endif %}
+{% if filter_division != "All divisions" %}
+    <h6><b>Filter (Division): {{ filter_division }}</b></h6>
+{% endif %}
+{% if sort != "Default: Team Name (A-Z)" %}
+    <h6><b>Sort: {{ sort }}</b></h6>
+{% endif %}
+
+<div class = "grid-container">
+    {%for team in teams%}
         <div class="grid-item">
             <h4><b>{{team['Name']}}</b></h4>
             <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
             <br>
             <br>
             <table>
-                <tr>
+            	<tr>
                     <td style="font-weight:bold">League</td>
-                    <td>WNBA</td>
-                </tr>
+                    <td>{{team['League']}}</td>
+                </tr>                
                 <tr>
                     <td style="font-weight:bold">Location</td>
                     <td>{{team['Location']}}</td>
                 </tr>
-                <tr>
+            	<tr>
                     <td style="font-weight:bold">Year Founded</td>
                     <td>{{team['Year Founded']}}</td>
                 </tr>
@@ -62,10 +89,20 @@
                     <td style="font-weight:bold">Conference</td>
                     <td>{{team['Conference']}}</td>
                 </tr>
+
+                {% if team['League'] == 'NBA' %}
+                <tr>
+                    <td style="font-weight:bold">Division</td>
+                    <td>{{team['Division']}}</td>
+                </tr> 
+                {% endif %}
+
+                {% if team['Coach'] != ' ' %}
                 <tr>
                     <td style="font-weight:bold">Coach</td>
                     <td>{{team['Coach']}}</td>
                 </tr>
+                {% endif %}
             </table>
             <br>
             <a href = "">Instance Page Link</a>

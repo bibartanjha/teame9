@@ -5,8 +5,93 @@
 {% block body %} 
 <h1>Active Players</h1>
 <p>This model has 100 instances</p>
+
+
+<form action="/Players" method="POST">
+    <select name="Filter by status" id="Filter by status">
+        <optgroup label = "Filter by status">
+        <option selected>All statuses</option>
+        <option>Active</option>
+        <option>Not Active</option>
+    </select>
+
+
+    <select name="Filter by position" id="Filter by position">
+        <optgroup label = "Filter by position">
+        <option selected>All positions</option>
+        <option>Forward</option>
+        <option>Center-Forward</option>
+        <option>Forward-Center</option>
+        <option>Forward-Guard</option>
+        <option>Center</option>
+        <option>Guard-Forward</option>
+        <option>Guard</option>
+    </select>
+
+    <select name="Filter by team" id="Filter by team">
+        <optgroup label = "Filter by team">
+        <option selected>All teams</option>
+        <option>76ers</option>
+        <option>Bucks</option>
+        <option>Bulls</option>
+        <option>Cavaliers</option>
+        <option>Celtics</option>
+        <option>Clippers</option>
+        <option>Grizzlies</option>
+        <option>Hawks</option>
+        <option>Heat</option>
+        <option>Hornets</option>
+        <option>Jazz</option>
+        <option>Kings</option>
+        <option>Knicks</option>
+        <option>Lakers</option>
+        <option>Magic</option>
+        <option>Mavericks</option>
+        <option>Nets</option>
+        <option>Nuggets</option>
+        <option>Pacers</option>
+        <option>Pelicans</option>
+        <option>Pistons</option>
+        <option>Rockets</option>
+        <option>Spurs</option>
+        <option>Suns</option>
+        <option>Thunder</option>
+        <option>Timberwolves</option>
+        <option>Trail Blazers</option>
+        <option>Warriors</option>
+        <option>Wizards</option>
+    </select>
+
+
+    <select name="Sort" id="Sort">
+        <optgroup label = "Sort by">
+        <option selected>Default: Name (A-Z)</option>
+        <option>Name (Z-A)</option>
+        <option>Start Year (Earliest to Latest)</option>
+        <option>Start Year (Latest to Earliest)</option>
+        <option>End Year (Earliest to Latest)</option>
+        <option>End Year (Latest to Earliest)</option>
+    </select>
+    <input type="submit" name="submit" value="Place">
+</form>
+
+{% if filter_status != "All statuses" %}
+    <h6><b>Filter (Status): {{ filter_status }}</b></h6>
+{% endif %}
+{% if filter_position != "All positions" %}
+    <h6><b>Filter (Position): {{ filter_position }}</b></h6>
+{% endif %}
+{% if filter_team != "All teams" %}
+    <h6><b>Filter (Team): {{ filter_team }}</b></h6>
+{% endif %}
+{% if sort != "Default: Name (A-Z)" %}
+    <h6><b>Sort: {{ sort }}</b></h6>
+{% endif %}
+
+
+
 <div class = "grid-container">
-    {%for player in player_info_documents%}
+    {%for player in players%}
         <div class="grid-item">
             <h4><b>{{player['Name']}}</b></h4>
             <img src="/static/images/playerspage/{{ player['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
