@@ -306,8 +306,21 @@ def coaches():
     coaches_documents = []
     for document in collection_coaches.find():
         coaches_documents.append(document)
+    if request.method == "POST":
 
-    return render_template('coaches.html',coaches_documents=coaches_documents)
+        coach_requested = request.form['coach_choices']
+        coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
+
+        team_name = coach_info['Team Name']
+        coach_name = coach_requested
+        coach_type = coach_info['Coach Type']
+        season_type = coach_info['Season']
+
+        return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=True,team_name=team_name,coach_name=coach_name,coach_type=coach_type,season_type=season_type)
+    else:
+        return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
+
+    
 
 
 
