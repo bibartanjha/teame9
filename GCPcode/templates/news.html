@@ -3,16 +3,19 @@
 <title>News</title>
 {% endblock %}
 {% block body %} 
+
+<div class="jumbotron bg-danger text-white" style="text-align: center">
+    <h1>Latest News</h1>
+</div>
 <div style="background-color: lightblue">
-<h3>Latest News</h3>
 <form action="/News_search" method="POST">
     <input type="text" id="search" name="search" placeholder="Enter article">
-    <input type="submit" name="submit" value="Search">
-    <input type="submit" name="submit" value="Default" />
+    <input type="submit" name="submit" value="Search" class="btn btn-secondary ml-3">
+    <input type="submit" name="submit" value="Default" class="btn btn-secondary ml-3"/>
 </form>
 <br>
 <form action="/News" method="POST">
-    <select name="Filter by category" id="Filter by category">
+    <select name="Filter by category" id="Filter by category" class="custom-select-sm">
         <optgroup label = "Filter by category"></optgroup>
         <option selected>All categories</option>
         <option>Injuries</option>
@@ -20,7 +23,7 @@
         <option>Sit-Start</option>
         <option>Risers</option>
     </select>
-    <select name="Filter by team" id="Filter by team">
+    <select name="Filter by team" id="Filter by team" class="custom-select-sm">
         <optgroup label = "Filter by team"></optgroup>
         <option selected>All teams</option>
         <option>BOS</option>
@@ -41,7 +44,7 @@
         <option>TOR</option>
         <option>WAS</option>
     </select>
-    <select name="Sort" id="Sort">
+    <select name="Sort" id="Sort" class="custom-select-sm">
         <optgroup label = "Sort by"></optgroup>
         <option selected>Default: Date (Latest to Earliest)</option>
         <option>Date (Earliest to Latest)</option>
@@ -50,7 +53,7 @@
         <option>Source (A to Z)</option>
         <option>Source (Z to A)</option>
     </select>
-    <input type="submit" name="submit" value="Place">
+    <input type="submit" name="submit" value="Place" class="btn btn-secondary ml-3">
 </form>
 </div>
 </br>

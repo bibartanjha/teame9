@@ -3,22 +3,25 @@
 <title>Players</title>
 {% endblock %}
 {% block body %} 
+
+<div class="jumbotron bg-primary text-white" style="text-align: center">
+    <h1>Selected Players</h1>
+</div>
 <div style="background-color: lightblue">
-<h3>Selected Players</h3>
-<form action="/Players_search" method="POST">
-    <input type="text" id="search" name="search" placeholder="Enter player">
-    <input type="submit" name="submit" value="Search">
-    <input type="submit" name="submit" value="Default" />
+<form action="/Players" method="POST">
+    <input type="text" id="search" name="search" placeholder="Enter player" >
+    <input type="submit" name="submit" value="Search" class="btn btn-secondary ml-3">
+    <input type="submit" name="submit" value="Default" class="btn btn-secondary ml-3" />
 </form>
 <br>
 <form action="/Players" method="POST">
-    <select name="Filter by status" id="Filter by status">
+    <select name="Filter by status" id="Filter by status" class="custom-select-sm">
         <optgroup label = "Filter by status"></optgroup>
         <option selected>All statuses</option>
         <option>Active</option>
         <option>Not Active</option>
     </select>
-    <select name="Filter by position" id="Filter by position">
+    <select name="Filter by position" id="Filter by position" class="custom-select-sm">
         <optgroup label = "Filter by position"></optgroup>
         <option selected>All positions</option>
         <option>Forward</option>
@@ -29,7 +32,7 @@
         <option>Guard-Forward</option>
         <option>Guard</option>
     </select>
-    <select name="Filter by team" id="Filter by team">
+    <select name="Filter by team" id="Filter by team" class="custom-select-sm">
         <optgroup label = "Filter by team"></optgroup>
         <option selected>All teams</option>
         <option>76ers</option>
@@ -62,7 +65,7 @@
         <option>Warriors</option>
         <option>Wizards</option>
     </select>
-    <select name="Sort" id="Sort">
+    <select name="Sort" id="Sort" class="custom-select-sm">
         <optgroup label = "Sort by"></optgroup>
         <option selected>Default: Name (A-Z)</option>
         <option>Name (Z-A)</option>
@@ -71,7 +74,7 @@
         <option>End Year (Earliest to Latest)</option>
         <option>End Year (Latest to Earliest)</option>
     </select>
-    <input type="submit" name="submit" value="Place">
+    <input type="submit" name="submit" value="Place" class="btn btn-secondary ml-3">
 </form>
 </div>
 <br>

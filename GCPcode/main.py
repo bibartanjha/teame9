@@ -32,9 +32,6 @@ def root():
     return render_template('index.html')
 
 
-
-
-
 @app.route('/AboutPage')
 
 def AboutPage():
@@ -245,7 +242,6 @@ def News_search():
     
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():
-
     db_year = client_year['Years']
     collection_year = db_year['NBA']
     year_info_documents = []
@@ -255,9 +251,7 @@ def Year():
     return render_template('year.html',year_info_documents=year_info_documents)
 
 @app.route('/Franchise_Leaders')
-
 def record():
-
     db_franLeaders = client_franLeaders['Franchise_Leaders']
     collection_franLeaders = db_franLeaders['NBA']
     franLeaders_documents = []
@@ -266,6 +260,41 @@ def record():
     franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
     
     return render_template('franchiseLeaders.html',franLeaders_documents=franLeaders_documents)
+
+@app.route('/Fantasy', methods=['GET', 'POST'])
+def Fantasy():
+    players_db = client['Players']
+    NBA = players_db['NBA_selected']
+    all_players = []
+    for player in NBA.find():
+        all_players.append(player)
+    if request.method == 'POST':
+        selected_players_names = request.form.getlist("player")
+        if len(selected_players_names) == 0:
+            return render_template('fantasy.html',all_players=all_players, team_formed = False, selected_players=[])
+        elif len(selected_players_names) > 5:
+            selected_players_names = selected_players_names[:5]
+
+        selected_players = []
+        average_PTS = 0
+        average_AST = 0
+        average_REB = 0
+        for player in all_players:
+            if player['Name'] in selected_players_names:
+                selected_players.append(player)
+                average_PTS += (float)(player['PTS'])
+                average_AST += (float)(player['AST'])
+                average_REB += (float)(player['REB'])
+        average_PTS /= len(selected_players) 
+        average_AST /= len(selected_players)
+        average_REB /= len(selected_players)
+
+        average_PTS = round(average_PTS, 1)
+        average_AST = round(average_AST, 1)
+        average_REB = round(average_REB, 1)
+        return render_template('fantasy.html',all_players=all_players, team_formed=True, selected_players=selected_players, average_PTS=average_PTS, average_AST=average_AST, average_REB=average_REB)
+    else:
+        return render_template('fantasy.html',all_players=all_players, team_formed = False, selected_players=[])
 
 
 @app.route('/Coaches',methods = ['GET','POST'])

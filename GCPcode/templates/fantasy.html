@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+
+{% block head %}
+<title>Fantasy</title>
+<style>
+body {text-align: center;}
+table{
+    margin: 0px auto;
+    background-color:lightgreen;
+}
+td {
+  padding: 0 10px;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class="jumbotron bg-warning text-white">
+    <h1 style = "color: white">Fantasy Basketball Team Simulator</h1>
+</div>
+
+<div class="media-container">
+{% if team_formed %}
+<table>
+    <tr>
+    <td style="font-weight:bold">Roster</td>
+    {% for player in selected_players %}
+        <td>{{player['Name']}}</td>
+    {% endfor %}
+    </tr>
+    <tr>
+        <td style="font-weight:bold">Positions</td>
+        {% for player in selected_players %}
+            <td>{{player['Position']}}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td style="font-weight:bold"></td>
+        {% for player in selected_players %}
+            <td><img name = "image" src="/static/images/playerspage/{{ player['Name'] }}.jpg" alt="No picture found" width="120" height="180" /></td>
+        {% endfor %}
+    </tr>
+</table>
+<br>
+<table>
+    <tr>
+        <td style="font-weight:bold">Average PTS</td>
+        <td>{{average_PTS}}</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold">Average AST</td>
+        <td>{{average_AST}}</td>
+    </tr>
+     <tr>
+        <td style="font-weight:bold">Average REB</td>
+        <td>{{average_REB}}</td>
+    </tr>
+</table>
+<br>
+{% endif %}
+</div>
+<div style="background-color: lightblue">
+<br>
+<h4 style = "color: black">New team</h4>
+<br>
+<h6>Select up to 5 active players</h6>
+<h6>If you choose more, only top 5 will be added</h6>
+<form action="/Fantasy" method="POST">
+    {%for player in all_players%}
+        <input type="checkbox" name="player" value="{{player['Name']}}">
+        <label for="player">{{player['Name']}}</label><br>
+    {% endfor %}
+    <br>
+    <input type="submit" name="submit" value="Create Team" class="btn btn-secondary ml-3">
+</form>
+<br>
+</div>
+{% endblock %}
