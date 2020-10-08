@@ -309,6 +309,9 @@ def coaches():
     if request.method == "POST":
 
         coach_requested = request.form['coach_choices']
+        if coach_requested == "":
+            return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
+ 
         coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
 
         team_name = coach_info['Team Name']
