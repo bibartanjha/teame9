@@ -40,6 +40,7 @@ def root():
 def AboutPage():
     return render_template('about.html')
 
+
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
     players_db = client['Players']
@@ -89,6 +90,23 @@ def Players():
     else: 
         return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
 
+@app.route('/Players_search', methods=['GET', 'POST'])
+def Players_search():
+    players = []
+    if request.method == 'POST':
+        players_db = client['Players']
+        NBA = players_db['NBA_selected']
+        if request.form['submit'] == 'Search':
+            search = request.form['search']
+            for player in NBA.find():
+                if player['Name'] == search:
+                    players.append(player)
+        else:
+            for player in NBA.find():
+                players.append(player)
+            players = sorted(players, key=lambda k: k['Name'])
+    return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
+    
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
     teams_db = client['Teams']
@@ -145,8 +163,29 @@ def Teams():
     else:
         return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
 
-
-
+@app.route('/Teams_search', methods=['GET', 'POST'])
+def Teams_search():
+    teams = []
+    if request.method == 'POST':
+        teams_db = client['Teams']
+        NBA = teams_db['NBA']
+        WNBA = teams_db['WNBA']
+        if request.form['submit'] == 'Search':
+            search = request.form['search']
+            for team in NBA.find():
+                if team['Name'] == search:
+                    teams.append(team)
+            for team in WNBA.find():
+                if team['Name'] == search:
+                    teams.append(team)
+        else:
+            for team in NBA.find():
+                teams.append(team)
+            for team in WNBA.find():
+                teams.append(team)
+            teams = sorted(teams, key=lambda k: k['Name'])
+    return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
+    
 @app.route('/News', methods=['GET', 'POST'])
 def News():
     news_db = client['News']
@@ -187,6 +226,23 @@ def News():
     else:
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
 
+@app.route('/News_search', methods=['GET', 'POST'])
+def News_search():
+    articles = []
+    if request.method == 'POST':
+        news_db = client['News']
+        NBA = news_db['NBA']
+        if request.form['submit'] == 'Search':
+            search = request.form['search']
+            for article in NBA.find():
+                if article['Title'] == search:
+                    articles.append(article)
+        else:
+            for article in NBA.find():
+                articles.append(article)
+            articles = sorted(articles, key=lambda k: k['Updated'], reverse=True) 
+    return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+    
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():
 

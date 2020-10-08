@@ -3,19 +3,23 @@
 <title>Players</title>
 {% endblock %}
 {% block body %} 
-<h1>Active Players</h1>
-
+<div style="background-color: lightblue">
+<h3>Selected Players</h3>
+<form action="/Players_search" method="POST">
+    <input type="text" id="search" name="search" placeholder="Enter player">
+    <input type="submit" name="submit" value="Search">
+    <input type="submit" name="submit" value="Default" />
+</form>
+<br>
 <form action="/Players" method="POST">
     <select name="Filter by status" id="Filter by status">
-        <optgroup label = "Filter by status">
+        <optgroup label = "Filter by status"></optgroup>
         <option selected>All statuses</option>
         <option>Active</option>
         <option>Not Active</option>
     </select>
-
-
     <select name="Filter by position" id="Filter by position">
-        <optgroup label = "Filter by position">
+        <optgroup label = "Filter by position"></optgroup>
         <option selected>All positions</option>
         <option>Forward</option>
         <option>Center-Forward</option>
@@ -25,9 +29,8 @@
         <option>Guard-Forward</option>
         <option>Guard</option>
     </select>
-
     <select name="Filter by team" id="Filter by team">
-        <optgroup label = "Filter by team">
+        <optgroup label = "Filter by team"></optgroup>
         <option selected>All teams</option>
         <option>76ers</option>
         <option>Bucks</option>
@@ -59,10 +62,8 @@
         <option>Warriors</option>
         <option>Wizards</option>
     </select>
-
-
     <select name="Sort" id="Sort">
-        <optgroup label = "Sort by">
+        <optgroup label = "Sort by"></optgroup>
         <option selected>Default: Name (A-Z)</option>
         <option>Name (Z-A)</option>
         <option>Start Year (Earliest to Latest)</option>
@@ -72,7 +73,8 @@
     </select>
     <input type="submit" name="submit" value="Place">
 </form>
-
+</div>
+<br>
 {% if filter_status != "All statuses" %}
     <h6><b>Filter (Status): {{ filter_status }}</b></h6>
 {% endif %}
@@ -86,37 +88,63 @@
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
 <h6><b>Number of instances: {{ num_instances }}</b></h6>
-
-
-
 <div class = "grid-container">
-    {%for player in players%}
-        <div class="grid-item">
-            <h4><b>{{player['Name']}}</b></h4>
-            <img src="/static/images/playerspage/{{ player['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
-            <br>
-            <br>
-            <table>
-                <tr>
-                    <td style="font-weight:bold">Status</td>
-                    <td>{{player['Status']}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Team</td>
-                    <td>{{player['Team']}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Position</td>
-                    <td>{{player['Position']}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Career</td>
-                    <td>{{player['Start Year']}}-{{player['End Year']}}</td>
-                </tr>
-            </table>
-            <br>
-            <a href = "">Instance Page Link</a>
-        </div>
+    {% for i in range(players| length) %}
+        {% if (i % 2) == 0 %}
+            <div class="grid-item">
+                <h4><b>{{players[i]['Name']}}</b></h4>
+                <img src="/static/images/playerspage/{{ players[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
+                <br>
+                <br>
+                <table>
+                    <tr>
+                        <td style="font-weight:bold">Status</td>
+                        <td>{{players[i]['Status']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Team</td>
+                        <td>{{players[i]['Team']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Position</td>
+                        <td>{{players[i]['Position']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Career</td>
+                        <td>{{players[i]['Start Year']}}-{{players[i]['End Year']}}</td>
+                    </tr>
+                </table>
+                <br>
+                <a href = "">Instance Page Link</a>
+            </div>
+        {% else %}
+            <div class="grid-item_2">
+                <h4><b>{{players[i]['Name']}}</b></h4>
+                <img src="/static/images/playerspage/{{ players[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
+                <br>
+                <br>
+                <table>
+                    <tr>
+                        <td style="font-weight:bold">Status</td>
+                        <td>{{players[i]['Status']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Team</td>
+                        <td>{{players[i]['Team']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Position</td>
+                        <td>{{players[i]['Position']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Career</td>
+                        <td>{{players[i]['Start Year']}}-{{players[i]['End Year']}}</td>
+                    </tr>
+                </table>
+                <br>
+                <a href = "">Instance Page Link</a>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

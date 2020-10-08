@@ -3,8 +3,14 @@
 <title>Teams</title>
 {% endblock %}
 {% block body %} 
-<h1>Active Teams</h1>
-
+<div style="background-color: lightblue">
+<h3>Active Teams</h3>
+<form action="/Teams_search" method="POST">
+    <input type="text" id="search" name="search" placeholder="Enter team">
+    <input type="submit" name="submit" value="Search">
+    <input type="submit" name="submit" value="Default" />
+</form>
+<br>
 <form action="/Teams" method="POST">
     <select name="Filter by league" id="Filter by league">
         <optgroup label = "Filter by league">
@@ -12,7 +18,6 @@
         <option>NBA</option>
         <option>WNBA</option>
     </select>
-
     <select name="Filter by conference" id="Filter by conference">
         <optgroup label = "Filter by conference">
         <option selected>All conferences</option>
@@ -23,7 +28,6 @@
         <option>WNBA East</option>
         <option>WNBA West</option>
     </select>
-
     <select name="Filter by division" id="Filter by division">
         <optgroup label = "Filter by division">
         <option selected>All divisions</option>
@@ -36,8 +40,6 @@
         <option>Pacific</option>
         <option>Southwest</option>
     </select>
-
-
     <select name="Sort" id="Sort">
         <optgroup label = "Sort by">
         <option selected>Default: Team Name (A-Z)</option>
@@ -49,7 +51,8 @@
     </select>
     <input type="submit" name="submit" value="Place">
 </form>
-
+</div>
+<br>
 {% if filter_league != "All leagues" %}
     <h6><b>Filter (League): {{ filter_league }}</b></h6>
 {% endif %}
@@ -65,52 +68,90 @@
 <h6><b>Number of instances: {{ num_instances }}</b></h6>
 
 <div class = "grid-container">
-    {%for team in teams%}
-        <div class="grid-item">
-            <h4><b>{{team['Name']}}</b></h4>
-            <img src="/static/images/teamspage/{{ team['Name'] }}.jpg" alt="No picture found" width="120" height="120" />
-            <br>
-            <br>
-            <table>
-            	<tr>
-                    <td style="font-weight:bold">League</td>
-                    <td>{{team['League']}}</td>
-                </tr>                
-                <tr>
-                    <td style="font-weight:bold">Location</td>
-                    <td>{{team['Location']}}</td>
-                </tr>
-            	<tr>
-                    <td style="font-weight:bold">Year Founded</td>
-                    <td>{{team['Year Founded']}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Conference</td>
-                    <td>{{team['Conference']}}</td>
-                </tr>
-
-                {% if team['League'] == 'NBA' %}
+    {% for i in range(teams| length) %}
+        {% if (i % 2) == 0 %}
+            <div class="grid-item">
+                <h4><b>{{teams[i]['Name']}}</b></h4>
+                <img src="/static/images/teamspage/{{ teams[i]['Name'] }}.jpg" alt="No picture found" width="120" height="120" /> 
+                <br><br>
+                <table>
+                	<tr>
+                        <td style="font-weight:bold">League</td>
+                        <td>{{teams[i]['League']}}</td>
+                    </tr>                
                     <tr>
-                        <td style="font-weight:bold">Division</td>
-                        <td>{{team['Division']}}</td>
-                    </tr> 
-                {% endif %}
-
-                {% if team['Coach'] != ' ' %}
-                <tr>
-                    <td style="font-weight:bold">Coach</td>
-                    <td>{{team['Coach']}}</td>
-                </tr>
-                {% endif %}
-            </table>
-            <br>
-            {% if team['League'] == 'WNBA' %}
+                        <td style="font-weight:bold">Location</td>
+                        <td>{{teams[i]['Location']}}</td>
+                    </tr>
+                	<tr>
+                        <td style="font-weight:bold">Year Founded</td>
+                        <td>{{teams[i]['Year Founded']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Conference</td>
+                        <td>{{teams[i]['Conference']}}</td>
+                    </tr>
+                    {% if teams[i]['League'] == 'NBA' %}
+                        <tr>
+                            <td style="font-weight:bold">Division</td>
+                            <td>{{teams[i]['Division']}}</td>
+                        </tr> 
+                    {% endif %}
+                    {% if teams[i]['Coach'] != ' ' %}
+                    <tr>
+                        <td style="font-weight:bold">Coach</td>
+                        <td>{{teams[i]['Coach']}}</td>
+                    </tr>
+                    {% endif %}
+                </table>
                 <br>
-            {% endif %}
-            <a href = "">Instance Page Link</a>
-        </div>
+                {% if teams[i]['League'] == 'WNBA' %}
+                    <br>
+                {% endif %}
+                <a href = "">Instance Page Link</a>
+            </div>
+        {% else %}
+            <div class="grid-item_2">
+                <h4><b>{{teams[i]['Name']}}</b></h4>
+                <img src="/static/images/teamspage/{{ teams[i]['Name'] }}.jpg" alt="No picture found" width="120" height="120" /> 
+                <br><br>
+                <table>
+                    <tr>
+                        <td style="font-weight:bold">League</td>
+                        <td>{{teams[i]['League']}}</td>
+                    </tr>                
+                    <tr>
+                        <td style="font-weight:bold">Location</td>
+                        <td>{{teams[i]['Location']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Year Founded</td>
+                        <td>{{teams[i]['Year Founded']}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Conference</td>
+                        <td>{{teams[i]['Conference']}}</td>
+                    </tr>
+                    {% if teams[i]['League'] == 'NBA' %}
+                        <tr>
+                            <td style="font-weight:bold">Division</td>
+                            <td>{{teams[i]['Division']}}</td>
+                        </tr> 
+                    {% endif %}
+                    {% if teams[i]['Coach'] != ' ' %}
+                    <tr>
+                        <td style="font-weight:bold">Coach</td>
+                        <td>{{teams[i]['Coach']}}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+                <br>
+                {% if teams[i]['League'] == 'WNBA' %}
+                    <br>
+                {% endif %}
+                <a href = "">Instance Page Link</a>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
-
-
 {% endblock %}

@@ -3,21 +3,25 @@
 <title>News</title>
 {% endblock %}
 {% block body %} 
-<h1>Latest News</h1>
-
+<div style="background-color: lightblue">
+<h3>Latest News</h3>
+<form action="/News_search" method="POST">
+    <input type="text" id="search" name="search" placeholder="Enter article">
+    <input type="submit" name="submit" value="Search">
+    <input type="submit" name="submit" value="Default" />
+</form>
+<br>
 <form action="/News" method="POST">
     <select name="Filter by category" id="Filter by category">
-        <optgroup label = "Filter by category">
+        <optgroup label = "Filter by category"></optgroup>
         <option selected>All categories</option>
         <option>Injuries</option>
         <option>Transactions</option>
         <option>Sit-Start</option>
         <option>Risers</option>
     </select>
-
-
     <select name="Filter by team" id="Filter by team">
-        <optgroup label = "Filter by team">
+        <optgroup label = "Filter by team"></optgroup>
         <option selected>All teams</option>
         <option>BOS</option>
         <option>CHI</option>
@@ -37,9 +41,8 @@
         <option>TOR</option>
         <option>WAS</option>
     </select>
-
     <select name="Sort" id="Sort">
-        <optgroup label = "Sort by">
+        <optgroup label = "Sort by"></optgroup>
         <option selected>Default: Date (Latest to Earliest)</option>
         <option>Date (Earliest to Latest)</option>
         <option>Title (A to Z)</option>
@@ -49,7 +52,8 @@
     </select>
     <input type="submit" name="submit" value="Place">
 </form>
-
+</div>
+</br>
 {% if filter_category != "All categories" %}
     <h6><b>Filter (Category): {{ filter_category }}</b></h6>
 {% endif %}
@@ -62,37 +66,70 @@
 <h6><b>Number of instances: {{ num_instances }}</b></h6>
 
 <div class = "grid-container">
-    {%for article in articles%}
+    {% for i in range(articles| length) %}
+        {% if (i % 2) == 0 %}
         <div class="grid-item">
-            <h4><b>{{article['Title']}}</b></h4>
+            <h4><b>{{articles[i]['Title']}}</b></h4>
             <br>
             <table>
         	 	<tr>
                     <td style="font-weight:bold">Date Posted</td>
-                    <td>{{article['Updated'][:10]}}</td>
+                    <td>{{articles[i]['Updated'][:10]}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Categories</td>
-                    <td>{{article['Categories']}}</td>
+                    <td>{{articles[i]['Categories']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Team</td>
-                    <td>{{article['Team']}}</td>
+                    <td>{{articles[i]['Team']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Source</td>
-                    <td>{{article['OriginalSource']}}</td>
+                    <td>{{articles[i]['OriginalSource']}}</td>
                 </tr>
             </table>
             <br>
             <figure>
-                <img src="/static/images/newspage/{{ article['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="180" />
-                <figcaption>{{article['OriginalSource']}}</figcaption>
+                <img src="/static/images/newspage/{{ articles[i]['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="120" />
+                <figcaption>{{articles[i]['OriginalSource']}}</figcaption>
             </figure>
-            <a href = "{{article['OriginalSourceUrl']}}">Original Source Link</a>
+            <a href = "{{articles[i]['OriginalSourceUrl']}}">Original Source Link</a>
             <br>
             <a href = "">Instance Page Link</a>
         </div>
+        {% else %}
+        <div class="grid-item_2">
+            <h4><b>{{articles[i]['Title']}}</b></h4>
+            <br>
+            <table>
+                <tr>
+                    <td style="font-weight:bold">Date Posted</td>
+                    <td>{{articles[i]['Updated'][:10]}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Categories</td>
+                    <td>{{articles[i]['Categories']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Team</td>
+                    <td>{{articles[i]['Team']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Source</td>
+                    <td>{{articles[i]['OriginalSource']}}</td>
+                </tr>
+            </table>
+            <br>
+            <figure>
+                <img src="/static/images/newspage/{{ articles[i]['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="120" />
+                <figcaption>{{articles[i]['OriginalSource']}}</figcaption>
+            </figure>
+            <a href = "{{articles[i]['OriginalSourceUrl']}}">Original Source Link</a>
+            <br>
+            <a href = "">Instance Page Link</a>
+        </div>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
