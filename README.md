@@ -15,8 +15,5 @@ GCP project id: ee461lteame9
 Website link:
 
 Estimated completion time for each member (hours : int)
-
-
-
 Actual completion time for each member (hours : int)
 
