@@ -5,81 +5,355 @@
 {% endblock %}
 
 {% block body %}
-<<div class="jumbotron bg-info text-white" style="text-align: center">
-    <h1>My Favorite Teams</h1>
+<div class="jumbotron bg-secondary text-white" style="text-align: center">
+    <h1 class = "display-3 bg-success font-weight-lighter">My Favorite Teams</h1>
 </div>
 
-<div class="form pb-3">
-<form action="/favteam" method="POST" style="text-align: center">
-    <select id="teamchoices" name="teamchoices" class="custom-select-sm">
+
+<div class="container p-3 my-3 bg-dark">
+<div class="form-group pb-2">
+<form action="/favplayer" method="POST" style="text-align: center">
+
+    <div class="container bg-success pb-1 mb-2">
+    <span class="badge badge-light mr-2" >filters</span>
+
+    <select id="Leagues" name="Leagues" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>leagues</option>
+            <option>NBA</option>
+            <option>WNBA</option>
+    </select>
+
+    <select id="conferences" name="conferences" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>conference</option>
+            <option>NBA East</option>
+            <option>NBA West</option>
+            <option>WNBA East</option>
+            <option>WNBA West</option>
+    </select>
+
+    <select id="divisions" name="divisions" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>divisions</option>
+            <option>Atlantic</option>
+            <option>Central</option>
+            <option>Southeast</option>
+            <option>Northwest</option>
+            <option>Pacific</option>
+            <option>Southwest</option>
+
+    </select>
+        </div>
+
+    <input type="text" class="mb-2 form-control-sm" placeholder="Enter a team">
+    <button type="submit" class="btn btn-success ml-3">Add</button>
+    <h5 class="text-white">OR</h5>
+    <select id="playerchoices" name="playerchoices" class="custom-select-sm text-inline">
         <option value="" selected disabled hidden></option>
         <option selected>Select a Team</option>
         {% for team in teamList %}
             <option>{{team.full_name}}</option>
        {% endfor %}
     </select>
-    <button type="submit" class="btn btn-secondary ml-3">Add</button>
+    <button type="submit" class="btn btn-success ml-3">Add</button>
 </form>
+</div>
 </div>
 
 
-<div class="container col-md-6">
-  <table class="table" style="background-color:lightgrey">
-      <thead class="thead-dark">
-        <tr><th>{{name}}</th></tr>
-      </thead>
+
+<div class="container justify-content-center">
+  <div class="card-deck">
+      <div class = "card justify-content-center bg-success">
+        <img class="card-img-top " src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boston_Celtics.svg/1200px-Boston_Celtics.svg.png"  style="width:100%">
+        <div class = "card-body justify-content-center">
+
+      <h1 class="text-center bg-white">Celtics</h1>
+            <table class="table">
       <tr>
-          <td style="font-weight:bold">Abbreviation: </td>
-          <td>{{abr}}</td>
+          <td style="font-weight:bold">Leaguee: </td>
+          <td>NBA</td>
       </tr>
 
       <tr>
-          <td style="font-weight:bold">Nickname: </td>
-          <td>{{nickname}}</td>
+          <td style="font-weight:bold">Location: </td>
+          <td>Boston</td>
       </tr>
 
       <tr>
-            <td style="font-weight:bold">City: </td>
-            <td>{{city}}</td>
-        </tr>
-
-        <tr>
-            <td style="font-weight:bold">State: </td>
-            <td>{{state}}</td>
-        </tr>
-
-        <tr>
             <td style="font-weight:bold">Year Founded: </td>
-            <td>{{year}}</td>
+            <td>1946</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Conference: </td>
+            <td>East</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Division: </td>
+            <td>Atlantic</td>
         </tr>
 
         <tr>
             <td style="font-weight:bold">Head Coach: </td>
-            <td>{{coach}}</td>
+            <td>Brad Stevens</td>
         </tr>
 
         <tr>
-            <td style="font-weight:bold">Manager: </td>
-            <td>{{manager}}</td>
+            <td style="font-weight:bold">Owner: </td>
+            <td>Wyc Grousbeck</td>
         </tr>
 
         <tr>
             <td style="font-weight:bold">Facebook: </td>
-            <td><a href={{facebook}}>{{facebook}}</a></td>
+            <td><a href=https://www.facebook.com/bostonceltics/>https://www.facebook.com/bostonceltics/</a></td>
         </tr>
 
         <tr >
             <td style="font-weight:bold">Instagram: </td>
-            <td><a href={{instagram}}>{{instagram}}</a></td>
+            <td><a href=https://www.instagram.com/celtics/?hl=en>https://www.instagram.com/celtics/?hl=en</a></td>
         </tr>
 
         <tr >
             <td style="font-weight:bold">Twitter: </td>
-            <td><a href={{twitter}}>{{twitter}}</a></td>
+            <td><a href=https://twitter.com/celtics?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor>https://twitter.com/celtics?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor</a></td>
         </tr>
 
-  </table>
+        <tr>
+            <td style="font-weight:bold">Wins: </td>
+            <td>48</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Losses: </td>
+            <td>24</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">PCT: </td>
+            <td>0.667</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Conference Rank: </td>
+            <td>3</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Division Rank: </td>
+            <td>2</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Arena: </td>
+            <td>TD Garden</td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Roster: </td>
+            <td><a href="">Click here for the Team Roster</a></td>
+        </tr>
+
+            </table>
+       </div>
+      </div>
+
+      <div class = "card justify-content-center bg-success">
+        <img class="card-img-top " src="https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/nop.png"  style="width:100%">
+        <div class = "card-body justify-content-center">
+
+      <h1 class="text-center bg-white">Pelicans</h1>
+            <table class="table">
+      <tr>
+          <td style="font-weight:bold">League: </td>
+          <td>NBA</td>
+      </tr>
+
+      <tr>
+          <td style="font-weight:bold">Location: </td>
+          <td>New Orleans</td>
+      </tr>
+
+      <tr>
+            <td style="font-weight:bold">Year Founded: </td>
+            <td>2002</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Conference: </td>
+            <td>West</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Division: </td>
+            <td>Southwest</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Head Coach: </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Owner: </td>
+            <td>Tom Benson</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Facebook: </td>
+            <td><a href=https://www.facebook.com/PelicansNBA/>https://www.facebook.com/PelicansNBA/</a></td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Instagram: </td>
+            <td><a href=https://www.instagram.com/pelicansnba/?hl=en>https://www.instagram.com/pelicansnba/?hl=en</a></td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Twitter: </td>
+            <td><a href=https://twitter.com/PelicansNBA?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor>https://twitter.com/PelicansNBA?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor</a></td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Wins: </td>
+            <td>30</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Losses: </td>
+            <td>42</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">PCT: </td>
+            <td>0.417</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Conference Rank: </td>
+            <td>13</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Division Rank: </td>
+            <td>5</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Arena: </td>
+            <td>Smoothie King Center</td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Roster: </td>
+            <td><a href="">Click here for the Team Roster</a></td>
+        </tr>
+
+            </table>
+       </div>
+      </div>
+
+
+      <div class = "card justify-content-center bg-success">
+        <img class="card-img-top " src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c2/Minnesota_Timberwolves_logo.svg/1200px-Minnesota_Timberwolves_logo.svg.png"  style="width:100%">
+        <div class = "card-body justify-content-center">
+
+      <h1 class="text-center bg-white">Timberwolves</h1>
+            <table class="table">
+      <tr>
+          <td style="font-weight:bold">League: </td>
+          <td>NBA</td>
+      </tr>
+
+      <tr>
+          <td style="font-weight:bold">Location: </td>
+          <td>Minneapolis</td>
+      </tr>
+
+      <tr>
+            <td style="font-weight:bold">Year Founded: </td>
+            <td>1989</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Conference: </td>
+            <td>West</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Division: </td>
+            <td>Northwest</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Head Coach: </td>
+            <td>Brad Stevens</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Owner: </td>
+            <td>Glen Taylor</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Facebook: </td>
+            <td><a href=https://www.facebook.com/MNTimberwolves/>https://www.facebook.com/MNTimberwolves/</a></td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Instagram: </td>
+            <td><a href=https://www.instagram.com/timberwolves/?hl=en>https://www.instagram.com/timberwolves/?hl=en</a></td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Twitter: </td>
+            <td><a href=https://twitter.com/Timberwolves?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor>https://twitter.com/Timberwolves?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor</a></td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Wins: </td>
+            <td>19</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Losses: </td>
+            <td>45</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">PCT: </td>
+            <td>0.297</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Conference Rank: </td>
+            <td>14</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Division Rank: </td>
+            <td>5</td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:bold">Arena: </td>
+            <td>Target Center</td>
+        </tr>
+
+        <tr >
+            <td style="font-weight:bold">Roster: </td>
+            <td><a href="">Click here for the Team Roster</a></td>
+        </tr>
+
+            </table>
+       </div>
+      </div>
+
+  </div>
 </div>
 
-{% endblock %}
 
+
+{% endblock %}
