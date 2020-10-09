@@ -268,6 +268,21 @@ def News():
     else:
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
 
+@app.route('/newsInstance1', methods=['GET', 'POST'])
+def newsInstance_one():
+    
+    return render_template('news1.html')
+
+@app.route('/newsInstance2', methods=['GET', 'POST'])
+def newsInstance_two():
+    
+    return render_template('news2.html')
+
+@app.route('/newsInstance3', methods=['GET', 'POST'])
+def newsInstance_three():
+    
+    return render_template('news3.html')
+
 @app.route('/News_search', methods=['GET', 'POST'])
 def News_search():
     articles = []
@@ -304,7 +319,7 @@ def record():
         franLeaders_documents.append(document)
     franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
     
-    return render_template('franchiseLeaders.html',franLeaders_documents=franLeaders_documents)
+    return render_template('franchiseleaders.html',franLeaders_documents=franLeaders_documents)
 
 @app.route('/Fantasy', methods=['GET', 'POST'])
 def Fantasy():
