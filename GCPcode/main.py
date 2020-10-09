@@ -35,46 +35,32 @@ client_teams = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj
 client_franLeaders = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Franchise_Leaders?retryWrites=true&w=majority")
 client_coaches = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Coaches?retryWrites=true&w=majority")
 
+
+# get game information #
+client = MongoClient("mongodb+srv://morganm:friedorboiled_@teame9db.kngdj.gcp.mongodb.net/GAMES?retryWrites=true&w=majority")
+
+
 @app.route('/')
 def root(method=['GET']):
     five_random_games = []
     five_games_info = []
-
-
-    # connect to sportsradar api #
-    conn = http.client.HTTPSConnection("api.sportradar.us")
-    url_schedule_2019 = 'http://api.sportradar.us/nba/trial/v7/en/games/2019/REG/schedule.json?api_key=w2vug627nf93497rn8cn44nm'
-    conn.request("GET", url_schedule_2019)
-    res = conn.getresponse()
-    data = res.read()
-
-    # get decoded json file and games#
-    datajson = json.loads(data.decode("utf-8")) #use this to get overall data
-    get_games_2019 = datajson["games"] #use this to get specific game info
+    gamedb = client["GAMES"]
+    gamecol = gamedb["NBA2019"]
 
     # get 5 random games #
     for i in range(5):
-        randomgame = random.randrange(len(get_games_2019))
-        if("home_points" in get_games_2019[randomgame]):
-            five_random_games.append(randomgame)
-        else:
-            while("home_points" not in get_games_2019[randomgame]):
-                randomgame = random.randrange(len(get_games_2019))
-            five_random_games.append(randomgame)
-
-
-
-    # get SCORES AND TEAMS (for now) from each random game #
-    # use get_games_2019[index for game][*] 
-    for i in range(5):
-        game_info = [] # where * = "home_points", "away_points", "home["name"]", "away["name"]"
-        game_info.append(get_games_2019[five_random_games[i]]["home_points"])
-        game_info.append(get_games_2019[five_random_games[i]]["home"]["name"])
-        game_info.append(get_games_2019[five_random_games[i]]["away_points"])
-        game_info.append(get_games_2019[five_random_games[i]]["away"]["name"])
+        randomgame = random.randrange(1061)
+        five_random_games.append(randomgame)
+        game_info = []
+        gamedoc = gamecol.find_one({"_id":randomgame})
+        game_info.append(gamedoc["HomePoints"])
+        game_info.append(gamedoc["HomeTeam"])
+        game_info.append(gamedoc["AwayPoints"])
+        game_info.append(gamedoc["AwayTeam"])
         five_games_info.append(game_info)
 
     return render_template('index.html', scores=five_games_info)
+
 
 
 @app.route('/AboutPage')
@@ -296,6 +282,21 @@ def News():
     else:
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
 
+@app.route('/newsInstance1', methods=['GET', 'POST'])
+def newsInstance_one():
+    
+    return render_template('news1.html')
+
+@app.route('/newsInstance2', methods=['GET', 'POST'])
+def newsInstance_two():
+    
+    return render_template('news2.html')
+
+@app.route('/newsInstance3', methods=['GET', 'POST'])
+def newsInstance_three():
+    
+    return render_template('news3.html')
+
 @app.route('/News_search', methods=['GET', 'POST'])
 def News_search():
     articles = []
@@ -332,7 +333,7 @@ def record():
         franLeaders_documents.append(document)
     franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
     
-    return render_template('franchiseLeaders.html',franLeaders_documents=franLeaders_documents)
+    return render_template('franchiseleaders.html',franLeaders_documents=franLeaders_documents)
 
 @app.route('/Fantasy', methods=['GET', 'POST'])
 def Fantasy():

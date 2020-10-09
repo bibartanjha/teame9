@@ -99,7 +99,13 @@
             </figure>
             <a href = "{{articles[i]['OriginalSourceUrl']}}">Original Source Link</a>
             <br>
-            <a href = "">Instance Page Link</a>
+            {% if i == 0 %}
+                <a href = "/newsInstance1">Instance Page Link</a>
+            {% elif i == 2 %}
+                <a href = "/newsInstance3">Instance Page Link</a>
+            {% else %}
+            <a href = "#">Instance Page Link</a>
+            {% endif %}
         </div>
         {% else %}
         <div class="grid-item_2">
@@ -130,7 +136,11 @@
             </figure>
             <a href = "{{articles[i]['OriginalSourceUrl']}}">Original Source Link</a>
             <br>
-            <a href = "">Instance Page Link</a>
+            {% if i == 1 %}
+                <a href = "/newsInstance2">Instance Page Link</a>
+            {% else %}
+                <a href = "#">Instance Page Link</a>
+            {% endif %}
         </div>
         {% endif %}
     {% endfor %}
