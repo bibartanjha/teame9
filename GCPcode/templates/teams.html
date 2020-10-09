@@ -111,7 +111,13 @@
                 {% if teams[i]['League'] == 'WNBA' %}
                     <br>
                 {% endif %}
-                <a href = "">Instance Page Link</a>
+                {% if (i==0) %}
+                    <a href = "/sixers">Instance Page Link</a>
+                {% elif (i==2) %}
+                    <a href="/bucks">Instance Page Link</a>
+                {% else %}
+                    <a href = "#">Instance Page Link</a>    
+                {% endif %}
             </div>
         {% else %}
             <div class="grid-item_2">
@@ -152,7 +158,11 @@
                 {% if teams[i]['League'] == 'WNBA' %}
                     <br>
                 {% endif %}
-                <a href = "">Instance Page Link</a>
+                {% if (i==1) %}
+                <a href = "/aces">Instance Page Link</a>
+                {% else %}
+                    <a href = "#">Instance Page Link</a>
+                {% endif %}
             </div>
         {% endif %}
     {% endfor %}
