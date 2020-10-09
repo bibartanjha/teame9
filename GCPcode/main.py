@@ -491,14 +491,14 @@ def favplayer():
 @app.route('/comparison')
 
 def comparison():
-
+    playerList = players.get_players()
+    teamList = teams.get_teams()
     if request.method == 'POST':
-
-        pass
+        return render_template('comparison.html', playerList=playerList, teamList=teamList)
 
     else:
 
-        return render_template('comparison.html')
+        return render_template('comparison.html', playerList=playerList, teamList=teamList)
 
 
 

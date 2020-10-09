@@ -13,8 +13,7 @@
 <div class="container p-3 my-3 bg-dark">
 <div class="form-group pb-2">
 <form action="/favplayer" method="POST" style="text-align: center">
-
-    <div class="container bg-success pb-1 mb-2">
+<div class="container bg-success pb-1 mb-2">
     <span class="badge badge-light mr-2" >filters</span>
 
     <select id="Leagues" name="Leagues" class="custom-select-sm">
@@ -45,10 +44,6 @@
 
     </select>
         </div>
-
-    <input type="text" class="mb-2 form-control-sm" placeholder="Enter a team">
-    <button type="submit" class="btn btn-success ml-3">Add</button>
-    <h5 class="text-white">OR</h5>
     <select id="playerchoices" name="playerchoices" class="custom-select-sm text-inline">
         <option value="" selected disabled hidden></option>
         <option selected>Select a Team</option>
@@ -57,6 +52,12 @@
        {% endfor %}
     </select>
     <button type="submit" class="btn btn-success ml-3">Add</button>
+    <h5 class="text-white">OR</h5>
+
+
+    <input type="text" class="mb-2 form-control-sm" placeholder="Enter a team">
+    <button type="submit" class="btn btn-success ml-3">Add</button>
+
 </form>
 </div>
 </div>
@@ -65,9 +66,9 @@
 
 <div class="container justify-content-center">
   <div class="card-deck">
-      <div class = "card justify-content-center bg-success">
+      <div class = "card justify-content-center shadow-lg bg-white border-success">
         <img class="card-img-top " src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boston_Celtics.svg/1200px-Boston_Celtics.svg.png"  style="width:100%">
-        <div class = "card-body justify-content-center">
+        <div class = "card-body text-center">
 
       <h1 class="text-center bg-white">Celtics</h1>
             <table class="table">
@@ -122,12 +123,12 @@
         </tr>
 
         <tr>
-            <td style="font-weight:bold">Wins: </td>
+            <td style="font-weight:bold">2019-2020 Wins: </td>
             <td>48</td>
         </tr>
 
         <tr>
-            <td style="font-weight:bold">Losses: </td>
+            <td style="font-weight:bold">2019-2020 Losses: </td>
             <td>24</td>
         </tr>
 
@@ -157,12 +158,13 @@
         </tr>
 
             </table>
+            <button type="submit" class="btn btn-danger btn-sm ml-3">remove</button>
        </div>
       </div>
 
-      <div class = "card justify-content-center bg-success">
+      <div class = "card justify-content-center shadow-lg bg-white border-success">
         <img class="card-img-top " src="https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/nop.png"  style="width:100%">
-        <div class = "card-body justify-content-center">
+        <div class = "card-body text-center">
 
       <h1 class="text-center bg-white">Pelicans</h1>
             <table class="table">
@@ -252,13 +254,14 @@
         </tr>
 
             </table>
+            <button type="submit" class="btn btn-danger btn-sm ml-3">remove</button>
        </div>
       </div>
 
 
-      <div class = "card justify-content-center bg-success">
+      <div class = "card justify-content-center shadow-lg bg-white border-success">
         <img class="card-img-top " src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c2/Minnesota_Timberwolves_logo.svg/1200px-Minnesota_Timberwolves_logo.svg.png"  style="width:100%">
-        <div class = "card-body justify-content-center">
+        <div class = "card-body text-center">
 
       <h1 class="text-center bg-white">Timberwolves</h1>
             <table class="table">
@@ -348,6 +351,7 @@
         </tr>
 
             </table>
+            <button type="submit" class="btn btn-danger btn-sm ml-3">remove</button>
        </div>
       </div>
 

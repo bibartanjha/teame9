@@ -1,10 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'index.html'%}
 
-</body>
-</html>
+{% block head %}
+<title>EE461L: Compare</title>
+{% endblock %}
+
+{% block body %}
+<div class="jumbotron bg-secondary text-white" style="text-align: center">
+    <h1 class = "display-3 bg-warning font-weight-lighter">Compare</h1>
+    <p class="font-weight-lighter">This page is where you can compare the stats of selected teams and players!</p>
+</div>
+<h1 class="text-center bg-info text-white font-weight-lighter mt-3 ">Team Comparisons</h1>
+<div class="container p-3 my-3 bg-dark">
+<div class="form-group pb-2">
+<form action="/favplayer" method="POST" style="text-align: center">
+<div class="container bg-info pb-1 mb-2">
+    <span class="badge badge-light mr-2" >filters</span>
+
+    <select id="Leagues" name="Leagues" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>leagues</option>
+            <option>NBA</option>
+            <option>WNBA</option>
+    </select>
+
+    <select id="conferences" name="conferences" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>conference</option>
+            <option>NBA East</option>
+            <option>NBA West</option>
+            <option>WNBA East</option>
+            <option>WNBA West</option>
+    </select>
+
+    <select id="divisions" name="divisions" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>divisions</option>
+            <option>Atlantic</option>
+            <option>Central</option>
+            <option>Southeast</option>
+            <option>Northwest</option>
+            <option>Pacific</option>
+            <option>Southwest</option>
+
+    </select>
+        </div>
+    <select id="playerchoices" name="playerchoices" class="custom-select-sm text-inline">
+        <option value="" selected disabled hidden></option>
+        <option selected>Select a Team</option>
+        {% for team in teamList %}
+            <option>{{team.full_name}}</option>
+       {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-info ml-3">Add</button>
+    <h5 class="text-white">OR</h5>
+
+
+    <input type="text" class="mb-2 form-control-sm" placeholder="Enter a team">
+    <button type="submit" class="btn btn-info ml-3">Add</button>
+
+</form>
+</div>
+</div>
+<div class="container container-fluid bg-info">
+
+
+<div class="table-responsive">
+    <table class="table table-responsive table-bordered bg-light table-striped ">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Team Name</th>
+                <th>League</th>
+                <th>Location</th>
+                <th>Conference</th>
+                <th>Division</th>
+                <th>2019-2020 Wins</th>
+                <th>2019-2020 Losses</th>
+                <th>PCT</th>
+                <th>Conference Rank</th>
+                <th>Division Rank</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+                <td>Warriors</td>
+                <td>NBA</td>
+                <td>Golden State</td>
+                <td>West</td>
+                <td>Pacific</td>
+                <td>15</td>
+                <td>50</td>
+                <td>0.231</td>
+                <td>15</td>
+                <td>5</td>
+            </tr>
+        <tr>
+                <td>Bulls</td>
+                <td>NBA</td>
+                <td>Chicago</td>
+                <td>East</td>
+                <td>Central</td>
+                <td>22</td>
+                <td>43</td>
+                <td>0.338</td>
+                <td>11</td>
+                <td>3</td>
+            </tr>
+        <tr>
+                <td>Pacers</td>
+                <td>NBA</td>
+                <td>Indianapolis</td>
+                <td>East</td>
+                <td>Central</td>
+                <td>45</td>
+                <td>28</td>
+                <td>0.616</td>
+                <td>4</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+</div>
+<h1 class="text-center bg-info text-white font-weight-lighter mt-3 ">Player Comparisons</h1>
+<div class="container p-3 my-3 bg-dark">
+<div class="form-group pb-2">
+
+<form action="/favplayer" method="POST" style="text-align: center">
+
+    <div class="container bg-info pb-1 mb-2">
+    <span class="badge badge-light mr-2" >filters</span>
+
+    <select id="status" name="status" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Status</option>
+            <option>Active</option>
+            <option>Not Active</option>
+    </select>
+
+    <select id="position" name="position" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Position</option>
+            <option>Forward</option>
+            <option>Center-Forward</option>
+            <option>Forward-Center</option>
+            <option>Forward-Guard</option>
+            <option>Center</option>
+            <option>Guard-Forward</option>
+            <option>Guard</option>
+    </select>
+
+    <select id="teams" name="teams" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Teams</option>
+        {% for team in teamList %}
+            <option>{{team.full_name}}</option>
+        {% endfor %}
+    </select>
+        </div>
+
+    <select id="playerchoices" name="playerchoices" class="custom-select-sm text-inline">
+        <option value="" selected disabled hidden></option>
+        <option selected>Select a Player</option>
+        {% for person in playerList %}
+            <option>{{person.full_name}}</option>
+       {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-info ml-3">Add</button>
+    <h5 class="text-white">OR</h5>
+    <input type="text" class="mb-2 form-control-sm" placeholder="Enter a player">
+    <button type="submit" class="btn btn-info ml-3">Add</button>
+
+
+</form>
+</div>
+</div>
+<div class="container container-fluid bg-info">
+<div class="table-responsive">
+    <table class="table table-responsive table-bordered bg-light table-striped ">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Player Name</th>
+                <th>Status</th>
+                <th>Team</th>
+                <th>Position</th>
+                <th>Jersey #</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Draft Year</th>
+                <th>Draft Round</th>
+                <th>Draft Number</th>
+                <th>Birthday</th>
+                <th>Start Year</th>
+                <th>End Year</th>
+                <th>PTS</th>
+                <th>AST</th>
+                <th>REB</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+                <td>Carmelo Anthony</td>
+                <td>Active</td>
+                <td>Trail Blazers</td>
+                <td>Forward</td>
+                <td>0</td>
+                <td>6' 8"</td>
+                <td>238</td>
+                <td>2003</td>
+                <td>1</td>
+                <td>3</td>
+                <td>5/29/1984</td>
+                <td>2003</td>
+                <td>present</td>
+                <td>15.4</td>
+                <td>1.5</td>
+                <td>6.3</td>
+            </tr>
+        <tr class="bg-danger">
+                <td>Chauncey Billups</td>
+                <td>Not Active</td>
+                <td>Pistons</td>
+                <td>Guard</td>
+                <td>1</td>
+                <td>6' 3"</td>
+                <td>210</td>
+                <td>1997</td>
+                <td>1</td>
+                <td>3</td>
+                <td>9/25/1976</td>
+                <td>1997</td>
+                <td>2013</td>
+                <td>15.2</td>
+                <td>5.4</td>
+                <td>2.9</td>
+            </tr>
+        <tr class="bg-danger">
+                <td>Adrian Dantley</td>
+                <td>Not Active</td>
+                <td>Jazz</td>
+                <td>Forward</td>
+                <td>4</td>
+                <td>6' 5"</td>
+                <td>208</td>
+                <td>1976</td>
+                <td>1</td>
+                <td>6</td>
+                <td>2/26/1955</td>
+                <td>1976</td>
+                <td>1990</td>
+                <td>24.3</td>
+                <td>3</td>
+                <td>5.7</td>
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+
+</div>
+</div>
+{% endblock %}
