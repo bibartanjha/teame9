@@ -79,9 +79,37 @@ def root(method=['GET']):
 
 @app.route('/AboutPage')
 def AboutPage():
-
     return render_template('about.html')
 
+@app.route('/AdrianDantley')
+def AdrianDantley():
+    players_db = client['Players']
+    NBA = players_db['NBA_selected']
+    players = []
+    for player in NBA.find():
+        if (player['Name'] == "Adrian Dantley"):
+            players.append(player)
+    return render_template('adriandantley.html', players=players)
+
+@app.route('/AlexEnglish')
+def AlexEnglish():
+    players_db = client['Players']
+    NBA = players_db['NBA_selected']
+    players = []
+    for player in NBA.find():
+        if (player['Name'] == "Alex English"):
+            players.append(player)
+    return render_template('alexenglish.html', players=players)
+
+@app.route('/AllenIverson')
+def AllenIverson():
+    players_db = client['Players']
+    NBA = players_db['NBA_selected']
+    players = []
+    for player in NBA.find():
+        if (player['Name'] == "Allen Iverson"):
+            players.append(player)
+    return render_template('alleniverson.html', players=players)
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
@@ -506,6 +534,19 @@ def popup():
     pass
 
 
+# teams instances, temporary#
+@app.route('/sixers')
+def team1():
+    return render_template('team1.html')
+
+@app.route('/aces')
+def team2():
+    return render_template('team2.html')
+
+@app.route('/bucks')
+def team3():
+    return render_template('team3.html')
+    
 
 if __name__ == '__main__':
 

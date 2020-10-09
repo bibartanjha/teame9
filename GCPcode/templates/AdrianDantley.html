@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+
+{% block head %}
+<title>Adrian Dantley</title>
+{% endblock %}
+{% block body %}
+
+<div class="container-fluid" style="text-align: center;">
+    {% for i in range(players| length) %}
+        <div class="grid-item">
+            <h4><b>{{players[i]['Name']}}</b></h4>
+            <img src="/static/images/playerspage/{{ players[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td style="font-weight:bold">Status</td>
+                    <td>{{players[i]['Status']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Team</td>
+                    <td>{{players[i]['Team']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Position</td>
+                    <td>{{players[i]['Position']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Career</td>
+                    <td>{{players[i]['Start Year']}}-{{players[i]['End Year']}}</td>
+                </tr>
+            </table>
+            <br>    
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
