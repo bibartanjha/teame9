@@ -447,10 +447,11 @@ def favteam():
 @app.route('/favplayer', methods=['GET', 'POST'])
 def favplayer():
     playerList = players.get_players()
+    teamList = teams.get_teams()
     if request.method == 'POST':
         person = request.form['playerchoices']
         if person == "":
-            return render_template('favplayer.html', playerList = playerList)
+            return render_template('favplayer.html', playerList = playerList, teamList=teamList)
 
         addPlayer = players.find_players_by_full_name(person)
         id = addPlayer[0].get('id')
@@ -478,9 +479,9 @@ def favplayer():
         REB = playerInfo.get('REB')
 
 
-        return render_template('favplayer.html', playerList = playerList, addPlayer = addPlayer, name=name, active=active, yearsActive= yearsActive, teamName=teamName, teamCity=teamCity, jersey = jersey, position=position, height=height, weight=weight, draftYear=draftYear, draftRound=draftRound, draftNumber=draftNumber, birth=birth, school=school, PTS=PTS, AST=AST, REB=REB)
+        return render_template('favplayer.html', teamList=teamList, playerList = playerList, addPlayer = addPlayer, name=name, active=active, yearsActive= yearsActive, teamName=teamName, teamCity=teamCity, jersey = jersey, position=position, height=height, weight=weight, draftYear=draftYear, draftRound=draftRound, draftNumber=draftNumber, birth=birth, school=school, PTS=PTS, AST=AST, REB=REB)
     else:
-        return render_template('favplayer.html', playerList = playerList)
+        return render_template('favplayer.html', teamList=teamList, playerList = playerList)
 
 
 

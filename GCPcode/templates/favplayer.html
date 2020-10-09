@@ -12,7 +12,37 @@
 <div class="container p-3 my-3 bg-dark">
 <div class="form pb-2">
 <form action="/favplayer" method="POST" style="text-align: center">
-    <select id="playerchoices" name="playerchoices" class="custom-select-md">
+
+    <span class="badge badge-light mr-2" >filters</span>
+
+    <select id="status" name="status" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Status</option>
+            <option>Active</option>
+            <option>Not Active</option>
+    </select>
+
+    <select id="position" name="position" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Position</option>
+            <option>Forward</option>
+            <option>Center-Forward</option>
+            <option>Forward-Center</option>
+            <option>Forward-Guard</option>
+            <option>Center</option>
+            <option>Guard-Forward</option>
+            <option>Guard</option>
+    </select>
+
+    <select id="teams" name="teams" class="custom-select-sm">
+        <option value="" selected disabled hidden></option>
+        <option selected>Teams</option>
+        {% for team in teamList %}
+            <option>{{team.full_name}}</option>
+        {% endfor %}
+    </select>
+
+    <select id="playerchoices" name="playerchoices" class="custom-select-sm">
         <option value="" selected disabled hidden></option>
         <option selected>Select a Player</option>
         {% for person in playerList %}
