@@ -10,6 +10,16 @@ from pymongo import MongoClient
 
 import numpy as np
 
+import requests
+
+import time
+
+import http.client
+
+import json
+
+import random
+
 #chase username and password accordingly
 try:
     client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
@@ -26,15 +36,50 @@ client_franLeaders = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db
 client_coaches = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Coaches?retryWrites=true&w=majority")
 
 @app.route('/')
+def root(method=['GET']):
+    five_random_games = []
+    five_games_info = []
 
-def root():
 
-    return render_template('index.html')
+    # connect to sportsradar api #
+    conn = http.client.HTTPSConnection("api.sportradar.us")
+    url_schedule_2019 = 'http://api.sportradar.us/nba/trial/v7/en/games/2019/REG/schedule.json?api_key=w2vug627nf93497rn8cn44nm'
+    conn.request("GET", url_schedule_2019)
+    res = conn.getresponse()
+    data = res.read()
+
+    # get decoded json file and games#
+    datajson = json.loads(data.decode("utf-8")) #use this to get overall data
+    get_games_2019 = datajson["games"] #use this to get specific game info
+
+    # get 5 random games #
+    for i in range(5):
+        randomgame = random.randrange(len(get_games_2019))
+        if("home_points" in get_games_2019[randomgame]):
+            five_random_games.append(randomgame)
+        else:
+            while("home_points" not in get_games_2019[randomgame]):
+                randomgame = random.randrange(len(get_games_2019))
+            five_random_games.append(randomgame)
+
+
+
+    # get SCORES AND TEAMS (for now) from each random game #
+    # use get_games_2019[index for game][*] 
+    for i in range(5):
+        game_info = [] # where * = "home_points", "away_points", "home["name"]", "away["name"]"
+        game_info.append(get_games_2019[five_random_games[i]]["home_points"])
+        game_info.append(get_games_2019[five_random_games[i]]["home"]["name"])
+        game_info.append(get_games_2019[five_random_games[i]]["away_points"])
+        game_info.append(get_games_2019[five_random_games[i]]["away"]["name"])
+        five_games_info.append(game_info)
+
+    return render_template('index.html', scores=five_games_info)
 
 
 @app.route('/AboutPage')
-
 def AboutPage():
+
     return render_template('about.html')
 
 

@@ -8,32 +8,42 @@
 {% block body %}
 <div class="container p-5">
 	<h4 style="text-align:center">Settings</h4>
-	<div class="container" style="text-align: center; width:750px">
-		<div class="row" style="margin:5px">
-			<div class="col-sm-5">Change password</div>
-			<!-- replace with link here -->
-			<div class="col-sm-5">Link to change here</div>
-		</div>	
-		<div class="row" style="margin:5px">
-			<div class="col-sm-5">Customize website</div>
-			<div class="col-sm-5">Link to change here</div>
-		</div>	
-		<div class="row" style="margin:5px">
-			<div class="col-sm-5">Set favorite teams</div>
-			<div class="col-sm-5">Link to change here</div>
-		</div>	
-		<div class="row" style="margin:5px">
-			<div class="col-sm-5">Set favorite player</div>
-			<div class="col-sm-5">Link to change here</div>
-		</div>	
-		<div class="row" style="margin:5px">
-			<div class="col-sm-5">Share favorites with friends</div>
-			<div class="col-sm-5">Link to do here?</div>
-		</div>	
-
-
-	</div>
+	<h6 style="text-align: center"> Make changes to your account, your favorites, and the overall website!</h6>
+	<table class="center" style="width:400px; text-align: center">
+		<tr>
+			<th>Account</th>
+		</tr>
+		<tr>
+			<td><a href="#">Change Password</a></td>
+		</tr>
+		<tr>
+			<td><a href="#">Change Email</a></td>
+		</tr>
+	</table>
+	<table class="center" style="width:400px; text-align: center">
+		<tr>
+			<th>Website</th>
+		</tr>
+		<br>
+		<tr>
+			<td><a href="#">Customize Website</a></td>
+		</tr>
+		<tr>
+			<td><a href="#">Set Favorite Teams</a></td>
+		</tr>
+		<tr>
+			<td><a href="#">Set Favorite Players</a></td>
+		</tr>
+		<tr>
+			<td><a href="#">Share Settings</a></td>
+		</tr>
+	</table>
 </div>
+<style>
+	a {
+		color: #b88a00;
+	}
+</style>
 
 
 {% endblock %}
