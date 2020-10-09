@@ -6,6 +6,7 @@
 
 <div class="jumbotron bg-success text-white" style="text-align: center">
     <h1>Active Teams</h1>
+    <h6>Note: Only first 3 teams have instance pages available at the moment</h6>
 </div>
 <div style="background-color: lightblue">
 <form action="/Teams_search" method="POST">
@@ -111,7 +112,13 @@
                 {% if teams[i]['League'] == 'WNBA' %}
                     <br>
                 {% endif %}
-                <a href = "">Instance Page Link</a>
+                {% if (i==0) %}
+                    <a href = "/sixers">Instance Page Link</a>
+                {% elif (i==2) %}
+                    <a href="/bucks">Instance Page Link</a>
+                {% else %}
+                    <a href = "#">Instance Page Link</a>    
+                {% endif %}
             </div>
         {% else %}
             <div class="grid-item_2">
@@ -152,7 +159,11 @@
                 {% if teams[i]['League'] == 'WNBA' %}
                     <br>
                 {% endif %}
-                <a href = "">Instance Page Link</a>
+                {% if (i==1) %}
+                <a href = "/aces">Instance Page Link</a>
+                {% else %}
+                    <a href = "#">Instance Page Link</a>
+                {% endif %}
             </div>
         {% endif %}
     {% endfor %}

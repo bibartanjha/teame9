@@ -519,6 +519,19 @@ def popup():
     pass
 
 
+# teams instances, temporary#
+@app.route('/sixers')
+def team1():
+    return render_template('team1.html')
+
+@app.route('/aces')
+def team2():
+    return render_template('team2.html')
+
+@app.route('/bucks')
+def team3():
+    return render_template('team3.html')
+    
 
 if __name__ == '__main__':
 
