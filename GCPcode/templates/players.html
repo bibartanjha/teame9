@@ -7,6 +7,7 @@
 <div class="jumbotron bg-primary text-white" style="text-align: center">
     <h1>Selected Players</h1>
 </div>
+<p>Instance pages for first 3 players have been created</p>
 <div style="background-color: lightblue">
 <form action="/Players" method="POST">
     <input type="text" id="search" name="search" placeholder="Enter player" >
@@ -117,8 +118,8 @@
                         <td>{{players[i]['Start Year']}}-{{players[i]['End Year']}}</td>
                     </tr>
                 </table>
-                <br>
-                <a href = "">Instance Page Link</a>
+                <br>    
+                    <a href = "/{{players[i]['Name'].split(' ')[0]}}{{players[i]['Name'].split(' ')[1]}}">Instance Page Link</a>
             </div>
         {% else %}
             <div class="grid-item_2">
@@ -145,7 +146,7 @@
                     </tr>
                 </table>
                 <br>
-                <a href = "">Instance Page Link</a>
+                <a href = "/{{players[i]['Name'].split(' ')[0]}}{{players[i]['Name'].split(' ')[1]}}">Instance Page Link</a>
             </div>
         {% endif %}
     {% endfor %}
