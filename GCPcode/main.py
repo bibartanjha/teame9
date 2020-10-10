@@ -235,7 +235,9 @@ def Teams():
     };
 
     teams = []
-    teams.append(team_1, team_2, team_3)
+    teams.append(team_1)
+    teams.append(team_2)
+    teams.append(team_3)
     return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
 
     '''
@@ -317,6 +319,15 @@ def Teams_search():
     
 @app.route('/News', methods=['GET', 'POST'])
 def News():
+    news_1 = {
+        "Updated": "2020-10-07",
+        "Title": "Bam Adebayo Will Officially Return For Game 4",
+        "Categories": "Injuries",
+        "Team": "MIA",
+        "OriginalSource": "Tim Reynolds",
+        "OriginalSourceUrl": "https://twitter.com/ByTimReynolds/status/1313626888347291653"
+    };
+    '''
     news_db = client['News']
     NBA = news_db['NBA']
     articles = []
@@ -354,7 +365,7 @@ def News():
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category=filter_category, filter_team=filter_team, sort=sort)
     else:
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
-
+'''
 @app.route('/newsInstance1', methods=['GET', 'POST'])
 def newsInstance_one():
     
