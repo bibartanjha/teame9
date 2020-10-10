@@ -540,11 +540,55 @@ def record():
 
 @app.route('/Fantasy', methods=['GET', 'POST'])
 def Fantasy():
-    players_db = client['Players']
-    NBA = players_db['NBA_selected']
+
+    player1 = {
+        "Name": "Ray Allen",
+        "PTS": "18.9",
+        "AST": "3.4",
+        "REB": "4.1"
+    }
+
+    player2 = {
+        "Name": "Larry Bird",
+        "PTS": "24.3",
+        "AST": "6.3",
+        "REB": "10"
+    }
+
+    player3 = {
+        "Name": "Dave Cowens",
+        "PTS": "17.6",
+        "AST": "3.8",
+        "REB": "13.6"
+    }
+
+    player4 = {
+        "Name": "Andrew Drummond",
+        "PTS": "17.7",
+        "AST": "2.7",
+        "REB": "15.2"
+    }
+
+    player5 = {
+        "Name": "Reggie Miller",
+        "PTS": "18.2",
+        "AST": "3",
+        "REB": "3"
+    }
+
+
+
+    # players_db = client['Players']
+    # NBA = players_db['NBA_selected']
     all_players = []
-    for player in NBA.find():
-        all_players.append(player)
+    all_players.append(player1)
+    all_players.append(player2)
+    all_players.append(player3)
+    all_players.append(player4)
+    all_players.append(player5)
+
+    # for player in NBA.find():
+    #     all_players.append(player)
     if request.method == 'POST':
         selected_players_names = request.form.getlist("player")
         if len(selected_players_names) == 0:
