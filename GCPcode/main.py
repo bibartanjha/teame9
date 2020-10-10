@@ -204,6 +204,41 @@ def Players_search():
     
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
+    team_1 = {
+        "Name": "Hawks",
+        "League": "NBA",
+        "Location": "Atlanta",
+        "Year Founded": "1949",
+        "Conference" : "East",
+        "Division": "Southeast",
+        "Coach": "Lloyd Pierce"
+    };
+
+    team_2 = {
+        "Name": "Celtics",
+        "League": "NBA",
+        "Location": "Boston",
+        "Year Founded": "1946",
+        "Conference" : "East",
+        "Division": "Atlantic",
+        "Coach": "Brad Stevens"
+    };
+
+    team_3 = {
+        "Name": "Nets",
+        "League": "NBA",
+        "Location": "Brooklyn",
+        "Year Founded": "1976",
+        "Conference" : "East",
+        "Division": "Atlantic",
+        "Coach": "Steve Nash"
+    };
+
+    teams = []
+    teams.append(team_1, team_2, team_3)
+    return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
+
+    '''
     teams_db = client['Teams']
     NBA = teams_db['NBA']
     WNBA = teams_db['WNBA']
@@ -256,8 +291,7 @@ def Teams():
             teams = sorted(teams, key=lambda k: k['Year Founded'], reverse=True) 
         return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
     else:
-        return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
-
+        '''
 @app.route('/Teams_search', methods=['GET', 'POST'])
 def Teams_search():
     teams = []
