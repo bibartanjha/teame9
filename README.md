@@ -29,7 +29,7 @@ Andrew Brown hours: 23 hours
 
 Bibartan Jha hours: 25 hours
 
-Morgan Murrell hours: 17hrs
+Morgan Murrell hours: 17 hours
 
 Alina Nguyen hours: 25 hours
 
