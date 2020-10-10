@@ -1,2 +1,5 @@
 gunicorn==20.0.4
 Flask==1.1.2
+nba_api==1.1.9
+pymongo==3.11.0
+dnspython==2.0.0

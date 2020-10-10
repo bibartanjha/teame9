@@ -9,7 +9,8 @@ from nba_api.stats.endpoints import commonplayerinfo, teaminfocommon, teamdetail
 import pymongo
 
 from pymongo import MongoClient
-
+import csv
+'''
 import numpy as np
 
 import requests
@@ -21,11 +22,12 @@ import http.client
 import json
 
 import random
+'''
 
 #chase username and password accordingly
 
 # try:
-client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
+#client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
 #     print("Connected")
 # except:
 #     print("Not connected")
@@ -115,46 +117,20 @@ def AllenIverson():
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
-    player_1 = {
-        "Name": "Adrian Dantley",
-        "Status": "Not Active",
-        "Team": "Jazz",
-        "Position": "Forward",
-        "Start Year": "1976",
-        "End Year": "1990"
-    };
-
-    player_2 = {
-        "Name": "Alex English",
-        "Status": "Not Active",
-        "Team": "Nuggets",
-        "Position": "Forward",
-        "Start Year": "1976",
-        "End Year": "1990"
-    };
-
-    player_3 = {
-        "Name": "Allen Iverson",
-        "Status": "Not Active",
-        "Team": "76ers",
-        "Position": "Guard",
-        "Start Year": "1996",
-        "End Year": "2009"
-    };
-
     players = []
-    players.append(player_1)
-    players.append(player_2)
-    players.append(player_3)
+    
+    csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
 
-    return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
-
-    '''
-    players_db = client['Players']
-    NBA = players_db['NBA_selected']
-    players = []
-    for player in NBA.find():
-        players.append(player)
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        players.append(dict_1)
     players = sorted(players, key=lambda k: k['Name'])
     
     if request.method == 'POST':
@@ -196,71 +172,66 @@ def Players():
         return render_template('players.html', players=players, num_instances=len(players), filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
     else: 
         return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
-'''
+
+
 @app.route('/Players_search', methods=['GET', 'POST'])
 def Players_search():
+    rows = []
+    csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
     players = []
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        players.append(dict_1)
+    
     if request.method == 'POST':
-        players_db = client['Players']
-        NBA = players_db['NBA_selected']
         if request.form['submit'] == 'Search':
             search = request.form['search']
-            for player in NBA.find():
-                if player['Name'] == search:
-                    players.append(player)
-        else:
-            for player in NBA.find():
-                players.append(player)
-            players = sorted(players, key=lambda k: k['Name'])
+            players_2 = []
+            for player in players:
+                if (player['Name'] == search):
+                    players_2.append(player)
+            players = players_2
+
+    players = sorted(players, key=lambda k: k['Name'])
     return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
-    
+
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
-    team_1 = {
-        "Name": "Hawks",
-        "League": "NBA",
-        "Location": "Atlanta",
-        "Year Founded": "1949",
-        "Conference" : "East",
-        "Division": "Southeast",
-        "Coach": "Lloyd Pierce"
-    };
-
-    team_2 = {
-        "Name": "Celtics",
-        "League": "NBA",
-        "Location": "Boston",
-        "Year Founded": "1946",
-        "Conference" : "East",
-        "Division": "Atlantic",
-        "Coach": "Brad Stevens"
-    };
-
-    team_3 = {
-        "Name": "Nets",
-        "League": "NBA",
-        "Location": "Brooklyn",
-        "Year Founded": "1976",
-        "Conference" : "East",
-        "Division": "Atlantic",
-        "Coach": "Steve Nash"
-    };
-
     teams = []
-    teams.append(team_1)
-    teams.append(team_2)
-    teams.append(team_3)
-    return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
 
-    '''
-    teams_db = client['Teams']
-    NBA = teams_db['NBA']
-    WNBA = teams_db['WNBA']
-    teams = []
-    for team in NBA.find():
-        teams.append(team)
-    for team in WNBA.find():
-        teams.append(team)
+    csv_file = csv.reader(open('nba_teams.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        teams.append(dict_1)
+
+    csv_file = csv.reader(open('wnba_teams.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        teams.append(dict_1)
+    
     teams = sorted(teams, key=lambda k: k['Name'])
 
     if request.method == 'POST':
@@ -305,72 +276,66 @@ def Teams():
             teams = sorted(teams, key=lambda k: k['Year Founded'], reverse=True) 
         return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
     else:
-        '''
+        return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
+
+
 @app.route('/Teams_search', methods=['GET', 'POST'])
 def Teams_search():
     teams = []
+
+    csv_file = csv.reader(open('nba_teams.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        teams.append(dict_1)
+
+    csv_file = csv.reader(open('wnba_teams.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        teams.append(dict_1)
+
     if request.method == 'POST':
-        teams_db = client['Teams']
-        NBA = teams_db['NBA']
-        WNBA = teams_db['WNBA']
         if request.form['submit'] == 'Search':
             search = request.form['search']
-            for team in NBA.find():
-                if team['Name'] == search:
-                    teams.append(team)
-            for team in WNBA.find():
-                if team['Name'] == search:
-                    teams.append(team)
-        else:
-            for team in NBA.find():
-                teams.append(team)
-            for team in WNBA.find():
-                teams.append(team)
-            teams = sorted(teams, key=lambda k: k['Name'])
+            teams_2 = []
+            for team in teams:
+                if (team['Name'] == search):
+                    teams_2.append(team)
+            teams = teams_2
     return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
-    
+ 
 @app.route('/News', methods=['GET', 'POST'])
 def News():
-    news_1 = {
-        "Updated": "2020-10-07",
-        "Title": "Bam Adebayo Will Officially Return For Game 4",
-        "Categories": "Injuries",
-        "Team": "MIA",
-        "OriginalSource": "Tim Reynolds",
-        "OriginalSourceUrl": "https://twitter.com/ByTimReynolds/status/1313626888347291653"
-    };
-
-    news_2 = {
-        "Updated": "2020-10-06",
-        "Title": "Bam Adebayo Likely To Return In Game 4",
-        "Categories": "Injuries",
-        "Team": "MIA",
-        "OriginalSource": "Adrian Wojnarowski",
-        "OriginalSourceUrl": "https://twitter.com/wojespn/status/1313576977358520321?s=20"
-    };
-
-    news_3 = {
-        "Updated": "2020-10-02",
-        "Title": "Goran Dragic Ruled Out For Game 2",
-        "Categories": "Injuries",
-        "Team": "MIA",
-        "OriginalSource": "Shams Charania",
-        "OriginalSourceUrl": "https://twitter.com/ShamsCharania/status/1312149052654379008"
-    }
-
     articles = []
-    articles.append(news_1)
-    articles.append(news_2)
-    articles.append(news_3)
-    return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+    csv_file = csv.reader(open('news.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
 
-    '''
-    news_db = client['News']
-    NBA = news_db['NBA']
-    articles = []
-    for article in NBA.find():
-        articles.append(article)
-    articles = sorted(articles, key=lambda k: k['Updated'], reverse=True) 
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        articles.append(dict_1)
+    articles = sorted(articles, key=lambda k: k['Updated'], reverse=True)
+
     if request.method == 'POST':
         filter_category = request.form['Filter by category']
         if filter_category != "All categories":
@@ -402,7 +367,35 @@ def News():
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category=filter_category, filter_team=filter_team, sort=sort)
     else:
         return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
-'''
+
+@app.route('/News_search', methods=['GET', 'POST'])
+def News_search():
+    articles = []
+    csv_file = csv.reader(open('news.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        articles.append(dict_1)
+    articles = sorted(articles, key=lambda k: k['Updated'], reverse=True)
+
+    if request.method == 'POST':
+        if request.form['submit'] == 'Search':
+            search = request.form['search']
+            articles_2 = []
+            for art in articles:
+                if (art['Updated'][:10] == search):
+                    articles_2.append(art)
+            articles = articles_2
+
+    return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+
 @app.route('/newsInstance1', methods=['GET', 'POST'])
 def newsInstance_one():
     
@@ -418,23 +411,6 @@ def newsInstance_three():
     
     return render_template('news3.html')
 
-@app.route('/News_search', methods=['GET', 'POST'])
-def News_search():
-    articles = []
-    if request.method == 'POST':
-        news_db = client['News']
-        NBA = news_db['NBA']
-        if request.form['submit'] == 'Search':
-            search = request.form['search']
-            for article in NBA.find():
-                if article['Title'] == search:
-                    articles.append(article)
-        else:
-            for article in NBA.find():
-                articles.append(article)
-            articles = sorted(articles, key=lambda k: k['Updated'], reverse=True) 
-    return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
-    
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():
     # db_year = client['Years']
@@ -444,39 +420,28 @@ def Year():
     #     year_info_documents.append(document)
     # year_info_documents = sorted(year_info_documents, key=lambda k: k['Year'],reverse=True)
 
-    year1 = {
-        "Year": "1947",
-        "Western Champion": "Golden State Warriors",
-        "Eastern Champion": "Chicago Stags",
-        "NBA Finals Winner": "Golden State Warriors",
-        "Season MVP": "",
-        "Finals MVP": ""
-    }
+    year_info_documents = []
+    csv_file = csv.reader(open('years.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
 
-    year2 = {
-        "Year": "1949",
-        "Western Champion": "Los Angeles Lakers",
-        "Eastern Champion": "Washington Capitols",
-        "NBA Finals Winner": "Los Angeles Lakers",
-        "Season MVP": "",
-        "Finals MVP": ""
-    }
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        year_info_documents.append(dict_1)
+    year_info_documents = sorted(year_info_documents, key=lambda k: k['Year'], reverse=True)
 
-    year3 = {
-        "Year": "1950",
-        "Western Champion": "Los Angeles Lakers",
-        "Eastern Champion": "Syracuse Nationals (76ers)",
-        "NBA Finals Winner": "Los Angeles Lakers",
-        "Season MVP": "",
-        "Finals MVP": ""
-    }
-
+    '''
     year_info_documents = []
     year_info_documents.append(year1)
     year_info_documents.append(year2)
     year_info_documents.append(year3)
 
-
+    '''
     return render_template('year.html',year_info_documents=year_info_documents)
 
 @app.route('/Franchise_Leaders')
@@ -488,105 +453,41 @@ def record():
     #     franLeaders_documents.append(document)
     # franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
 
-    record1 = {
-        "Team Name": "Atlanta Hawks",
-        "PTS Franchise Leader Name": "Dominique Wilkins",
-        "Total Points": "23292",
-        "AST Franchise Leader Name": "Doc Rivers",
-        "Total Assists": "3866",
-        "REB Franchise Leader Name": "Bob Pettit",
-        "Total Rebounds": "12849",
-        "BLK Franchise Leader Name": "Tree Rollins",
-        "Total Blocks": "2283",
-        "STL Franchise Leader Name": "Mookie Blaylock",
-        "Total Steals": "1321"
-    }
-
-    record2 = {
-        "Team Name": "Boston Celtics",
-        "PTS Franchise Leader Name": "John Havlicek",
-        "Total Points": "26395",
-        "AST Franchise Leader Name": "Bob Cousy",
-        "Total Assists": "6945",
-        "REB Franchise Leader Name": "Bill Russell",
-        "Total Rebounds": "21620",
-        "BLK Franchise Leader Name": "Robert Parish",
-        "Total Blocks": "1703",
-        "STL Franchise Leader Name": "Paul Pierce",
-        "Total Steals": "1583"
-    }
-
-    record3 = {
-        "Team Name": "Cleveland Cavaliers",
-        "PTS Franchise Leader Name": "Lebron James",
-        "Total Points": "23119",
-        "AST Franchise Leader Name": "Lebron James",
-        "Total Assists": "6228",
-        "REB Franchise Leader Name": "Lebron James",
-        "Total Rebounds": "6190",
-        "BLK Franchise Leader Name": "Zydrunas Ilgauskas",
-        "Total Blocks": "1269",
-        "STL Franchise Leader Name": "Lebron James",
-        "Total Steals": "1376"
-    }
-
     franLeaders_documents = []
-    franLeaders_documents.append(record1)
-    franLeaders_documents.append(record2)
-    franLeaders_documents.append(record3)
+    csv_file = csv.reader(open('franchise_leaders.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
 
-    
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        franLeaders_documents.append(dict_1)
+    franLeaders_documents = sorted(franLeaders_documents, key=lambda k: k['Team Name'])
+
     return render_template('franchiseleaders.html',franLeaders_documents=franLeaders_documents)
 
 @app.route('/Fantasy', methods=['GET', 'POST'])
 def Fantasy():
-
-    player1 = {
-        "Name": "Ray Allen",
-        "PTS": "18.9",
-        "AST": "3.4",
-        "REB": "4.1"
-    }
-
-    player2 = {
-        "Name": "Larry Bird",
-        "PTS": "24.3",
-        "AST": "6.3",
-        "REB": "10"
-    }
-
-    player3 = {
-        "Name": "Dave Cowens",
-        "PTS": "17.6",
-        "AST": "3.8",
-        "REB": "13.6"
-    }
-
-    player4 = {
-        "Name": "Andrew Drummond",
-        "PTS": "17.7",
-        "AST": "2.7",
-        "REB": "15.2"
-    }
-
-    player5 = {
-        "Name": "Reggie Miller",
-        "PTS": "18.2",
-        "AST": "3",
-        "REB": "3"
-    }
-
-
-
-    # players_db = client['Players']
-    # NBA = players_db['NBA_selected']
     all_players = []
-    all_players.append(player1)
-    all_players.append(player2)
-    all_players.append(player3)
-    all_players.append(player4)
-    all_players.append(player5)
+    
+    csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
 
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        all_players.append(dict_1)
+    all_players = sorted(all_players, key=lambda k: k['Name'])
+    
     # for player in NBA.find():
     #     all_players.append(player)
     if request.method == 'POST':
@@ -621,39 +522,36 @@ def Fantasy():
 @app.route('/Coaches',methods = ['GET','POST'])
 
 def coaches():
-
-    
-
-    coach1 = {
-        "Team Name": "Atlanta Hawks",
-        "Coach Name": "Lloyd Pierce",
-        "Coach Type": "Head Coach",
-        "Season": "2019-2020"
-    }
-
-    coach2 = {
-        "Team Name": "Boston Celtics",
-        "Coach Name": "Brad Stevens",
-        "Coach Type": "Head Coach",
-        "Season": "2019-2020"
-    }
-
-    coach3 = {
-        "Team Name": "Cleveland Cavaliers",
-        "Coach Name": "JB Bickerstaff",
-        "Coach Type": "Head Coach",
-        "Season": "2019-2020"
-    }
-
     coaches_documents = []
-    coaches_documents.append(coach1)
-    coaches_documents.append(coach2)
-    coaches_documents.append(coach3)
+
+    csv_file = csv.reader(open('coaches.csv', "r"), delimiter=",")
+    rows = []
+    for row in csv_file:
+        rows.append(row)
+    headers = rows[0]
+
+    for i in range (1, len(rows)):
+        curr_row = rows[i]
+        dict_1 = {};
+        for j in range (len(headers)):
+            dict_1[headers[j]] = curr_row[j]
+        coaches_documents.append(dict_1)
+    coaches_documents = sorted(coaches_documents, key=lambda k: k['Coach Name'])
 
     if request.method == "POST":
         coach_requested = request.form['coach_choices']
-        
-        #     coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
+        coach_selected = coaches_documents[0]
+        for coach in coaches_documents:
+            if (coach['Coach Name'] == coach_requested):
+                coach_selected = coach
+                break
+        team_name = coach_selected['Team Name']
+        coach_name = coach_selected['Coach Name']
+        coach_type = coach_selected['Coach Type']
+        season_type = coach_selected['Season']
+
+
+        '''    coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
 
         if coach_requested == "Lloyd Pierce":
             team_name = "Atlanta Hawks"
@@ -675,10 +573,9 @@ def coaches():
         # coach_name = coach_requested
         # coach_type = coach_info['Coach Type']
         # season_type = coach_info['Season']
+        '''
 
         return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=True,team_name=team_name,coach_name=coach_name,coach_type=coach_type,season_type=season_type)
-
-
     else:
 
         return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)

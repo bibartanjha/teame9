@@ -9,7 +9,7 @@
 </div>
 <div style="background-color: lightblue">
 <form action="/News_search" method="POST">
-    <input type="text" id="search" name="search" placeholder="Enter article">
+    <input type="text" id="search" name="search" placeholder="Enter date">
     <input type="submit" name="submit" value="Search" class="btn btn-secondary ml-3">
     <input type="submit" name="submit" value="Default" class="btn btn-secondary ml-3"/>
 </form>
@@ -72,7 +72,7 @@
     {% for i in range(articles| length) %}
         {% if (i % 2) == 0 %}
         <div class="grid-item">
-            <h4><b>{{articles[i]['Title']}}</b></h4>
+            <h4><b>{{articles[i]['Title'].split(" ")[0]}} {{articles[i]['Title'].split(" ")[1]}} {{articles[i]['Title'].split(" ")[2]}}...</b></h4>
             <br>
             <table>
         	 	<tr>
@@ -109,7 +109,7 @@
         </div>
         {% else %}
         <div class="grid-item_2">
-            <h4><b>{{articles[i]['Title']}}</b></h4>
+            <h4><b>{{articles[i]['Title'].split(" ")[0]}} {{articles[i]['Title'].split(" ")[1]}} {{articles[i]['Title'].split(" ")[2]}}...</b></h4>
             <br>
             <table>
                 <tr>

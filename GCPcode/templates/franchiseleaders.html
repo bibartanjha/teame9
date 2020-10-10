@@ -4,58 +4,112 @@
 <title>Franchise Leaders</title>
 {% endblock %}
 {% block body %}
-<h1><b>Franchise Leaders</b></h1>
+<div class="jumbotron bg-success text-white" style="text-align: center">
+    <h1>Franchise Leaders</h1>
+</div>
 <div class="grid-container">
-    {% for franLeader in franLeaders_documents %}
+    {% for i in range(franLeaders_documents| length) %}
+        {% if (i % 2) == 0 %}
         <div class = "grid-item">
-            <h4><b>{{franLeader['Team Name']}}</b></h4>
-            <img src="/static/images/nbaTeams_fran/{{ franLeader['Team Name'] }}.jpeg" alt="No picture found" width="120" height="120" />
+            <h4><b>{{franLeaders_documents[i]['Team Name']}}</b></h4>
+            <img src="/static/images/nbaTeams_fran/{{ franLeaders_documents[i]['Team Name'] }}.jpeg" alt="No picture found" width="120" height="120" />
             <br>
             <br>
             <table>
             	<tr>
                     <td style="font-weight:bold">Franchise Leader Points</td>
-                    <td>{{franLeader['PTS Franchise Leader Name']}}</td>
+                    <td>{{franLeaders_documents[i]['PTS Franchise Leader Name']}}</td>
                 </tr>
             	<tr>
                     <td style="font-weight:bold">Total Points</td>
-                    <td>{{franLeader['Total Points']}}</td>
+                    <td>{{franLeaders_documents[i]['Total Points']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Franchise Leader Assists</td>
-                    <td>{{franLeader['AST Franchise Leader Name']}}</td>
+                    <td>{{franLeaders_documents[i]['AST Franchise Leader Name']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Total Assists</td>
-                    <td>{{franLeader['Total Assists']}}</td>
+                    <td>{{franLeaders_documents[i]['Total Assists']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Franchise Leader Rebounds</td>
-                    <td>{{franLeader['REB Franchise Leader Name']}}</td>
+                    <td>{{franLeaders_documents[i]['REB Franchise Leader Name']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Total Rebounds</td>
-                    <td>{{franLeader['Total Rebounds']}}</td>
+                    <td>{{franLeaders_documents[i]['Total Rebounds']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Franchise Leader Blocks</td>
-                    <td>{{franLeader['BLK Franchise Leader Name']}}</td>
+                    <td>{{franLeaders_documents[i]['BLK Franchise Leader Name']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Total Blocks</td>
-                    <td>{{franLeader['Total Blocks']}}</td>
+                    <td>{{franLeaders_documents[i]['Total Blocks']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Franchise Leader Steals</td>
-                    <td>{{franLeader['STL Franchise Leader Name']}}</td>
+                    <td>{{franLeaders_documents[i]['STL Franchise Leader Name']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Total Steals</td>
-                    <td>{{franLeader['Total Steals']}}</td>
+                    <td>{{franLeaders_documents[i]['Total Steals']}}</td>
                 </tr>
             </table>
             <br>
         </div>
-        {% endfor %}
+        {% else %}
+        <div class = "grid-item_2">
+            <h4><b>{{franLeaders_documents[i]['Team Name']}}</b></h4>
+            <img src="/static/images/nbaTeams_fran/{{ franLeaders_documents[i]['Team Name'] }}.jpeg" alt="No picture found" width="120" height="120" />
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Points</td>
+                    <td>{{franLeaders_documents[i]['PTS Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Points</td>
+                    <td>{{franLeaders_documents[i]['Total Points']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Assists</td>
+                    <td>{{franLeaders_documents[i]['AST Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Assists</td>
+                    <td>{{franLeaders_documents[i]['Total Assists']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Rebounds</td>
+                    <td>{{franLeaders_documents[i]['REB Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Rebounds</td>
+                    <td>{{franLeaders_documents[i]['Total Rebounds']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Blocks</td>
+                    <td>{{franLeaders_documents[i]['BLK Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Blocks</td>
+                    <td>{{franLeaders_documents[i]['Total Blocks']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Franchise Leader Steals</td>
+                    <td>{{franLeaders_documents[i]['STL Franchise Leader Name']}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Total Steals</td>
+                    <td>{{franLeaders_documents[i]['Total Steals']}}</td>
+                </tr>
+            </table>
+            <br>
+        </div>
+        {% endif %}
+    {% endfor %}
     </div>
 {% endblock %}
