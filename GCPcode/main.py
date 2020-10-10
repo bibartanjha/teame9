@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 
+import nba_api
+
 from nba_api.stats.static import players, teams
 
 from nba_api.stats.endpoints import commonplayerinfo, teaminfocommon, teamdetails, commonteamroster
@@ -21,20 +23,28 @@ import json
 import random
 
 #chase username and password accordingly
+<<<<<<< HEAD
 client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
     
+=======
+# try:
+client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
+#     print("Connected")
+# except:
+#     print("Not connected")
+>>>>>>> 1d9300aab54329448bcb38a86e82dd31351da0a7
 
 app = Flask(__name__)
 
-client_year = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Years?retryWrites=true&w=majority")
-client_trade = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
-client_teams = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Teams?retryWrites=true&w=majority")
-client_franLeaders = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Franchise_Leaders?retryWrites=true&w=majority")
-client_coaches = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Coaches?retryWrites=true&w=majority")
+# client_year = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Years?retryWrites=true&w=majority")
+# client_trade = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
+# client_teams = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Teams?retryWrites=true&w=majority")
+# client_franLeaders = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Franchise_Leaders?retryWrites=true&w=majority")
+# client_coaches = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Coaches?retryWrites=true&w=majority")
 
 
 # get game information #
-client = MongoClient("mongodb+srv://morganm:friedorboiled_@teame9db.kngdj.gcp.mongodb.net/GAMES?retryWrites=true&w=majority")
+# client = MongoClient("mongodb+srv://morganm:friedorboiled_@teame9db.kngdj.gcp.mongodb.net/GAMES?retryWrites=true&w=majority")
 
 
 @app.route('/')
@@ -313,7 +323,7 @@ def News_search():
     
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():
-    db_year = client_year['Years']
+    db_year = client['Years']
     collection_year = db_year['NBA']
     year_info_documents = []
     for document in collection_year.find():
@@ -323,7 +333,7 @@ def Year():
 
 @app.route('/Franchise_Leaders')
 def record():
-    db_franLeaders = client_franLeaders['Franchise_Leaders']
+    db_franLeaders = client['Franchise_Leaders']
     collection_franLeaders = db_franLeaders['NBA']
     franLeaders_documents = []
     for document in collection_franLeaders.find():
@@ -372,7 +382,7 @@ def Fantasy():
 
 def coaches():
 
-    db_coaches = client_coaches['Coaches']
+    db_coaches = client['Coaches']
     collection_coaches = db_coaches['NBA']
     coaches_documents = []
     for document in collection_coaches.find():
