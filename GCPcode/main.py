@@ -21,11 +21,8 @@ import json
 import random
 
 #chase username and password accordingly
-try:
-    client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
-    print("Connected")
-except:
-    print("Not connected")
+client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
+    
 
 app = Flask(__name__)
 
