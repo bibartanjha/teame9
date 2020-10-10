@@ -46,24 +46,24 @@ app = Flask(__name__)
 
 @app.route('/')
 def root(method=['GET']):
-    five_random_games = []
-    five_games_info = []
-    gamedb = client["GAMES"]
-    gamecol = gamedb["NBA2019"]
+    #five_random_games = []
+    #five_games_info = []
+    #gamedb = client["GAMES"]
+    #gamecol = gamedb["NBA2019"]
 
     # get 5 random games #
-    for i in range(5):
-        randomgame = random.randrange(1061)
-        five_random_games.append(randomgame)
-        game_info = []
-        gamedoc = gamecol.find_one({"_id":randomgame})
-        game_info.append(gamedoc["HomePoints"])
-        game_info.append(gamedoc["HomeTeam"])
-        game_info.append(gamedoc["AwayPoints"])
-        game_info.append(gamedoc["AwayTeam"])
-        five_games_info.append(game_info)
+    #for i in range(5):
+    #    randomgame = random.randrange(1061)
+    #    five_random_games.append(randomgame)
+    #    game_info = []
+    #    gamedoc = gamecol.find_one({"_id":randomgame})
+    #    game_info.append(gamedoc["HomePoints"])
+    #    game_info.append(gamedoc["HomeTeam"])
+    #    game_info.append(gamedoc["AwayPoints"])
+    #    game_info.append(gamedoc["AwayTeam"])
+    #    five_games_info.append(game_info)
 
-    return render_template('index.html', scores=five_games_info)
+    return render_template('home.html')
 
 
 
