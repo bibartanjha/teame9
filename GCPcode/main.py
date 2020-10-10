@@ -23,16 +23,13 @@ import json
 import random
 
 #chase username and password accordingly
-<<<<<<< HEAD
-client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
-    
-=======
+
 # try:
 client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
 #     print("Connected")
 # except:
 #     print("Not connected")
->>>>>>> 1d9300aab54329448bcb38a86e82dd31351da0a7
+
 
 app = Flask(__name__)
 
@@ -402,12 +399,60 @@ def Year():
 
 @app.route('/Franchise_Leaders')
 def record():
-    db_franLeaders = client['Franchise_Leaders']
-    collection_franLeaders = db_franLeaders['NBA']
+    # db_franLeaders = client['Franchise_Leaders']
+    # collection_franLeaders = db_franLeaders['NBA']
+    # franLeaders_documents = []
+    # for document in collection_franLeaders.find():
+    #     franLeaders_documents.append(document)
+    # franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
+
+    record1 = {
+        "Team Name": "Atlanta Hawks",
+        "PTS Franchise Leader Name": "Dominique Wilkins",
+        "Total Points": "23292",
+        "AST Franchise Leader Name": "Doc Rivers",
+        "Total Assists": "3866",
+        "REB Franchise Leader Name": "Bob Pettit",
+        "Total Rebounds": "12849",
+        "BLK Franchise Leader Name": "Tree Rollins",
+        "Total Blocks": "2283",
+        "STL Franchise Leader Name": "Mookie Blaylock",
+        "Total Steals": "1321"
+    }
+
+    record2 = {
+        "Team Name": "Boston Celtics",
+        "PTS Franchise Leader Name": "John Havlicek",
+        "Total Points": "26395",
+        "AST Franchise Leader Name": "Bob Cousy",
+        "Total Assists": "6945",
+        "REB Franchise Leader Name": "Bill Russell",
+        "Total Rebounds": "21620",
+        "BLK Franchise Leader Name": "Robert Parish",
+        "Total Blocks": "1703",
+        "STL Franchise Leader Name": "Paul Pierce",
+        "Total Steals": "1583"
+    }
+
+    record3 = {
+        "Team Name": "Cleveland Cavaliers",
+        "PTS Franchise Leader Name": "Lebron James",
+        "Total Points": "23119",
+        "AST Franchise Leader Name": "Lebron James",
+        "Total Assists": "6228",
+        "REB Franchise Leader Name": "Lebron James",
+        "Total Rebounds": "6190",
+        "BLK Franchise Leader Name": "Zydrunas Ilgauskas",
+        "Total Blocks": "1269",
+        "STL Franchise Leader Name": "Lebron James",
+        "Total Steals": "1376"
+    }
+
     franLeaders_documents = []
-    for document in collection_franLeaders.find():
-        franLeaders_documents.append(document)
-    franLeaders_documents = sorted(franLeaders_documents,key=lambda k: k['Team Name'])
+    franLeaders_documents.append(record1)
+    franLeaders_documents.append(record2)
+    franLeaders_documents.append(record3)
+
     
     return render_template('franchiseleaders.html',franLeaders_documents=franLeaders_documents)
 
@@ -451,27 +496,30 @@ def Fantasy():
 
 def coaches():
 
-    db_coaches = client['Coaches']
-    collection_coaches = db_coaches['NBA']
-    coaches_documents = []
-    for document in collection_coaches.find():
-        coaches_documents.append(document)
-    if request.method == "POST":
+    
 
-        coach_requested = request.form['coach_choices']
-        if coach_requested == "":
-            return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
+    # db_coaches = client['Coaches']
+    # collection_coaches = db_coaches['NBA']
+    # coaches_documents = []
+    # for document in collection_coaches.find():
+    #     coaches_documents.append(document)
+    # if request.method == "POST":
+
+    #     coach_requested = request.form['coach_choices']
+    #     if coach_requested == "":
+    #         return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
  
-        coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
+    #     coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
 
-        team_name = coach_info['Team Name']
-        coach_name = coach_requested
-        coach_type = coach_info['Coach Type']
-        season_type = coach_info['Season']
+    #     team_name = coach_info['Team Name']
+    #     coach_name = coach_requested
+    #     coach_type = coach_info['Coach Type']
+    #     season_type = coach_info['Season']
 
-        return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=True,team_name=team_name,coach_name=coach_name,coach_type=coach_type,season_type=season_type)
-    else:
-        return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
+    #     return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=True,team_name=team_name,coach_name=coach_name,coach_type=coach_type,season_type=season_type)
+    # else:
+    #     return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
+    return render_template('coaches.html')
 
     
 
