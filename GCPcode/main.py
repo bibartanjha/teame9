@@ -532,6 +532,65 @@ def coaches():
 
     
 
+    coach1 = {
+        "Team Name": "Atlanta Hawks",
+        "Coach Name": "Lloyd Pierce",
+        "Coach Type": "Head Coach",
+        "Season": "2019-2020"
+    }
+
+    coach2 = {
+        "Team Name": "Boston Celtics",
+        "Coach Name": "Brad Stevens",
+        "Coach Type": "Head Coach",
+        "Season": "2019-2020"
+    }
+
+    coach3 = {
+        "Team Name": "Cleveland Cavaliers",
+        "Coach Name": "JB Bickerstaff",
+        "Coach Type": "Head Coach",
+        "Season": "2019-2020"
+    }
+
+    coaches_documents = []
+    coaches_documents.append(coach1)
+    coaches_documents.append(coach2)
+    coaches_documents.append(coach3)
+
+    if request.method == "POST":
+        coach_requested = request.form['coach_choices']
+        
+        #     coach_info = collection_coaches.find_one({"Coach Name": coach_requested})
+
+        if coach_requested == "Lloyd Pierce":
+            team_name = "Atlanta Hawks"
+            coach_name = coach_requested
+            coach_type = "Head Coach"
+            season_type = "2019-2020"
+        elif coach_requested == "Brad Stevens":
+            team_name = "Boston Celtics"
+            coach_name = coach_requested
+            coach_type = "Head Coach"
+            season_type = "2019-2020"
+        elif coach_requested == "JB Bickerstaff":
+            team_name = "Cleveland Cavaliers"
+            coach_name = coach_requested
+            coach_type = "Head Coach"
+            season_type = "2019-2020"
+
+        # team_name = coach_info['Team Name']
+        # coach_name = coach_requested
+        # coach_type = coach_info['Coach Type']
+        # season_type = coach_info['Season']
+
+        return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=True,team_name=team_name,coach_name=coach_name,coach_type=coach_type,season_type=season_type)
+
+
+    else:
+
+        return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
+
     # db_coaches = client['Coaches']
     # collection_coaches = db_coaches['NBA']
     # coaches_documents = []
@@ -553,7 +612,7 @@ def coaches():
     #     return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=True,team_name=team_name,coach_name=coach_name,coach_type=coach_type,season_type=season_type)
     # else:
     #     return render_template('coaches.html',coaches_documents=coaches_documents,coach_selected=False)
-    return render_template('coaches.html')
+    
 
     
 
