@@ -73,61 +73,73 @@ def AboutPage():
 
 @app.route('/AdrianDantley')
 def AdrianDantley():
-    players_db = client['Players']
-    NBA = players_db['NBA_selected']
+    player_1 = {
+        "Name": "Adrian Dantley",
+        "Status": "Not Active",
+        "Team": "Jazz",
+        "Position": "Forward",
+        "Start Year": "1976",
+        "End Year": "1990"
+    };
     players = []
-    for player in NBA.find():
-        if (player['Name'] == "Adrian Dantley"):
-            players.append(player)
+    players.append(player_1)
     return render_template('adriandantley.html', players=players)
 
 @app.route('/AlexEnglish')
 def AlexEnglish():
-    players_db = client['Players']
-    NBA = players_db['NBA_selected']
+    player_1 = {
+        "Name": "Alex English",
+        "Status": "Not Active",
+        "Team": "Nuggets",
+        "Position": "Forward",
+        "Start Year": "1976",
+        "End Year": "1990"
+    };
     players = []
-    for player in NBA.find():
-        if (player['Name'] == "Alex English"):
-            players.append(player)
+    players.append(player_1)
     return render_template('alexenglish.html', players=players)
 
 @app.route('/AllenIverson')
 def AllenIverson():
-    players_db = client['Players']
-    NBA = players_db['NBA_selected']
+    player_1 = {
+        "Name": "Allen Iverson",
+        "Status": "Not Active",
+        "Team": "76ers",
+        "Position": "Guard",
+        "Start Year": "1996",
+        "End Year": "2009"
+    };
     players = []
-    for player in NBA.find():
-        if (player['Name'] == "Allen Iverson"):
-            players.append(player)
+    players.append(player_1)
     return render_template('alleniverson.html', players=players)
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
     player_1 = {
-        "Name": "Kareem Abdul-Jabbar",
+        "Name": "Adrian Dantley",
         "Status": "Not Active",
-        "Team": "Lakers",
-        "Position": "Center",
-        "Start Year": "1969",
-        "End Year": "1988"
+        "Team": "Jazz",
+        "Position": "Forward",
+        "Start Year": "1976",
+        "End Year": "1990"
     };
 
     player_2 = {
-        "Name": "Ray Allen",
+        "Name": "Alex English",
         "Status": "Not Active",
-        "Team": "Bucks",
-        "Position": "Guard",
-        "Start Year": "1996",
-        "End Year": "2013"
+        "Team": "Nuggets",
+        "Position": "Forward",
+        "Start Year": "1976",
+        "End Year": "1990"
     };
 
     player_3 = {
-        "Name": "Giannis Antetokounmpo",
-        "Status": "Active",
-        "Team": "Bucks",
-        "Position": "Forward",
-        "Start Year": "2013",
-        "End Year": "Present"
+        "Name": "Allen Iverson",
+        "Status": "Not Active",
+        "Team": "76ers",
+        "Position": "Guard",
+        "Start Year": "1996",
+        "End Year": "2009"
     };
 
     players = []
@@ -327,6 +339,31 @@ def News():
         "OriginalSource": "Tim Reynolds",
         "OriginalSourceUrl": "https://twitter.com/ByTimReynolds/status/1313626888347291653"
     };
+
+    news_2 = {
+        "Updated": "2020-10-06",
+        "Title": "Bam Adebayo Likely To Return In Game 4",
+        "Categories": "Injuries",
+        "Team": "MIA",
+        "OriginalSource": "Adrian Wojnarowski",
+        "OriginalSourceUrl": "https://twitter.com/wojespn/status/1313576977358520321?s=20"
+    };
+
+    news_3 = {
+        "Updated": "2020-10-02",
+        "Title": "Goran Dragic Ruled Out For Game 2",
+        "Categories": "Injuries",
+        "Team": "MIA",
+        "OriginalSource": "Shams Charania",
+        "OriginalSourceUrl": "https://twitter.com/ShamsCharania/status/1312149052654379008"
+    }
+
+    articles = []
+    articles.append(news_1)
+    articles.append(news_2)
+    articles.append(news_3)
+    return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+
     '''
     news_db = client['News']
     NBA = news_db['NBA']
