@@ -106,13 +106,48 @@ def AllenIverson():
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
+    player_1 = {
+        "Name": "Kareem Abdul-Jabbar",
+        "Status": "Not Active",
+        "Team": "Lakers",
+        "Position": "Center",
+        "Start Year": "1969",
+        "End Year": "1988"
+    };
+
+    player_2 = {
+        "Name": "Ray Allen",
+        "Status": "Not Active",
+        "Team": "Bucks",
+        "Position": "Guard",
+        "Start Year": "1996",
+        "End Year": "2013"
+    };
+
+    player_3 = {
+        "Name": "Giannis Antetokounmpo",
+        "Status": "Active",
+        "Team": "Bucks",
+        "Position": "Forward",
+        "Start Year": "2013",
+        "End Year": "Present"
+    };
+
+    players = []
+    players.append(player_1)
+    players.append(player_2)
+    players.append(player_3)
+
+    return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
+
+    '''
     players_db = client['Players']
     NBA = players_db['NBA_selected']
     players = []
     for player in NBA.find():
         players.append(player)
     players = sorted(players, key=lambda k: k['Name'])
-
+    
     if request.method == 'POST':
         filter_status = request.form['Filter by status']
         if filter_status != "All statuses":
@@ -152,7 +187,7 @@ def Players():
         return render_template('players.html', players=players, num_instances=len(players), filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
     else: 
         return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
-
+'''
 @app.route('/Players_search', methods=['GET', 'POST'])
 def Players_search():
     players = []
