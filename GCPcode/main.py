@@ -400,12 +400,46 @@ def News_search():
     
 @app.route('/Year', methods=['GET', 'POST'])
 def Year():
-    db_year = client['Years']
-    collection_year = db_year['NBA']
+    # db_year = client['Years']
+    # collection_year = db_year['NBA']
+    # year_info_documents = []
+    # for document in collection_year.find():
+    #     year_info_documents.append(document)
+    # year_info_documents = sorted(year_info_documents, key=lambda k: k['Year'],reverse=True)
+
+    year1 = {
+        "Year": "1947",
+        "Western Champion": "Golden State Warriors",
+        "Eastern Champion": "Chicago Stags",
+        "NBA Finals Winner": "Golden State Warriors",
+        "Season MVP": "",
+        "Finals MVP": ""
+    }
+
+    year2 = {
+        "Year": "1949",
+        "Western Champion": "Los Angeles Lakers",
+        "Eastern Champion": "Washington Capitols",
+        "NBA Finals Winner": "Los Angeles Lakers",
+        "Season MVP": "",
+        "Finals MVP": ""
+    }
+
+    year3 = {
+        "Year": "1950",
+        "Western Champion": "Los Angeles Lakers",
+        "Eastern Champion": "Syracuse Nationals (76ers)",
+        "NBA Finals Winner": "Los Angeles Lakers",
+        "Season MVP": "",
+        "Finals MVP": ""
+    }
+
     year_info_documents = []
-    for document in collection_year.find():
-        year_info_documents.append(document)
-    year_info_documents = sorted(year_info_documents, key=lambda k: k['Year'],reverse=True)
+    year_info_documents.append(year1)
+    year_info_documents.append(year2)
+    year_info_documents.append(year3)
+
+
     return render_template('year.html',year_info_documents=year_info_documents)
 
 @app.route('/Franchise_Leaders')
