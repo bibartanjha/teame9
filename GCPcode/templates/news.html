@@ -8,14 +8,14 @@
     <h1>Latest News</h1>
 </div>
 <div style="background-color: lightblue">
-<form action="/News_search" method="POST">
+<form action="/News" method="GET">
     <input type="text" id="search" name="search" placeholder="Enter date">
     <input type="submit" name="submit" value="Search" class="btn btn-secondary ml-3">
     <input type="submit" name="submit" value="Default" class="btn btn-secondary ml-3"/>
 </form>
 <br>
-<form action="/News" method="POST">
-    <select name="Filter by category" id="Filter by category" class="custom-select-sm">
+<form action="/News" method="GET">
+    <select name="Category" id="Category" class="custom-select-sm">
         <optgroup label = "Filter by category"></optgroup>
         <option selected>All categories</option>
         <option>Injuries</option>
@@ -23,7 +23,7 @@
         <option>Sit-Start</option>
         <option>Risers</option>
     </select>
-    <select name="Filter by team" id="Filter by team" class="custom-select-sm">
+    <select name="Team" id="Team" class="custom-select-sm">
         <optgroup label = "Filter by team"></optgroup>
         <option selected>All teams</option>
         <option>BOS</option>
@@ -57,47 +57,48 @@
 </form>
 </div>
 </br>
-{% if filter_category != "All categories" %}
+{% if filter_category != "All categories" and filter_category != None and filter_category != "None" %}
     <h6><b>Filter (Category): {{ filter_category }}</b></h6>
 {% endif %}
-{% if filter_team != "All teams" %}
+{% if filter_team != "All teams" and filter_team != None and filter_team != "None" %}
     <h6><b>Filter (Team): {{ filter_team }}</b></h6>
 {% endif %}
-{% if sort != "Default: Date (Latest to Earliest)" %}
+{% if sort != "Default: Date (Latest to Earliest)" and sort != None and sort != "None" %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
 <h6><b>Number of instances: {{ num_instances }}</b></h6>
+<h6><b>Page {{ page }} of {{ num_pages }}</b></h6>
 
 <div class = "grid-container">
-    {% for i in range(articles| length) %}
+    {% for i in range(posts| length) %}
         {% if (i % 2) == 0 %}
         <div class="grid-item">
-            <h4><b>{{articles[i]['Title'].split(" ")[0]}} {{articles[i]['Title'].split(" ")[1]}} {{articles[i]['Title'].split(" ")[2]}}...</b></h4>
+            <h4><b>{{posts[i]['Title'].split(" ")[0]}} {{posts[i]['Title'].split(" ")[1]}} {{posts[i]['Title'].split(" ")[2]}}...</b></h4>
             <br>
             <table>
         	 	<tr>
                     <td style="font-weight:bold">Date Posted</td>
-                    <td>{{articles[i]['Updated'][:10]}}</td>
+                    <td>{{posts[i]['Updated'][:10]}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Categories</td>
-                    <td>{{articles[i]['Categories']}}</td>
+                    <td>{{posts[i]['Categories']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Team</td>
-                    <td>{{articles[i]['Team']}}</td>
+                    <td>{{posts[i]['Team']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Source</td>
-                    <td>{{articles[i]['OriginalSource']}}</td>
+                    <td>{{posts[i]['OriginalSource']}}</td>
                 </tr>
             </table>
             <br>
             <figure>
-                <img src="/static/images/newspage/{{ articles[i]['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="120" />
-                <figcaption>{{articles[i]['OriginalSource']}}</figcaption>
+                <img src="/static/images/newspage/{{ posts[i]['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="120" />
+                <figcaption>{{posts[i]['OriginalSource']}}</figcaption>
             </figure>
-            <a href = "{{articles[i]['OriginalSourceUrl']}}">Original Source Link</a>
+            <a href = "{{posts[i]['OriginalSourceUrl']}}">Original Source Link</a>
             <br>
             {% if i == 0 %}
                 <a href = "/newsInstance1">Instance Page Link</a>
@@ -109,32 +110,32 @@
         </div>
         {% else %}
         <div class="grid-item_2">
-            <h4><b>{{articles[i]['Title'].split(" ")[0]}} {{articles[i]['Title'].split(" ")[1]}} {{articles[i]['Title'].split(" ")[2]}}...</b></h4>
+            <h4><b>{{posts[i]['Title'].split(" ")[0]}} {{posts[i]['Title'].split(" ")[1]}} {{posts[i]['Title'].split(" ")[2]}}...</b></h4>
             <br>
             <table>
                 <tr>
                     <td style="font-weight:bold">Date Posted</td>
-                    <td>{{articles[i]['Updated'][:10]}}</td>
+                    <td>{{posts[i]['Updated'][:10]}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Categories</td>
-                    <td>{{articles[i]['Categories']}}</td>
+                    <td>{{posts[i]['Categories']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Team</td>
-                    <td>{{articles[i]['Team']}}</td>
+                    <td>{{posts[i]['Team']}}</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Source</td>
-                    <td>{{articles[i]['OriginalSource']}}</td>
+                    <td>{{posts[i]['OriginalSource']}}</td>
                 </tr>
             </table>
             <br>
             <figure>
-                <img src="/static/images/newspage/{{ articles[i]['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="120" />
-                <figcaption>{{articles[i]['OriginalSource']}}</figcaption>
+                <img src="/static/images/newspage/{{ posts[i]['OriginalSource'] }}.jpg" alt="No picture found" width="120" height="120" />
+                <figcaption>{{posts[i]['OriginalSource']}}</figcaption>
             </figure>
-            <a href = "{{articles[i]['OriginalSourceUrl']}}">Original Source Link</a>
+            <a href = "{{posts[i]['OriginalSourceUrl']}}">Original Source Link</a>
             <br>
             {% if i == 1 %}
                 <a href = "/newsInstance2">Instance Page Link</a>
@@ -145,6 +146,27 @@
         {% endif %}
     {% endfor %}
 </div>
+<form action="/News" method="GET">
+    <select name="page" id="page" class="custom-select-sm">
+        {% for i in range(1, num_pages+1) %}
+            {% if i == page %}
+                <option selected>{{i}}</a> 
+            {% else %}
+                <option>{{i}}</a> 
+            {% endif %}
+        {% endfor %}
+    </select>
+    <select hidden name="Category" id="Category" class="custom-select-sm">
+        <option selected>{{filter_category}}</a> 
+    </select>
+    <select hidden name="Team" id="Team" class="custom-select-sm">
+        <option selected>{{filter_team}}</a> 
+    </select>
+     <select hidden name="Sort" id="Sort" class="custom-select-sm">
+        <option selected>{{sort}}</a> 
+    </select>
+    <input type="submit" value="Go" class="btn btn-secondary ml-3" />
+</form>
 {% endblock %}
 
 

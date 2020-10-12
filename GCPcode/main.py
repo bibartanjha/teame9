@@ -9,6 +9,7 @@ from nba_api.stats.endpoints import commonplayerinfo, teaminfocommon, teamdetail
 import pymongo
 
 from pymongo import MongoClient
+from django.core.paginator import Paginator
 import csv
 '''
 import numpy as np
@@ -118,7 +119,6 @@ def AllenIverson():
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
     players = []
-    
     csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
     rows = []
     for row in csv_file:
@@ -133,32 +133,48 @@ def Players():
         players.append(dict_1)
     players = sorted(players, key=lambda k: k['Name'])
     
-    if request.method == 'POST':
-        filter_status = request.form['Filter by status']
-        if filter_status != "All statuses":
+    if request.method == 'GET':
+        which_button = request.args.get('submit')
+        if which_button == "Search" or which_button == "Default":
+            if which_button == "Search":
+                search = request.args.get('search')
+                players_2 = []
+                for player in players:
+                    if (player['Name'] == search):
+                        players_2.append(player)
+                players = players_2
+            p = Paginator(players, 9) #9 entries per page
+            num_pages = p.num_pages
+            page = request.args.get('page', 1, type=int)
+            posts = p.get_page(page).object_list
+            return render_template('players.html', page=page, posts=posts, num_pages=num_pages, players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
+
+        filter_status = request.args.get('Status')
+        if not (filter_status == None or filter_status == "None" or filter_status == "All statuses"):
             players_with_status = []
             for player in players:
                 if player['Status'] == filter_status:
                     players_with_status.append(player)
             players=players_with_status
 
-        filter_position = request.form['Filter by position']
-        if filter_position != "All positions":
+        filter_position = request.args.get('Position')
+        if not (filter_position == None or filter_position == "None" or filter_position == "All positions"):
             players_in_position = []
             for player in players:
                 if player['Position'] == filter_position:
                     players_in_position.append(player)
             players=players_in_position
 
-        filter_team = request.form['Filter by team']
-        if filter_team != "All teams":
+        filter_team = request.args.get('Team')
+        if not (filter_team == None or filter_team == "None" or filter_team == "All teams"):
             players_in_team = []
             for player in players:
                 if player['Team'] == filter_team:
                     players_in_team.append(player)
             players=players_in_team
 
-        sort = request.form['Sort']
+
+        sort = request.args.get('Sort')
         if sort == "Name (Z-A)":
             players = sorted(players, key=lambda k: k['Name'], reverse=True)
         elif sort == "Start Year (Earliest to Latest)":
@@ -169,43 +185,24 @@ def Players():
             players = sorted(players, key=lambda k: k['End Year'])
         elif sort == "End Year (Latest to Earliest)":
             players = sorted(players, key=lambda k: k['End Year'], reverse=True)
-        return render_template('players.html', players=players, num_instances=len(players), filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
+
+
+        p = Paginator(players, 9) #9 entries per page
+        num_pages = p.num_pages
+        page = request.args.get('page', 1, type=int)
+        posts = p.get_page(page).object_list
+        return render_template('players.html', page=page, posts=posts, num_pages=num_pages, players=players, num_instances=len(players), filter_status=filter_status, filter_position=filter_position, filter_team=filter_team, sort=sort)
     else: 
-        return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
+        p = Paginator(players, 9) #9 entries per page
+        num_pages = p.num_pages
+        page = request.args.get('page', 1, type=int)
+        posts = p.get_page(page).object_list
+        return render_template('players.html', page=page, posts=posts, num_pages=num_pages, players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
 
-
-@app.route('/Players_search', methods=['GET', 'POST'])
-def Players_search():
-    rows = []
-    csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-    players = []
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        players.append(dict_1)
-    
-    if request.method == 'POST':
-        if request.form['submit'] == 'Search':
-            search = request.form['search']
-            players_2 = []
-            for player in players:
-                if (player['Name'] == search):
-                    players_2.append(player)
-            players = players_2
-
-    players = sorted(players, key=lambda k: k['Name'])
-    return render_template('players.html', players=players, num_instances=len(players), filter_status="All statuses", filter_position="All positions", filter_team="All teams", sort='Default: Name (A-Z)')
 
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
     teams = []
-
     csv_file = csv.reader(open('nba_teams.csv', "r"), delimiter=",")
     rows = []
     for row in csv_file:
@@ -234,17 +231,32 @@ def Teams():
     
     teams = sorted(teams, key=lambda k: k['Name'])
 
-    if request.method == 'POST':
-        filter_league = request.form['Filter by league']
-        if filter_league != "All leagues":
+    if request.method == 'GET':
+        which_button = request.args.get('submit')
+        if which_button == "Search" or which_button == "Default":
+            if which_button == "Search":
+                search = request.args.get('search')
+                teams_2 = []
+                for team in teams:
+                    if (team['Name'] == search):
+                        teams_2.append(team)
+                teams = teams_2
+            p = Paginator(teams, 9) #9 entries per page
+            num_pages = p.num_pages
+            page = request.args.get('page', 1, type=int)
+            posts = p.get_page(page).object_list
+            return render_template('teams.html', page=page, posts=posts, num_pages=num_pages, teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
+
+        filter_league = request.args.get('League')
+        if not (filter_league == None or filter_league == "None" or filter_league == "All leagues"):
             teams_in_league = []
             for team in teams:
                 if team['League'] == filter_league:
                     teams_in_league.append(team)
             teams=teams_in_league
 
-        filter_conference = request.form['Filter by conference']
-        if filter_conference != "All conferences":
+        filter_conference = request.args.get('Conference')
+        if not (filter_conference == None or filter_conference == "None" or filter_conference == "All conferences"):
             league = filter_conference.split(" ")[0]
             conference = filter_conference.split(" ")[1]
             teams_in_conference = []
@@ -253,8 +265,8 @@ def Teams():
                     teams_in_conference.append(team)
             teams=teams_in_conference
 
-        filter_division = request.form['Filter by division']
-        if filter_division != "All divisions":
+        filter_division = request.args.get('Division')
+        if not (filter_division == None or filter_division == "None" or filter_division == "All divisions"):
             teams_in_division = []
             for team in teams:
                 if team['League'] == 'NBA':
@@ -263,7 +275,7 @@ def Teams():
             teams=teams_in_division
 
 
-        sort = request.form['Sort'] 
+        sort = request.args.get('Sort') 
         if sort == "Team Name (Z-A)":
             teams = sorted(teams, key=lambda k: k['Name'], reverse=True) 
         elif sort == "Location (A-Z)":
@@ -274,51 +286,18 @@ def Teams():
             teams = sorted(teams, key=lambda k: k['Year Founded']) 
         elif sort == "Year Founded (Latest to Earliest)":
             teams = sorted(teams, key=lambda k: k['Year Founded'], reverse=True) 
-        return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
+        p = Paginator(teams, 9) #9 entries per page
+        num_pages = p.num_pages
+        page = request.args.get('page', 1, type=int)
+        posts = p.get_page(page).object_list
+        return render_template('teams.html', page=page, posts=posts, num_pages=num_pages, teams=teams, num_instances=len(teams), filter_league=filter_league, filter_conference=filter_conference, filter_division=filter_division, sort=sort)
     else:
-        return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
+        p = Paginator(teams, 9) #9 entries per page
+        num_pages = p.num_pages
+        page = request.args.get('page', 1, type=int)
+        posts = p.get_page(page).object_list
+        return render_template('teams.html', page=page, posts=posts, num_pages=num_pages, teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
 
-
-@app.route('/Teams_search', methods=['GET', 'POST'])
-def Teams_search():
-    teams = []
-
-    csv_file = csv.reader(open('nba_teams.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        teams.append(dict_1)
-
-    csv_file = csv.reader(open('wnba_teams.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        teams.append(dict_1)
-
-    if request.method == 'POST':
-        if request.form['submit'] == 'Search':
-            search = request.form['search']
-            teams_2 = []
-            for team in teams:
-                if (team['Name'] == search):
-                    teams_2.append(team)
-            teams = teams_2
-    return render_template('teams.html', teams=teams, num_instances=len(teams), filter_league="All leagues", filter_conference="All conferences", filter_division="All divisions", sort='Default: Team Name (A-Z)')
- 
 @app.route('/News', methods=['GET', 'POST'])
 def News():
     articles = []
@@ -336,24 +315,39 @@ def News():
         articles.append(dict_1)
     articles = sorted(articles, key=lambda k: k['Updated'], reverse=True)
 
-    if request.method == 'POST':
-        filter_category = request.form['Filter by category']
-        if filter_category != "All categories":
+    if request.method == 'GET':
+        which_button = request.args.get('submit')
+        if which_button == "Search" or which_button == "Default":
+            if which_button == "Search":
+                search = request.args.get('search')
+                articles_2 = []
+                for art in articles:
+                    if (art['Updated'][:10] == search):
+                        articles_2.append(art)
+                articles = articles_2
+            p = Paginator(articles, 9) #9 entries per page
+            num_pages = p.num_pages
+            page = request.args.get('page', 1, type=int)
+            posts = p.get_page(page).object_list
+            return render_template('news.html', page=page, posts=posts, num_pages=num_pages, articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+
+        filter_category = request.args.get('Category')
+        if not (filter_category == None or filter_category == "None" or filter_category == "All categories"):
             articles_in_category = []
             for article in articles:
                 if article['Categories'] == filter_category:
                     articles_in_category.append(article)
             articles=articles_in_category
 
-        filter_team = request.form['Filter by team']
-        if filter_team != "All teams":
+        filter_team = request.args.get('Team')
+        if not (filter_team == None or filter_team == "None" or filter_team == "All teams"):
             articles_for_team = []
             for article in articles:
                 if article['Team'] == filter_team:
                     articles_for_team.append(article)
             articles=articles_for_team
 
-        sort = request.form['Sort'] 
+        sort = request.args.get('Sort')
         if sort == "Date (Earliest to Latest)":
             articles = sorted(articles, key=lambda k: k['Updated']) 
         elif sort == "Title (A to Z)":
@@ -364,38 +358,19 @@ def News():
             articles = sorted(articles, key=lambda k: k['OriginalSource']) 
         elif sort == "Source (Z to A)":
             articles = sorted(articles, key=lambda k: k['OriginalSource'], reverse=True)
-        return render_template('news.html', articles=articles, num_instances=len(articles), filter_category=filter_category, filter_team=filter_team, sort=sort)
+
+        p = Paginator(articles, 9) #9 entries per page
+        num_pages = p.num_pages
+        page = request.args.get('page', 1, type=int)
+        posts = p.get_page(page).object_list
+        return render_template('news.html', page=page, posts=posts, num_pages=num_pages, articles=articles, num_instances=len(articles), filter_category=filter_category, filter_team=filter_team, sort=sort)
     else:
-        return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
-
-@app.route('/News_search', methods=['GET', 'POST'])
-def News_search():
-    articles = []
-    csv_file = csv.reader(open('news.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        articles.append(dict_1)
-    articles = sorted(articles, key=lambda k: k['Updated'], reverse=True)
-
-    if request.method == 'POST':
-        if request.form['submit'] == 'Search':
-            search = request.form['search']
-            articles_2 = []
-            for art in articles:
-                if (art['Updated'][:10] == search):
-                    articles_2.append(art)
-            articles = articles_2
-
-    return render_template('news.html', articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
-
+        p = Paginator(articles, 9) #9 entries per page
+        num_pages = p.num_pages
+        page = request.args.get('page', 1, type=int)
+        posts = p.get_page(page).object_list
+        return render_template('news.html', page=page, posts=posts, num_pages=num_pages, articles=articles, num_instances=len(articles), filter_category="All categories", filter_team="All teams", sort="Default: Date (Latest to Earliest)")
+    
 @app.route('/newsInstance1', methods=['GET', 'POST'])
 def newsInstance_one():
     

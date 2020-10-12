@@ -9,20 +9,20 @@
     <h6>Note: Only first 3 players have instance pages available at the moment</h6>
 </div>
 <div style="background-color: lightblue">
-<form action="/Players_search" method="POST">
+<form action="/Players" method="GET">
     <input type="text" id="search" name="search" placeholder="Enter player" >
     <input type="submit" name="submit" value="Search" class="btn btn-secondary ml-3">
     <input type="submit" name="submit" value="Default" class="btn btn-secondary ml-3" />
 </form>
 <br>
-<form action="/Players" method="POST">
-    <select name="Filter by status" id="Filter by status" class="custom-select-sm">
+<form action="/Players" method="GET">
+    <select name="Status" id="Status" class="custom-select-sm">
         <optgroup label = "Filter by status"></optgroup>
         <option selected>All statuses</option>
         <option>Active</option>
         <option>Not Active</option>
     </select>
-    <select name="Filter by position" id="Filter by position" class="custom-select-sm">
+    <select name="Position" id="Position" class="custom-select-sm">
         <optgroup label = "Filter by position"></optgroup>
         <option selected>All positions</option>
         <option>Forward</option>
@@ -33,7 +33,7 @@
         <option>Guard-Forward</option>
         <option>Guard</option>
     </select>
-    <select name="Filter by team" id="Filter by team" class="custom-select-sm">
+    <select name="Team" id="Team" class="custom-select-sm">
         <optgroup label = "Filter by team"></optgroup>
         <option selected>All teams</option>
         <option>76ers</option>
@@ -79,76 +79,102 @@
 </form>
 </div>
 <br>
-{% if filter_status != "All statuses" %}
+{% if filter_status != "All statuses" and filter_status != None and filter_status != "None" %}
     <h6><b>Filter (Status): {{ filter_status }}</b></h6>
 {% endif %}
-{% if filter_position != "All positions" %}
+{% if filter_position != "All positions" and filter_position != None and filter_position != "None" %}
     <h6><b>Filter (Position): {{ filter_position }}</b></h6>
 {% endif %}
-{% if filter_team != "All teams" %}
+{% if filter_team != "All teams" and filter_team != None and filter_team != "None"  %}
     <h6><b>Filter (Team): {{ filter_team }}</b></h6>
 {% endif %}
-{% if sort != "Default: Name (A-Z)" %}
+{% if sort != "Default: Name (A-Z)" and sort != None and sort != "None"  %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
 <h6><b>Number of instances: {{ num_instances }}</b></h6>
+<h6><b>Page {{ page }} of {{ num_pages }}</b></h6>
 <div class = "grid-container">
-    {% for i in range(players| length) %}
+    {% for i in range(posts| length) %}
         {% if (i % 2) == 0 %}
             <div class="grid-item">
-                <h4><b>{{players[i]['Name']}}</b></h4>
-                <img src="/static/images/playerspage/{{ players[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
+                <h4><b>{{posts[i]['Name']}}</b></h4>
+                <img src="/static/images/playerspage/{{ posts[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
                 <br>
                 <br>
                 <table>
                     <tr>
                         <td style="font-weight:bold">Status</td>
-                        <td>{{players[i]['Status']}}</td>
+                        <td>{{posts[i]['Status']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Team</td>
-                        <td>{{players[i]['Team']}}</td>
+                        <td>{{posts[i]['Team']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Position</td>
-                        <td>{{players[i]['Position']}}</td>
+                        <td>{{posts[i]['Position']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Career</td>
-                        <td>{{players[i]['Start Year']}}-{{players[i]['End Year']}}</td>
+                        <td>{{posts[i]['Start Year']}}-{{posts[i]['End Year']}}</td>
                     </tr>
                 </table>
                 <br>    
-                    <a href = "/{{players[i]['Name'].split(' ')[0]}}{{players[i]['Name'].split(' ')[1]}}">Instance Page Link</a>
+                    <a href = "/{{posts[i]['Name'].split(' ')[0]}}{{posts[i]['Name'].split(' ')[1]}}">Instance Page Link</a>
             </div>
         {% else %}
             <div class="grid-item_2">
-                <h4><b>{{players[i]['Name']}}</b></h4>
-                <img src="/static/images/playerspage/{{ players[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
+                <h4><b>{{posts[i]['Name']}}</b></h4>
+                <img src="/static/images/playerspage/{{ posts[i]['Name'] }}.jpg" alt="No picture found" width="120" height="180" />
                 <br>
                 <br>
                 <table>
                     <tr>
                         <td style="font-weight:bold">Status</td>
-                        <td>{{players[i]['Status']}}</td>
+                        <td>{{posts[i]['Status']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Team</td>
-                        <td>{{players[i]['Team']}}</td>
+                        <td>{{posts[i]['Team']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Position</td>
-                        <td>{{players[i]['Position']}}</td>
+                        <td>{{posts[i]['Position']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Career</td>
-                        <td>{{players[i]['Start Year']}}-{{players[i]['End Year']}}</td>
+                        <td>{{posts[i]['Start Year']}}-{{posts[i]['End Year']}}</td>
                     </tr>
                 </table>
                 <br>
-                <a href = "/{{players[i]['Name'].split(' ')[0]}}{{players[i]['Name'].split(' ')[1]}}">Instance Page Link</a>
+                <a href = "/{{posts[i]['Name'].split(' ')[0]}}{{posts[i]['Name'].split(' ')[1]}}">Instance Page Link</a>
             </div>
         {% endif %}
     {% endfor %}
 </div>
+
+<form action="/Players" method="GET">
+    <select name="page" id="page" class="custom-select-sm">
+        {% for i in range(1, num_pages+1) %}
+            {% if i == page %}
+                <option selected>{{i}}</a> 
+            {% else %}
+                <option>{{i}}</a> 
+            {% endif %}
+        {% endfor %}
+    </select>
+    <select hidden name="Status" id="Status" class="custom-select-sm">
+        <option selected>{{filter_status}}</a> 
+    </select>
+    <select hidden name="Position" id="Position" class="custom-select-sm">
+        <option selected>{{filter_position}}</a> 
+    </select>
+     <select hidden name="Team" id="Team" class="custom-select-sm">
+        <option selected>{{filter_team}}</a> 
+    </select>
+     <select hidden name="Sort" id="Sort" class="custom-select-sm">
+        <option selected>{{sort}}</a> 
+    </select>
+    <input type="submit" value="Go" class="btn btn-secondary ml-3" />
+</form>
 {% endblock %}

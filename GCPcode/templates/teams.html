@@ -9,20 +9,20 @@
     <h6>Note: Only first 3 teams have instance pages available at the moment</h6>
 </div>
 <div style="background-color: lightblue">
-<form action="/Teams_search" method="POST">
+<form action="/Teams" method="GET">
     <input type="text" id="search" name="search" placeholder="Enter team">
     <input type="submit" name="submit" value="Search" class="btn btn-secondary ml-3">
     <input type="submit" name="submit" value="Default" class="btn btn-secondary ml-3" />
 </form>
 <br>
-<form action="/Teams" method="POST">
-    <select name="Filter by league" id="Filter by league" class="custom-select-sm">
+<form action="/Teams" method="GET">
+    <select name="League" id="League" class="custom-select-sm">
         <optgroup label = "Filter by league"></optgroup>
         <option selected>All leagues</option>
         <option>NBA</option>
         <option>WNBA</option>
     </select>
-    <select name="Filter by conference" id="Filter by conference" class="custom-select-sm">
+    <select name="Conference" id="Conference" class="custom-select-sm">
         <optgroup label = "Filter by conference"></optgroup>
         <option selected>All conferences</option>
         <optgroup label = "NBA">
@@ -32,7 +32,7 @@
         <option>WNBA East</option>
         <option>WNBA West</option>
     </select>
-    <select name="Filter by division" id="Filter by division" class="custom-select-sm">
+    <select name="Division" id="Division" class="custom-select-sm">
         <optgroup label = "Filter by division"></optgroup>
         <option selected>All divisions</option>
         <optgroup label = "NBA East">
@@ -57,59 +57,60 @@
 </form>
 </div>
 <br>
-{% if filter_league != "All leagues" %}
+{% if filter_league != "All leagues" and filter_league != None and filter_league != "None"  %}
     <h6><b>Filter (League): {{ filter_league }}</b></h6>
 {% endif %}
-{% if filter_conference != "All conferences" %}
+{% if filter_conference != "All conferences" and filter_conference != None and filter_conference != "None"  %}
     <h6><b>Filter (Conference): {{ filter_conference }}</b></h6>
 {% endif %}
-{% if filter_division != "All divisions" %}
+{% if filter_division != "All divisions" and filter_division != None and filter_division != "None"  %}
     <h6><b>Filter (Division): {{ filter_division }}</b></h6>
 {% endif %}
-{% if sort != "Default: Team Name (A-Z)" %}
+{% if sort != "Default: Team Name (A-Z)" and sort != None and sort != "None" %}
     <h6><b>Sort: {{ sort }}</b></h6>
 {% endif %}
 <h6><b>Number of instances: {{ num_instances }}</b></h6>
+<h6><b>Page {{ page }} of {{ num_pages }}</b></h6>
 
 <div class = "grid-container">
-    {% for i in range(teams| length) %}
+    {% for i in range(posts| length) %}
         {% if (i % 2) == 0 %}
             <div class="grid-item">
-                <h4><b>{{teams[i]['Name']}}</b></h4>
-                <img src="/static/images/teamspage/{{ teams[i]['Name'] }}.jpg" alt="No picture found" width="120" height="120" /> 
+                <h4><b>{{posts[i]['Name']}}</b></h4>
+                <img src="/static/images/teamspage/{{ posts[i]['Name'] }}.jpg" alt="No picture found" width="120" height="120" /> 
                 <br><br>
                 <table>
                 	<tr>
                         <td style="font-weight:bold">League</td>
-                        <td>{{teams[i]['League']}}</td>
+                        <td>{{posts[i]['League']}}</td>
                     </tr>                
                     <tr>
                         <td style="font-weight:bold">Location</td>
-                        <td>{{teams[i]['Location']}}</td>
+                        <td>{{posts[i]['Location']}}</td>
                     </tr>
                 	<tr>
                         <td style="font-weight:bold">Year Founded</td>
-                        <td>{{teams[i]['Year Founded']}}</td>
+                        <td>{{posts[i]['Year Founded']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Conference</td>
-                        <td>{{teams[i]['Conference']}}</td>
+                        <td>{{posts[i]['Conference']}}</td>
                     </tr>
-                    {% if teams[i]['League'] == 'NBA' %}
+                    {% if posts[i]['League'] == 'NBA' %}
                         <tr>
                             <td style="font-weight:bold">Division</td>
-                            <td>{{teams[i]['Division']}}</td>
+                            <td>{{posts[i]['Division']}}</td>
                         </tr> 
                     {% endif %}
-                    {% if teams[i]['Coach'] != ' ' %}
+                    {% if posts[i]['Coach'] != ' ' %}
                     <tr>
                         <td style="font-weight:bold">Coach</td>
-                        <td>{{teams[i]['Coach']}}</td>
+                        <td>{{posts[i]['Coach']}}</td>
                     </tr>
                     {% endif %}
                 </table>
                 <br>
-                {% if teams[i]['League'] == 'WNBA' %}
+                {% if posts[i]['League'] == 'WNBA' %}
                     <br>
                 {% endif %}
                 {% if (i==0) %}
@@ -122,41 +123,41 @@
             </div>
         {% else %}
             <div class="grid-item_2">
-                <h4><b>{{teams[i]['Name']}}</b></h4>
-                <img src="/static/images/teamspage/{{ teams[i]['Name'] }}.jpg" alt="No picture found" width="120" height="120" /> 
+                <h4><b>{{posts[i]['Name']}}</b></h4>
+                <img src="/static/images/teamspage/{{ posts[i]['Name'] }}.jpg" alt="No picture found" width="120" height="120" /> 
                 <br><br>
                 <table>
                     <tr>
                         <td style="font-weight:bold">League</td>
-                        <td>{{teams[i]['League']}}</td>
+                        <td>{{posts[i]['League']}}</td>
                     </tr>                
                     <tr>
                         <td style="font-weight:bold">Location</td>
-                        <td>{{teams[i]['Location']}}</td>
+                        <td>{{posts[i]['Location']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Year Founded</td>
-                        <td>{{teams[i]['Year Founded']}}</td>
+                        <td>{{posts[i]['Year Founded']}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight:bold">Conference</td>
-                        <td>{{teams[i]['Conference']}}</td>
+                        <td>{{posts[i]['Conference']}}</td>
                     </tr>
-                    {% if teams[i]['League'] == 'NBA' %}
+                    {% if posts[i]['League'] == 'NBA' %}
                         <tr>
                             <td style="font-weight:bold">Division</td>
-                            <td>{{teams[i]['Division']}}</td>
+                            <td>{{posts[i]['Division']}}</td>
                         </tr> 
                     {% endif %}
-                    {% if teams[i]['Coach'] != ' ' %}
+                    {% if posts[i]['Coach'] != ' ' %}
                     <tr>
                         <td style="font-weight:bold">Coach</td>
-                        <td>{{teams[i]['Coach']}}</td>
+                        <td>{{posts[i]['Coach']}}</td>
                     </tr>
                     {% endif %}
                 </table>
                 <br>
-                {% if teams[i]['League'] == 'WNBA' %}
+                {% if posts[i]['League'] == 'WNBA' %}
                     <br>
                 {% endif %}
                 {% if (i==1) %}
@@ -168,4 +169,29 @@
         {% endif %}
     {% endfor %}
 </div>
+
+<form action="/Teams" method="GET">
+    <select name="page" id="page" class="custom-select-sm">
+        {% for i in range(1, num_pages+1) %}
+            {% if i == page %}
+                <option selected>{{i}}</a> 
+            {% else %}
+                <option>{{i}}</a> 
+            {% endif %}
+        {% endfor %}
+    </select>
+    <select hidden name="League" id="League" class="custom-select-sm">
+        <option selected>{{filter_league}}</a> 
+    </select>
+    <select hidden name="Conference" id="Conference" class="custom-select-sm">
+        <option selected>{{filter_conference}}</a> 
+    </select>
+     <select hidden name="Division" id="Division" class="custom-select-sm">
+        <option selected>{{filter_division}}</a> 
+    </select>
+     <select hidden name="Sort" id="Sort" class="custom-select-sm">
+        <option selected>{{sort}}</a> 
+    </select>
+    <input type="submit" value="Go" class="btn btn-secondary ml-3" />
+</form>
 {% endblock %}
