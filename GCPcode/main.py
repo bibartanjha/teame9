@@ -1,5 +1,4 @@
 from flask import Flask, render_template, url_for, request, redirect
-
 import nba_api
 
 from nba_api.stats.static import players, teams
