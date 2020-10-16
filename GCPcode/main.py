@@ -116,22 +116,6 @@ def AllenIverson():
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
-    
-    '''csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        players.append(dict_1)
-    players = sorted(players, key=lambda k: k['Name'])
-    '''
-
     db_players = client['Players']
     collection_players = db_players['NBA_selected']
     players = []
@@ -209,32 +193,13 @@ def Players():
 @app.route('/Teams', methods=['GET', 'POST'])
 def Teams():
     teams = []
-    csv_file = csv.reader(open('nba_teams.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        teams.append(dict_1)
-
-    csv_file = csv.reader(open('wnba_teams.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        teams.append(dict_1)
-    
+    db = client['Teams']
+    NBA = db['NBA']
+    for document in NBA.find():
+        teams.append(document)
+    WNBA = db['WNBA']
+    for document in WNBA.find():
+        teams.append(document)
     teams = sorted(teams, key=lambda k: k['Name'])
 
     if request.method == 'GET':
@@ -307,20 +272,12 @@ def Teams():
 @app.route('/News', methods=['GET', 'POST'])
 def News():
     articles = []
-    csv_file = csv.reader(open('news.csv', "r"), delimiter=",")
-    rows = []
-    for row in csv_file:
-        rows.append(row)
-    headers = rows[0]
-
-    for i in range (1, len(rows)):
-        curr_row = rows[i]
-        dict_1 = {};
-        for j in range (len(headers)):
-            dict_1[headers[j]] = curr_row[j]
-        articles.append(dict_1)
+    db = client['News']
+    NBA = db['NBA']
+    for document in NBA.find():
+        articles.append(document)
     articles = sorted(articles, key=lambda k: k['Updated'], reverse=True)
-
+    
     if request.method == 'GET':
         which_button = request.args.get('submit')
         if which_button == "Search" or which_button == "Default":
