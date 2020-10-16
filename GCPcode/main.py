@@ -367,6 +367,7 @@ def Year():
 
     for i in range (1, len(rows)):
         curr_row = rows[i]
+        
         dict_1 = {};
         for j in range (len(headers)):
             dict_1[headers[j]] = curr_row[j]
