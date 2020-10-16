@@ -10,7 +10,7 @@ import pymongo
 from pymongo import MongoClient
 from django.core.paginator import Paginator
 import csv
-'''
+
 import numpy as np
 
 import requests
@@ -22,19 +22,18 @@ import http.client
 import json
 
 import random
-'''
+
 
 #chase username and password accordingly
 
-# try:
-#client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
-#     print("Connected")
-# except:
-#     print("Not connected")
-
-
+try:
+    client = pymongo.MongoClient("mongodb+srv://Bibartan:bibpass@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
+    #print("Connected")
+except:
+    pass
+    #print("Not connected")
 app = Flask(__name__)
-
+'''
 # client_year = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Years?retryWrites=true&w=majority")
 # client_trade = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Players?retryWrites=true&w=majority")
 # client_teams = MongoClient("mongodb+srv://Andrew:w66lPqEEXd7YZPZB@teame9db.kngdj.gcp.mongodb.net/Teams?retryWrites=true&w=majority")
@@ -44,7 +43,7 @@ app = Flask(__name__)
 
 # get game information #
 # client = MongoClient("mongodb+srv://morganm:friedorboiled_@teame9db.kngdj.gcp.mongodb.net/GAMES?retryWrites=true&w=majority")
-
+'''
 
 @app.route('/')
 def root(method=['GET']):
@@ -117,8 +116,8 @@ def AllenIverson():
 
 @app.route('/Players', methods=['GET', 'POST'])
 def Players():
-    players = []
-    csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
+    
+    '''csv_file = csv.reader(open('nba_players.csv', "r"), delimiter=",")
     rows = []
     for row in csv_file:
         rows.append(row)
@@ -131,7 +130,15 @@ def Players():
             dict_1[headers[j]] = curr_row[j]
         players.append(dict_1)
     players = sorted(players, key=lambda k: k['Name'])
-    
+    '''
+
+    db_players = client['Players']
+    collection_players = db_players['NBA_selected']
+    players = []
+    for document in collection_players.find():
+        players.append(document)
+    players = sorted(players, key=lambda k: k['Name'])
+
     if request.method == 'GET':
         which_button = request.args.get('submit')
         if which_button == "Search" or which_button == "Default":
